@@ -1,0 +1,49 @@
+---
+interface Props {
+  naam: string;
+  functie: string;
+  email: string;
+  foto?: string;
+}
+
+const { naam, functie, email, foto } = Astro.props;
+
+// Generate initials for avatar fallback
+const initials = naam
+  .split(' ')
+  .map((part) => part[0])
+  .filter(Boolean)
+  .slice(0, 2)
+  .join('')
+  .toUpperCase();
+---
+
+<div class="bg-white rounded-lg border border-gray-200 p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center">
+  <div class="w-24 h-24 rounded-full overflow-hidden mb-4 bg-gray-100 border-2 border-[var(--color-primary)] relative shadow-inner">
+    {foto ? (
+      <img
+        src={foto}
+        alt={`Foto van ${naam}`}
+        class="w-full h-full object-cover object-center"
+        loading="lazy"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      />
+    ) : null}
+    <div class={`${foto ? 'hidden' : 'flex'} absolute inset-0 bg-gradient-to-tr from-[var(--color-header-bg)] to-[var(--color-primary)] items-center justify-center text-white font-bold text-xl tracking-wider`}>
+      {initials}
+    </div>
+  </div>
+
+  <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary-light)] px-3 py-1 rounded-full mb-2">
+    {functie}
+  </span>
+  <h3 class="text-xl font-bold font-['Roboto_Condensed'] text-gray-900 mb-2">
+    {naam}
+  </h3>
+  <a
+    href={`mailto:${email}`}
+    class="text-sm text-gray-600 hover:text-[var(--color-primary)] underline underline-offset-2 break-all transition-colors mt-auto"
+  >
+    {email}
+  </a>
+</div>

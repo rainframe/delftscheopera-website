@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  return pages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const { Content } = await page.render();
+---
+
+<BaseLayout title={page.data.title} description={page.data.description}>
+  <!-- Header banner -->
+  <div class="bg-[var(--color-bg-subtle)] border-b border-[var(--color-border)] py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl sm:text-5xl font-extrabold font-['Roboto_Condensed'] text-gray-900">
+        {page.data.title}
+      </h1>
+      {page.data.description && (
+        <p class="text-lg text-gray-600 mt-4 leading-relaxed">
+          {page.data.description}
+        </p>
+      )}
+    </div>
+  </div>
+
+  <!-- Inhoud van het markdown bestand -->
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="prose-content">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

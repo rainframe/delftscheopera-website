@@ -1,0 +1,63 @@
+---
+interface Props {
+  titel: string;
+  jaar: number;
+  afbeelding?: string;
+  quote?: string;
+  quoteBron?: string;
+  recensieUrl?: string;
+}
+
+const { titel, jaar, afbeelding, quote, quoteBron, recensieUrl } = Astro.props;
+---
+
+<article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+  {afbeelding && (
+    <div class="h-56 sm:h-64 bg-gray-100 overflow-hidden relative">
+      <img
+        src={afbeelding}
+        alt={`Productie ${titel} (${jaar})`}
+        class="w-full h-full object-cover object-center"
+        loading="lazy"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      />
+      <div class="hidden absolute inset-0 bg-gradient-to-br from-[var(--color-header-bg)] to-[var(--color-primary)] items-center justify-center text-white/40 font-bold text-3xl">
+        {titel}
+      </div>
+      <div class="absolute top-3 right-3 bg-[var(--color-primary)] text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+        {jaar}
+      </div>
+    </div>
+  )}
+
+  <div class="p-6">
+    <div class="flex items-center justify-between gap-4 mb-3">
+      <h2 class="text-2xl font-bold font-['Roboto_Condensed'] text-gray-900">
+        {titel} <span class="text-gray-500 font-normal">({jaar})</span>
+      </h2>
+    </div>
+
+    <div class="text-gray-700 leading-relaxed space-y-3">
+      <slot />
+    </div>
+
+    {quote && (
+      <blockquote class="mt-4 p-4 rounded-md bg-[var(--color-primary-light)] border-l-4 border-[var(--color-primary)] text-sm text-gray-800 italic">
+        <p class="mb-1">“{quote}”</p>
+        <footer class="font-semibold not-italic text-xs text-gray-600 flex items-center justify-between">
+          <span>— {quoteBron || 'Recensie'}</span>
+          {recensieUrl && (
+            <a
+              href={recensieUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[var(--color-primary)] hover:underline ml-2 font-normal"
+            >
+              Lees recensie &rarr;
+            </a>
+          )}
+        </footer>
+      </blockquote>
+    )}
+  </div>
+</article>

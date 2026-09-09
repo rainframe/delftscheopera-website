@@ -1,0 +1,44 @@
+:root {
+  /* ==========================================================================
+     STIJLGIDS / DESIGN TOKENS (STICHTING DELFTSCHE OPERA COMPAGNIE)
+     Pas deze variabelen aan wanneer de nieuwe huisstijl klaar is!
+     ========================================================================== */
+
+  /* Kleurenpalet */
+  --color-primary: #07996f;
+  --color-primary-hover: #057a58;
+  --color-primary-light: #e6f6f1;
+  --color-primary-contrast: #ffffff;
+
+  --color-header-bg: #4f474e;
+  --color-header-text: #ffffff;
+  --color-header-hover: #e4ecea;
+
+  --color-footer-bg: #4f474e;
+  --color-footer-text: #e2e8f0;
+
+  --color-bg-page: #ffffff;
+  --color-bg-subtle: #f8faf9;
+  --color-bg-card: #ffffff;
+
+  --color-text-main: #212121;
+  --color-text-muted: #555555;
+  --color-text-light: #777777;
+
+  --color-border: #e2e8f0;
+  --color-border-hover: #07996f;
+
+  /* Typografie */
+  --font-heading: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Randen en schaduwen */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}

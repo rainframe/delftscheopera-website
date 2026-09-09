@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductionCard from '../components/ProductionCard.astro';
+import { getCollection } from 'astro:content';
+
+const producties = await getCollection('producties');
+// Sorteer op volgorde (of jaar descending)
+const sortedProducties = producties.sort((a, b) => (a.data.volgorde ?? 10) - (b.data.volgorde ?? 10));
+---
+
+<BaseLayout 
+  title="Producties" 
+  description="Overzicht van de grootse producties van Stichting DOC voor Krashna Musika, waaronder Carmina Burana, Carmen en François Guyon."
+>
+  <!-- Header banner -->
+  <div class="bg-[var(--color-bg-subtle)] border-b border-[var(--color-border)] py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-primary)]">
+        Archief & Voorstellingen
+      </span>
+      <h1 class="text-4xl sm:text-5xl font-extrabold font-['Roboto_Condensed'] text-gray-900 mt-2 mb-4">
+        Producties
+      </h1>
+      <p class="text-lg text-gray-600 max-w-3xl leading-relaxed">
+        Op deze pagina vind je een greep uit de grootschalige operaprojecten en symfonische producties van Stichting DOC.
+      </p>
+    </div>
+  </div>
+
+  <!-- Content section -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {sortedProducties.map((productie) => (
+        <ProductionCard
+          titel={productie.data.titel}
+          jaar={productie.data.jaar}
+          afbeelding={productie.data.afbeelding}
+          quote={productie.data.quote}
+          quoteBron={productie.data.quoteBron}
+          recensieUrl={productie.data.recensieUrl}
+        >
+          <p>{productie.body}</p>
+        </ProductionCard>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

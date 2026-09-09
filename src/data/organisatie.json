@@ -1,0 +1,38 @@
+{
+  "algemeen": {
+    "naam": "Stichting Delftsche Opera Compagnie",
+    "opgericht": "1994",
+    "rsin": "8036313217",
+    "kvk": "41146911",
+    "email": "info@stichtingdoc.nl",
+    "adres": "Mekelweg 10, 2628CD, Delft",
+    "beschrijving": "Stichting Delftsche Opera Compagnie (DOC) is opgericht in 1994. De stichting heeft het doel om grootschalige projecten te organiseren ten behoeve van het Delftse studenten muziekgezelschap Krashna Musika. De stichting heeft een eigen bestuur met een Raad van Toezicht benoemd door de vereniging D.S.M.G. Krashna Musika."
+  },
+  "rvt": [
+    {
+      "naam": "Marinke Brouerius van Nidek-Visser",
+      "functie": "Zakelijk leider Bachkoor Holland"
+    },
+    {
+      "naam": "Kayleigh Hagen",
+      "functie": "Freelance productieleider"
+    },
+    {
+      "naam": "Julian Langkemper",
+      "functie": "Financieel adviseur, oud-penningmeester Hofstads JeugdOrkest"
+    },
+    {
+      "naam": "Martijn Visser",
+      "functie": "Mede-oprichter Stichting DOC, oud-lustrumbestuur"
+    },
+    {
+      "naam": "Dick van Gameren",
+      "functie": "Oud-decaan faculteit Bouwkunde TU Delft"
+    }
+  ],
+  "documenten": [
+    { "naam": "Jaarverslag", "status": "volgt binnenkort" },
+    { "naam": "Beleidsplan", "status": "volgt binnenkort" },
+    { "naam": "Beloningsbeleid", "status": "volgt binnenkort" }
+  ]
+}

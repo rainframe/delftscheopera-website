@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allProducties = await getCollection('producties');
+const latestProductie = allProducties.sort((a, b) => (a.data.volgorde ?? 10) - (b.data.volgorde ?? 10))[0];
+---
+
+<BaseLayout title="Welkom bij Stichting Delftsche Opera Compagnie">
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-br from-[var(--color-header-bg)] to-[#2d282c] text-white py-16 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#07996f_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    
+    <div class="relative max-w-4xl mx-auto text-center">
+      <span class="inline-block px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold tracking-wider uppercase bg-[var(--color-primary)] text-white mb-6 shadow">
+        Muziektheater & Opera in Delft
+      </span>
+      <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold font-['Roboto_Condensed'] tracking-tight mb-6 leading-tight">
+        Welkom bij Stichting Delftsche Opera Compagnie!
+      </h1>
+      <p class="text-lg sm:text-xl text-gray-200 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+        Stichting DOC organiseert grootse producties voor het Delftse studentenorkest en -koor <strong class="font-semibold text-white">Krashna Musika</strong>.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a
+          href="/producties"
+          class="px-6 py-3 rounded-md bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-bold text-base shadow-md transition-all hover:-translate-y-0.5"
+        >
+          Bekijk onze producties
+        </a>
+        <a
+          href="/contact"
+          class="px-6 py-3 rounded-md bg-white/10 hover:bg-white/20 text-white font-semibold text-base border border-white/20 transition-all"
+        >
+          Neem contact op
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Belangrijkste Pijlers -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Kaart DOC -->
+      <div class="bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl p-8 hover:border-[var(--color-primary)] transition-colors shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-lg bg-[var(--color-primary)] text-white flex items-center justify-center font-bold text-xl mb-6">
+            DOC
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold font-['Roboto_Condensed'] text-gray-900 mb-4">
+            Stichting DOC
+          </h2>
+          <p class="text-gray-700 leading-relaxed text-base mb-6">
+            De stichting Delftse Opera Compagnie organiseert al meer dan 25 jaar grootschalige producties voor Krashna Musika. Wij zorgen voor de organisatie, fondsenwerving en zakelijke leiding achter monumentale voorstellingen.
+          </p>
+        </div>
+        <div>
+          <a
+            href="/organisatie"
+            class="inline-flex items-center text-[var(--color-primary)] font-bold hover:underline"
+          >
+            Meer over onze organisatie &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Kaart Krashna Musika -->
+      <div class="bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl p-8 hover:border-[var(--color-primary)] transition-colors shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="w-12 h-12 rounded-lg bg-[var(--color-header-bg)] text-white flex items-center justify-center font-bold text-xl mb-6">
+            KM
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-bold font-['Roboto_Condensed'] text-gray-900 mb-4">
+            Krashna Musika
+          </h2>
+          <p class="text-gray-700 leading-relaxed text-base mb-6">
+            Krashna Musika is hét studentenorkest en -koor uit Delft. Het koor en orkest brengen op hoog niveau groot symfonisch repertoire ten gehore. Neem ook een kijkje op de officiële website van Krashna!
+          </p>
+        </div>
+        <div>
+          <a
+            href="https://www.krashna.nl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center text-[var(--color-primary)] font-bold hover:underline"
+          >
+            Bezoek www.krashna.nl &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Laatste productie uitgelicht -->
+  {latestProductie && (
+    <section class="bg-gray-50 border-t border-gray-200 py-16">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-primary)]">
+              Recente voorstelling
+            </span>
+            <h2 class="text-3xl font-bold font-['Roboto_Condensed'] text-gray-900 mt-1">
+              Uitgelichte Productie
+            </h2>
+          </div>
+          <a
+            href="/producties"
+            class="text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] font-bold text-sm"
+          >
+            Bekijk alle producties &rarr;
+          </a>
+        </div>
+
+        <div class="bg-white border border-gray-200 rounded-xl p-8 shadow-sm">
+          <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div class="max-w-2xl">
+              <span class="text-xs font-bold px-2.5 py-1 rounded bg-[var(--color-primary-light)] text-[var(--color-primary)]">
+                {latestProductie.data.jaar}
+              </span>
+              <h3 class="text-2xl sm:text-3xl font-bold font-['Roboto_Condensed'] text-gray-900 mt-2 mb-3">
+                {latestProductie.data.titel}
+              </h3>
+              <p class="text-gray-700 leading-relaxed">
+                {latestProductie.body}
+              </p>
+            </div>
+            <a
+              href="/producties"
+              class="inline-block px-5 py-2.5 rounded-md bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-semibold text-sm transition-colors"
+            >
+              Lees meer over producties
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

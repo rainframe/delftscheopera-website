@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BoardMemberCard from '../components/BoardMemberCard.astro';
+import bestuurData from '../data/bestuur.json';
+---
+
+<BaseLayout 
+  title="Contact" 
+  description="Neem contact op met het bestuur van Stichting Delftsche Opera Compagnie."
+>
+  <!-- Header banner -->
+  <div class="bg-[var(--color-bg-subtle)] border-b border-[var(--color-border)] py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-primary)]">
+        Bestuur & Contact
+      </span>
+      <h1 class="text-4xl sm:text-5xl font-extrabold font-['Roboto_Condensed'] text-gray-900 mt-2 mb-4">
+        Contact
+      </h1>
+      <p class="text-lg text-gray-600 max-w-3xl leading-relaxed">
+        Heb je een vraag, wil je samenwerken of meer weten over onze producties? Neem gerust contact op met ons bestuur.
+      </p>
+    </div>
+  </div>
+
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Algemeen contact blok -->
+    <div class="bg-gradient-to-br from-[var(--color-header-bg)] to-[#2d282c] text-white rounded-xl p-8 mb-12 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+      <div>
+        <h2 class="text-2xl font-bold font-['Roboto_Condensed'] text-white mb-2">
+          Algemeen Contact
+        </h2>
+        <p class="text-gray-300 text-sm max-w-xl">
+          Voor algemene vragen, sponsoring en administratieve zaken kun je ons direct bereiken via ons algemene mailadres.
+        </p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a
+          href="mailto:info@stichtingdoc.nl"
+          class="px-6 py-3 rounded-md bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-bold text-sm shadow transition-colors flex items-center justify-center gap-2"
+        >
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          info@stichtingdoc.nl
+        </a>
+      </div>
+    </div>
+
+    <!-- Bestuur Section -->
+    <div>
+      <div class="border-b border-gray-200 pb-4 mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold font-['Roboto_Condensed'] text-gray-900">
+          Het Bestuur
+        </h2>
+        <p class="text-sm text-gray-600 mt-1">
+          Maak kennis met de bestuursleden van Stichting DOC.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {bestuurData.map((lid) => (
+          <BoardMemberCard
+            naam={lid.naam}
+            functie={lid.functie}
+            email={lid.email}
+            foto={lid.foto}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

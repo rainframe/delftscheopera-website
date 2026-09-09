@@ -1,0 +1,38 @@
+[
+  {
+    "functie": "Voorzitter",
+    "naam": "Marije van den Bogaard",
+    "email": "voorzitter@stichtingdoc.nl",
+    "foto": "/images/bestuur/marije.jpg"
+  },
+  {
+    "functie": "Penningmeester",
+    "naam": "Rein Lakerveld",
+    "email": "penningmeester@stichtingdoc.nl",
+    "foto": "/images/bestuur/rein.jpg"
+  },
+  {
+    "functie": "Secretaris",
+    "naam": "Iris Wegewijs",
+    "email": "secretaris@stichtingdoc.nl",
+    "foto": "/images/bestuur/iris.jpg"
+  },
+  {
+    "functie": "Acquisiteur",
+    "naam": "Sytze Boerstra",
+    "email": "acquisiteur@stichtingdoc.nl",
+    "foto": "/images/bestuur/sytze.jpg"
+  },
+  {
+    "functie": "Externe Relaties",
+    "naam": "Hidde Marsman",
+    "email": "extern@stichtingdoc.nl",
+    "foto": "/images/bestuur/hidde.jpg"
+  },
+  {
+    "functie": "Algemeen Lid",
+    "naam": "Fenna Andeweg",
+    "email": "info@stichtingdoc.nl",
+    "foto": "/images/bestuur/fenna.jpg"
+  }
+]

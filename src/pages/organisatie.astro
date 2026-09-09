@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import organisatieData from '../data/organisatie.json';
+---
+
+<BaseLayout 
+  title="Organisatie" 
+  description="Informatie over Stichting Delftsche Opera Compagnie, onze doelstelling, de Raad van Toezicht en ANBI-gegevens."
+>
+  <!-- Header banner -->
+  <div class="bg-[var(--color-bg-subtle)] border-b border-[var(--color-border)] py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <span class="text-xs font-bold uppercase tracking-wider text-[var(--color-primary)]">
+        Over de stichting
+      </span>
+      <h1 class="text-4xl sm:text-5xl font-extrabold font-['Roboto_Condensed'] text-gray-900 mt-2 mb-4">
+        Organisatie
+      </h1>
+      <p class="text-lg text-gray-600 max-w-3xl leading-relaxed">
+        {organisatieData.algemeen.beschrijving}
+      </p>
+      <p class="text-sm text-gray-500 mt-3">
+        Het huidige uitvoerende bestuur vind je op de pagina <a href="/contact" class="text-[var(--color-primary)] underline font-semibold">Contact</a>.
+      </p>
+    </div>
+  </div>
+
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Raad van Toezicht -->
+    <div class="mb-16">
+      <div class="border-b border-gray-200 pb-4 mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold font-['Roboto_Condensed'] text-gray-900">
+          Raad van Toezicht
+        </h2>
+        <p class="text-sm text-gray-600 mt-1">
+          Benoemd door de vereniging D.S.M.G. Krashna Musika.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {organisatieData.rvt.map((lid) => (
+          <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:border-[var(--color-primary)] transition-colors">
+            <h3 class="text-lg font-bold font-['Roboto_Condensed'] text-gray-900 mb-1">
+              {lid.naam}
+            </h3>
+            <p class="text-sm text-gray-600 leading-snug">
+              {lid.functie}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Algemene Informatie & Documenten -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Bedrijfsgegevens -->
+      <div class="bg-[var(--color-bg-subtle)] border border-gray-200 rounded-xl p-8">
+        <h2 class="text-2xl font-bold font-['Roboto_Condensed'] text-gray-900 mb-6">
+          Algemene Informatie
+        </h2>
+        <dl class="space-y-4 text-sm sm:text-base">
+          <div>
+            <dt class="text-xs font-bold uppercase tracking-wider text-gray-500">Naam</dt>
+            <dd class="font-semibold text-gray-900 mt-0.5">{organisatieData.algemeen.naam}</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-bold uppercase tracking-wider text-gray-500">Oprichtingsjaar</dt>
+            <dd class="text-gray-800 mt-0.5">{organisatieData.algemeen.opgericht}</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-bold uppercase tracking-wider text-gray-500">RSIN</dt>
+            <dd class="text-gray-800 font-mono mt-0.5">{organisatieData.algemeen.rsin}</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-bold uppercase tracking-wider text-gray-500">Kamer van Koophandel (KvK)</dt>
+            <dd class="text-gray-800 font-mono mt-0.5">{organisatieData.algemeen.kvk}</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-bold uppercase tracking-wider text-gray-500">Adres</dt>
+            <dd class="text-gray-800 mt-0.5">{organisatieData.algemeen.adres}</dd>
+          </div>
+          <div>
+            <dt class="text-xs font-bold uppercase tracking-wider text-gray-500">E-mail</dt>
+            <dd class="mt-0.5">
+              <a href={`mailto:${organisatieData.algemeen.email}`} class="text-[var(--color-primary)] font-semibold hover:underline">
+                {organisatieData.algemeen.email}
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Beleidsdocumenten & ANBI status -->
+      <div class="bg-[var(--color-bg-subtle)] border border-gray-200 rounded-xl p-8 flex flex-col justify-between">
+        <div>
+          <h2 class="text-2xl font-bold font-['Roboto_Condensed'] text-gray-900 mb-6">
+            Documenten & Publicaties
+          </h2>
+          <p class="text-sm text-gray-600 mb-6 leading-relaxed">
+            Hieronder vind je de officiële stukken en beleidsdocumenten van Stichting DOC.
+          </p>
+
+          <ul class="space-y-4">
+            {organisatieData.documenten.map((doc) => (
+              <li class="flex items-center justify-between p-3.5 bg-white border border-gray-200 rounded-lg shadow-sm">
+                <span class="font-semibold text-gray-800 text-sm">{doc.naam}</span>
+                <span class="text-xs text-gray-500 italic bg-gray-100 px-2.5 py-1 rounded">
+                  {doc.status}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-200 text-xs text-gray-500 leading-relaxed">
+          Vragen over ons beleid of wil je een document inzien? Neem gerust contact op via <a href={`mailto:${organisatieData.algemeen.email}`} class="text-[var(--color-primary)] underline">{organisatieData.algemeen.email}</a>.
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
