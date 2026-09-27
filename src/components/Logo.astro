@@ -1,0 +1,22 @@
+---
+/**
+ * Het logo als gewoon <img>: één SVG-bestand per kleur (zonder achtergrond), dat de browser na de
+ * eerste pagina uit de cache haalt. Met <Image> zou Astro er per breedte een kopie van maken.
+ */
+import type { HTMLAttributes } from 'astro/types';
+import navy from '@/assets/brand/logo-navy.svg';
+import white from '@/assets/brand/logo-white.svg';
+
+interface Props extends Omit<HTMLAttributes<'img'>, 'src' | 'width' | 'height'> {
+  color: 'navy' | 'white';
+  /** Breedte in pixels; de CSS van de pagina mag het logo verder schalen. */
+  width: number;
+  alt: string;
+}
+
+const { color, width, ...attrs } = Astro.props;
+const logo = color === 'navy' ? navy : white;
+const height = Math.round((width * logo.height) / logo.width);
+---
+
+<img src={logo.src} width={width} height={height} decoding="async" {...attrs} />

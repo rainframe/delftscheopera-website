@@ -1,6 +1,5 @@
 ---
-import { Image } from 'astro:assets';
-import logoWhite from '@/assets/brand/logo-white.png';
+import Logo from './Logo.astro';
 import NewsletterForm from './NewsletterForm.astro';
 import SocialLinks from './SocialLinks.astro';
 import { pageUrl, type Locale } from '@/i18n/routes';
@@ -23,7 +22,7 @@ const year = new Date().getFullYear();
 
   <div class="site-footer__grid container container--wide">
     <a class="site-footer__logo" href={pageUrl('home', locale)}>
-      <Image src={logoWhite} alt="Delftsche Opera – home" width={214} layout="fixed" />
+      <Logo color="white" alt="Delftsche Opera – home" width={214} loading="lazy" />
     </a>
 
     <div class="site-footer__follow">

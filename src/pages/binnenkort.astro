@@ -3,9 +3,8 @@
  * "Binnenkort online": tot de lancering toont delftscheopera.nl alleen deze pagina, op elk adres
  * (zie worker/index.ts). De site zelf staat dan op preview.delftscheopera.nl.
  */
-import { Image } from 'astro:assets';
-import logoWhite from '@/assets/brand/logo-white.png';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import Logo from '@/components/Logo.astro';
 import SocialLinks from '@/components/SocialLinks.astro';
 import StageMessage from '@/components/StageMessage.astro';
 import { t } from '@/i18n/ui';
@@ -24,7 +23,7 @@ const { email } = await getSettings();
 >
   <div class="construction">
     <StageMessage>
-      <Image class="construction__logo" src={logoWhite} alt="Delftsche Opera" width={260} loading="eager" />
+      <Logo class="construction__logo" color="white" alt="Delftsche Opera" width={260} />
       <h1>{t('nl', 'construction.title')}</h1>
       <p class="stage-message__lead">{t('nl', 'construction.text')}</p>
       <p>

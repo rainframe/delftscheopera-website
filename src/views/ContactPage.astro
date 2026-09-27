@@ -1,10 +1,9 @@
 ---
-import { Image } from 'astro:assets';
-import logoNavy from '@/assets/brand/logo-navy.png';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import SocialLinks from '@/components/SocialLinks.astro';
 import InfoList from '@/components/InfoList.astro';
 import Icon from '@/components/Icon.astro';
+import Logo from '@/components/Logo.astro';
 import { alternatesFor, type Locale } from '@/i18n/routes';
 import { getPage, getPeople, getSettings, localized } from '@/lib/content';
 
@@ -29,7 +28,7 @@ const board = await getPeople('bestuur');
     <h1 id="contact-title" class="visually-hidden">
       {page.title}
     </h1>
-    <Image class="contact__logo" src={logoNavy} alt="Delftsche Opera" width={490} layout="fixed" />
+    <Logo class="contact__logo" color="navy" alt="Delftsche Opera" width={490} loading="lazy" />
     <p class="statement contact__intro">{page.intro}</p>
     <a class="contact__email" href={`mailto:${settings.email}`}>
       <Icon name="mail" />

@@ -64,9 +64,9 @@ docs/                      ← handleiding voor redacteuren
   wijziging de nieuwe versie ophaalt. Verander je het ontwerp, verhoog dan `DESIGN_VERSION`.
   Satori krijgt League Spartan als TTF (`@expo-google-fonts/league-spartan`): package.json dwingt via
   `overrides` een nieuwere fflate af vanwege een beveiligingsmelding, en daarmee leest Satori geen WOFF.
-- De logo's staan in `src/assets/brand/`. Als de officiële SVG-bestanden er zijn, kunnen die daar de
-  PNG's vervangen (en de imports in `Header.astro`, `Footer.astro`, `StageBanner.astro` en
-  `ContactPage.astro` aangepast).
+- De logo's staan als SVG in `src/assets/brand/` (navy en wit, zonder achtergrond). Ze zijn
+  overgetrokken uit de Canva-export: Canva's SVG-bestanden bevatten het logo als PNG-afbeelding met
+  een achtergrondvlak, dus niet als vectoren.
 
 ### Talen
 
@@ -149,7 +149,10 @@ De site wordt gehost op **Cloudflare Workers** (statische bestanden, gratis) en 
 GitHub: elke wijziging op `main` staat binnen een paar minuten online. De configuratie staat in
 `wrangler.jsonc`. De domeinen (delftscheopera.nl, www.delftscheopera.nl en
 preview.delftscheopera.nl) zijn in Cloudflare als _Custom domain_ aan de worker gekoppeld, niet in
-`wrangler.jsonc`, dus een deploy laat ze ongemoeid. Via `*.workers.dev` is de site niet bereikbaar.
+`wrangler.jsonc`, dus een deploy laat ze ongemoeid. Kies bij _Add domain_ voor _Enable for_ altijd
+**Production**, ook voor preview.delftscheopera.nl: de optie _Preview_ is voor Cloudflares testversies
+per Git-branch (`wrangler preview`, op adressen als `main.preview.delftscheopera.nl`) en maakt voor
+het domein zelf geen DNS-record aan. Via `*.workers.dev` is de site niet bereikbaar.
 
 De worker ([worker/index.ts](worker/index.ts)) komt vóór de statische bestanden en kiest per domein
 wat er gebeurt: de pagina _Binnenkort online_, de preview, doorverwijzingen en het inloggen in het
@@ -268,7 +271,7 @@ het al.
 
 ## Nog te doen vóór de lancering
 
-- [ ] Officiële logo's als SVG en scherpere foto's aanleveren
+- [ ] Scherpere foto's aanleveren
 - [ ] Portretten van Sytze Boerstra en Hidde Marsman (konden niet van de oude site gehaald worden)
 - [ ] RSIN controleren: op de oude site staat `8036313217` (10 cijfers), een RSIN heeft er 9
 - [ ] Placeholders invullen: lustrumdetails (opzet, locaties, data) en de privacyverklaring laten controleren
@@ -276,7 +279,7 @@ het al.
 - [ ] Nieuwsbrief: Laposta-account en -lijst aanmaken en het formulier koppelen (zie _Nieuwsbrief_)
 - [ ] IBAN invullen in `settings/site.yml` als dat op _Steun ons_ moet staan
 - [ ] Het client secret van de GitHub OAuth App als Secret in Cloudflare zetten (zie _Inloggen in het beheer_)
-- [ ] preview.delftscheopera.nl als _Custom domain_ aan de worker koppelen (zie _Preview en lancering_)
+- [ ] preview.delftscheopera.nl als _Custom domain_ met _Enable for: Production_ aan de worker koppelen (zie _Publiceren_)
 - [ ] stichtingdoc.nl en www.stichtingdoc.nl aan de worker koppelen (zie _Doorverwijzingen_)
 - [ ] Cloudflare Web Analytics aanzetten (zie _Statistieken_)
 - [ ] `npm run check:live` draaien: er mogen geen ✗ meer staan

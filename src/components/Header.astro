@@ -1,9 +1,6 @@
 ---
-import { Image } from 'astro:assets';
-import logoNavy from '@/assets/brand/logo-navy.png';
-import nlFlag from '@/assets/flags/nl.svg?url';
-import gbFlag from '@/assets/flags/gb.svg?url';
 import Icon from './Icon.astro';
+import Logo from './Logo.astro';
 import { mainNav, pageUrl, type Alternates, type Locale, type RouteKey } from '@/i18n/routes';
 import { navLabel, t } from '@/i18n/ui';
 
@@ -16,27 +13,15 @@ interface Props {
 const { locale, alternates, current } = Astro.props;
 
 const languages = [
-  {
-    code: 'nl',
-    flag: nlFlag,
-    width: 36,
-    label: t(locale, 'lang.nl'),
-    href: alternates.nl ?? pageUrl('home', 'nl'),
-  },
-  {
-    code: 'en',
-    flag: gbFlag,
-    width: 48,
-    label: t(locale, 'lang.en'),
-    href: alternates.en ?? pageUrl('home', 'en'),
-  },
+  { code: 'nl', label: t(locale, 'lang.nl'), href: alternates.nl ?? pageUrl('home', 'nl') },
+  { code: 'en', label: t(locale, 'lang.en'), href: alternates.en ?? pageUrl('home', 'en') },
 ] as const;
 ---
 
 <header class="site-header" data-menu="closed">
   <div class="site-header__inner container container--wide">
     <a class="site-header__logo" href={pageUrl('home', locale)}>
-      <Image src={logoNavy} alt="Delftsche Opera – home" width={180} layout="fixed" loading="eager" />
+      <Logo color="navy" alt="Delftsche Opera – home" width={180} />
     </a>
 
     <nav id="hoofdmenu" class="main-nav" aria-label={t(locale, 'nav.label')}>
@@ -59,9 +44,8 @@ const languages = [
             hreflang={lang.code}
             lang={lang.code}
             aria-current={lang.code === locale ? 'true' : undefined}
-            title={lang.label}
           >
-            <img src={lang.flag} alt="" width={lang.width} height="26" />
+            <span aria-hidden="true">{lang.code.toUpperCase()}</span>
             <span class="visually-hidden">{lang.label}</span>
           </a>
         </li>
@@ -152,29 +136,37 @@ const languages = [
     text-underline-offset: 0.3em;
   }
 
+  /* Taalkeuze als schakelaar: de huidige taal is marineblauw gevuld. */
   .lang-switch {
     display: flex;
-    align-items: center;
-    gap: 0.9rem;
+    flex: none;
     margin: 0;
-    padding: 0;
+    padding: 3px;
+    border: 2px solid var(--navy);
+    border-radius: 999px;
     list-style: none;
   }
 
   .lang-switch a {
     display: block;
-    padding: 4px;
-    border-bottom: 3px solid transparent;
+    min-width: 2.75rem;
+    padding: 0.5rem 0.625rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .lang-switch a:hover {
+    background: rgb(var(--navy-rgb) / 0.1);
   }
 
   .lang-switch a[aria-current='true'] {
-    border-bottom-color: var(--navy);
-  }
-
-  .lang-switch img {
-    height: 26px;
-    width: auto;
-    box-shadow: 0 0 0 1px rgb(var(--navy-rgb) / 0.12);
+    background: var(--navy);
+    color: var(--white);
   }
 
   .menu-toggle {
@@ -205,14 +197,6 @@ const languages = [
     .main-nav {
       order: 3;
       flex-basis: 100%;
-    }
-
-    .lang-switch {
-      gap: 0.5rem;
-    }
-
-    .lang-switch img {
-      height: 22px;
     }
 
     :global(.js) .menu-toggle {

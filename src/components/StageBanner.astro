@@ -5,9 +5,9 @@
  */
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import logoWhite from '@/assets/brand/logo-white.png';
 import CurtainFrame from './CurtainFrame.astro';
 import Icon from './Icon.astro';
+import Logo from './Logo.astro';
 import type { Locale } from '@/i18n/routes';
 import { t } from '@/i18n/ui';
 
@@ -54,7 +54,7 @@ const Heading = headingLevel;
       fetchpriority={eager ? 'high' : undefined}
     />
     <div class="stage__overlay">
-      <Image class="stage__logo" src={logoWhite} alt="" width={132} layout="fixed" />
+      <Logo class="stage__logo" color="white" alt="" width={132} />
       <Heading class="stage__title">{title}</Heading>
       <p class="stage__subtitle">{subtitle}</p>
       <p class="stage__year">{year}</p>

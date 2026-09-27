@@ -13,7 +13,7 @@ import { relative, resolve } from 'node:path';
 import type { ImageMetadata } from 'astro';
 import satori from 'satori';
 import sharp, { type OverlayOptions } from 'sharp';
-import logoWhite from '@/assets/brand/logo-white.png';
+import logoWhite from '@/assets/brand/logo-white.svg?raw';
 import { formatDate, t } from '@/i18n/ui';
 import type { Post } from '@/lib/content';
 import { curtainPath, curtainViewBox } from '@/lib/curtain';
@@ -22,6 +22,11 @@ const WIDTH = 1200;
 const HEIGHT = 630;
 const NAVY = '#042d64';
 const PADDING = 64;
+/** Verhouding van het logo, uit de viewBox van het SVG-bestand. */
+const [logoViewWidth, logoViewHeight] = logoWhite
+  .match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/)!
+  .slice(1)
+  .map(Number);
 /** Verhoog dit na een wijziging in het ontwerp, zodat LinkedIn de nieuwe afbeeldingen ophaalt. */
 const DESIGN_VERSION = 1;
 
@@ -107,7 +112,7 @@ export async function renderShareImage(post: Post): Promise<Buffer> {
   const { title, date, cover } = post.entry.data;
   const wide = !cover;
   const logoHeight = 72;
-  const logoWidth = Math.round((logoWhite.width / logoWhite.height) * logoHeight);
+  const logoWidth = Math.round((logoViewWidth / logoViewHeight) * logoHeight);
   const logoTop = HEIGHT - PADDING + 8 - logoHeight;
 
   // Met foto: tekst links, foto rechts tussen twee marineblauwe gordijnen.
@@ -188,7 +193,7 @@ export async function renderShareImage(post: Post): Promise<Buffer> {
   }
   layers.push({ input: Buffer.from(textSvg), left: 0, top: 0 });
   layers.push({
-    input: await sharp(await readFile(sourcePath(logoWhite)))
+    input: await sharp(Buffer.from(logoWhite), { density: (72 * logoHeight) / logoViewHeight })
       .resize({ height: logoHeight })
       .toBuffer(),
     left: wide ? Math.round((WIDTH - logoWidth) / 2) : PADDING,
