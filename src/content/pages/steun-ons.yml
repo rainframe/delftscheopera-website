@@ -1,0 +1,35 @@
+nl:
+  seo:
+    title: Steun ons
+    description: Help de Delftsche Opera met het realiseren van prachtige concerten, als donateur, sponsor of partner.
+  hero:
+    title: Steun ons!
+    subtitle: Help ons met het realiseren van prachtige concerten
+    image: ../../assets/uploads/orkest-panorama.jpg
+    imageAlt: Het orkest van Krashna Musika op het podium, in blauw licht
+  intro: Grote producties met orkest, koor, solisten en regie zijn niet mogelijk zonder steun van buiten. Met jouw bijdrage helpen we studenten om op hoog niveau opera en symfonische muziek te maken, en brengen we die muziek naar een breed publiek.
+  ways:
+    - title: Doneren
+      text: Elke gift helpt, groot of klein. Wil je doneren? Mail onze penningmeester via [penningmeester@delftscheopera.nl](mailto:penningmeester@delftscheopera.nl).
+    - title: Sponsor of partner worden
+      text: Wil je als bedrijf of fonds verbonden zijn aan onze producties, zoals het lustrum in 2028? Neem contact op met onze acquisiteur via [acquisiteur@delftscheopera.nl](mailto:acquisiteur@delftscheopera.nl).
+  anbi:
+    title: ANBI-status
+    text: De Delftsche Opera is (nog) geen ANBI. We werken eraan om aan alle wettelijke en administratieve eisen te voldoen. Zolang we die status niet hebben, zijn giften aan ons niet aftrekbaar als gift aan een ANBI. [Meer over onze ANBI-status](/anbi/)
+en:
+  seo:
+    title: Support us
+    description: Help Delftsche Opera make wonderful concerts happen, as a donor, sponsor or partner.
+  hero:
+    title: Support us!
+    subtitle: Help us make wonderful concerts happen
+    imageAlt: The Krashna Musika orchestra on stage, in blue light
+  intro: Large-scale productions with orchestra, choir, soloists and a stage director are not possible without outside support. Your contribution helps students make opera and symphonic music at a high level, and bring that music to a wide audience.
+  ways:
+    - title: Donate
+      text: Every gift helps, large or small. Would you like to donate? Email our treasurer at [penningmeester@delftscheopera.nl](mailto:penningmeester@delftscheopera.nl).
+    - title: Become a sponsor or partner
+      text: Would your company or fund like to be associated with our productions, such as the anniversary in 2028? Contact our fundraiser at [acquisiteur@delftscheopera.nl](mailto:acquisiteur@delftscheopera.nl).
+  anbi:
+    title: ANBI status
+    text: Delftsche Opera is not (yet) a registered charity (ANBI) in the Netherlands. We are working to meet all legal and administrative requirements. Until we have that status, gifts to us are not tax-deductible as gifts to an ANBI. [More about our ANBI status](/en/anbi/)

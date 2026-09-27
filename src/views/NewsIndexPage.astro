@@ -1,0 +1,102 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageTitle from '@/components/PageTitle.astro';
+import PostCard from '@/components/PostCard.astro';
+import Icon from '@/components/Icon.astro';
+import { alternatesFor, type Locale } from '@/i18n/routes';
+import { t } from '@/i18n/ui';
+import { getPage, getPosts } from '@/lib/content';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const page = await getPage('nieuwsPagina', locale);
+const [featured, ...rest] = await getPosts(locale);
+const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
+---
+
+<BaseLayout
+  locale={locale}
+  title={page.seo.title}
+  description={page.seo.description}
+  alternates={alternatesFor('nieuws')}
+  current="nieuws"
+>
+  <PageTitle title={page.title} />
+
+  {
+    featured ? (
+      <>
+        <section class="news-featured band" aria-label={featured.entry.data.title}>
+          <div class="container">
+            <PostCard post={featured} locale={locale} tone="navy" size="large" headingLevel="h2" />
+          </div>
+        </section>
+        {rest.length > 0 && (
+          <section class="news-list section container" aria-label={page.title}>
+            <ul class="news-grid" role="list">
+              {rest.map((post) => (
+                <li>
+                  <PostCard post={post} locale={locale} tone="white" headingLevel="h2" />
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </>
+    ) : (
+      <p class="news-empty container">{page.empty}</p>
+    )
+  }
+
+  <p class="news-rss container">
+    <a class="arrow-link" href={rssUrl}>
+      <Icon name="rss" />
+      <span>{t(locale, 'news.rss')}</span>
+    </a>
+  </p>
+</BaseLayout>
+
+<style>
+  .news-featured {
+    padding-block: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2.5rem, 4vw, 3.5rem) clamp(2rem, 4vw, 3.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .news-empty {
+    padding-bottom: var(--space-section);
+    font-size: var(--fs-lead);
+    text-align: center;
+  }
+
+  .news-rss {
+    padding-block: 0 var(--space-block);
+    font-size: var(--fs-small);
+  }
+
+  .news-featured + .news-rss {
+    padding-top: var(--space-block);
+  }
+
+  @media (max-width: 64rem) {
+    .news-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .news-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

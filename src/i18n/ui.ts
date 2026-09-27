@@ -1,0 +1,134 @@
+import type { Locale, RouteKey } from './routes';
+
+/** Vaste teksten in de interface (menu, knoppen, labels). Paginateksten staan in src/content/. */
+const strings = {
+  nl: {
+    'site.skip': 'Naar de inhoud',
+    'nav.label': 'Hoofdmenu',
+    'nav.open': 'Menu openen',
+    'nav.close': 'Menu sluiten',
+    'lang.label': 'Taal',
+    'lang.nl': 'Nederlands',
+    'lang.en': 'English',
+    'footer.follow': 'Follow us!',
+    'footer.contact': 'Contact',
+    'footer.kvk': 'KvK',
+    'footer.rsin': 'RSIN',
+    'social.instagram': 'Delftsche Opera op Instagram',
+    'social.linkedin': 'Delftsche Opera op LinkedIn',
+    'photo.credit': 'Foto',
+    'news.readMore': 'Lees verder',
+    'news.all': 'Al het nieuws',
+    'news.more': 'Meer nieuws',
+    'news.share': 'Deel op LinkedIn',
+    'news.back': 'Terug naar het nieuws',
+    'news.dutchOnly': 'Alleen in het Nederlands',
+    'news.by': 'door',
+    'news.rss': 'RSS-feed',
+    'people.email': 'Mail',
+    'people.photoAlt': 'Portret van',
+    'people.noPhoto': 'Foto volgt',
+    'project.review': 'Recensie',
+    'info.name': 'Naam',
+    'info.address': 'Adres',
+    'info.email': 'E-mail',
+    'info.kvk': 'KvK-nummer',
+    'info.rsin': 'RSIN',
+    'info.iban': 'IBAN',
+    'info.anbi': 'ANBI-status',
+    'info.anbiStatus': 'Nog geen ANBI (in voorbereiding)',
+    'info.ibanName': 't.n.v.',
+    'anbi.pending': 'volgt',
+    'anbi.board': 'Bestuurssamenstelling',
+    'anbi.info': 'Gegevens',
+    'notFound.title': 'Het doek is gevallen',
+    'notFound.text': 'Deze pagina bestaat niet (meer). Misschien vind je wat je zoekt via het menu of op de homepage.',
+    'notFound.home': 'Naar de homepage',
+    'lustrum.more': 'Lees meer over het lustrum',
+    'lustrum.team': 'Het artistieke team',
+    'nav.home': 'Home',
+    'nav.lustrum': 'Lustrum',
+    'nav.nieuws': 'Nieuws',
+    'nav.projecten': 'Projecten',
+    'nav.organisatie': 'Organisatie',
+    'nav.contact': 'Contact',
+    'nav.steunOns': 'Steun ons',
+    'nav.anbi': 'ANBI',
+    'nav.privacy': 'Privacy',
+  },
+  en: {
+    'site.skip': 'Skip to content',
+    'nav.label': 'Main menu',
+    'nav.open': 'Open menu',
+    'nav.close': 'Close menu',
+    'lang.label': 'Language',
+    'lang.nl': 'Nederlands',
+    'lang.en': 'English',
+    'footer.follow': 'Follow us!',
+    'footer.contact': 'Contact',
+    'footer.kvk': 'Chamber of Commerce',
+    'footer.rsin': 'RSIN',
+    'social.instagram': 'Delftsche Opera on Instagram',
+    'social.linkedin': 'Delftsche Opera on LinkedIn',
+    'photo.credit': 'Photo',
+    'news.readMore': 'Read more',
+    'news.all': 'All news',
+    'news.more': 'More news',
+    'news.share': 'Share on LinkedIn',
+    'news.back': 'Back to the news',
+    'news.dutchOnly': 'In Dutch only',
+    'news.by': 'by',
+    'news.rss': 'RSS feed',
+    'people.email': 'Email',
+    'people.photoAlt': 'Portrait of',
+    'people.noPhoto': 'Photo to follow',
+    'project.review': 'Review',
+    'info.name': 'Name',
+    'info.address': 'Address',
+    'info.email': 'Email',
+    'info.kvk': 'Chamber of Commerce (KvK) number',
+    'info.rsin': 'RSIN (tax number)',
+    'info.iban': 'IBAN',
+    'info.anbi': 'ANBI status',
+    'info.anbiStatus': 'Not yet an ANBI (in preparation)',
+    'info.ibanName': 'in the name of',
+    'anbi.pending': 'to follow',
+    'anbi.board': 'Board composition',
+    'anbi.info': 'Details',
+    'notFound.title': 'The curtain has fallen',
+    'notFound.text': 'This page does not exist (anymore). You may find what you are looking for in the menu or on the homepage.',
+    'notFound.home': 'Go to the homepage',
+    'lustrum.more': 'Read more about the anniversary',
+    'lustrum.team': 'The artistic team',
+    'nav.home': 'Home',
+    'nav.lustrum': 'Lustrum',
+    'nav.nieuws': 'News',
+    'nav.projecten': 'Projects',
+    'nav.organisatie': 'Organisation',
+    'nav.contact': 'Contact',
+    'nav.steunOns': 'Support us',
+    'nav.anbi': 'ANBI',
+    'nav.privacy': 'Privacy',
+  },
+} as const;
+
+export type UiKey = keyof (typeof strings)['nl'];
+
+export function t(locale: Locale, key: UiKey): string {
+  return strings[locale][key] ?? strings.nl[key];
+}
+
+export function navLabel(locale: Locale, key: RouteKey): string {
+  return t(locale, `nav.${key}` as UiKey);
+}
+
+const dateFormats: Record<Locale, Intl.DateTimeFormat> = {
+  nl: new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Amsterdam' }),
+  en: new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Amsterdam' }),
+};
+
+export function formatDate(date: Date, locale: Locale): string {
+  return dateFormats[locale].format(date);
+}
+
+export const htmlLang: Record<Locale, string> = { nl: 'nl-NL', en: 'en-GB' };

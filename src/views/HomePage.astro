@@ -1,0 +1,201 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import StageBanner from '@/components/StageBanner.astro';
+import PostCard from '@/components/PostCard.astro';
+import CurtainFrame from '@/components/CurtainFrame.astro';
+import Icon from '@/components/Icon.astro';
+import { alternatesFor, pageUrl, type Locale } from '@/i18n/routes';
+import { t } from '@/i18n/ui';
+import { getPage, getPosts, localized, resolvePeople } from '@/lib/content';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const page = await getPage('home', locale);
+const posts = (await getPosts(locale)).slice(0, 3);
+const conductors = await resolvePeople(page.conductors.people);
+---
+
+<BaseLayout
+  locale={locale}
+  title={page.seo.title}
+  description={page.seo.description}
+  alternates={alternatesFor('home')}
+  image={page.hero.image}
+  imageAlt={page.hero.imageAlt}
+  isHome
+>
+  <h1 class="visually-hidden">Delftsche Opera</h1>
+
+  <Hero
+    title={page.hero.title}
+    subtitle={page.hero.subtitle}
+    intro={page.hero.intro}
+    image={page.hero.image}
+    imageAlt={page.hero.imageAlt}
+    link={{ href: pageUrl('steunOns', locale), label: page.hero.linkLabel }}
+    headingLevel="h2"
+  />
+
+  <section class="home-news" aria-labelledby="home-news-title">
+    <h2 id="home-news-title" class="display-title home-news__title">{page.news.title}</h2>
+    <div class="band">
+      <StageBanner
+        locale={locale}
+        title={page.feature.title}
+        subtitle={page.feature.subtitle}
+        year={page.feature.year}
+        image={page.feature.image}
+        imageAlt={page.feature.imageAlt}
+        credit={page.feature.credit}
+        href={pageUrl('lustrum', locale)}
+        linkLabel={page.feature.linkLabel}
+        headingLevel="h3"
+      />
+      {
+        posts.length > 0 && (
+          <div class="home-news__posts container">
+            <ul class="post-grid" role="list">
+              {posts.map((post) => (
+                <li>
+                  <PostCard post={post} locale={locale} tone="navy" />
+                </li>
+              ))}
+            </ul>
+            <a class="arrow-link home-news__more" href={pageUrl('nieuws', locale)}>
+              <span>{page.news.moreLabel}</span>
+              <Icon name="arrow" />
+            </a>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="conductors" aria-labelledby="conductors-title">
+    <div class="conductors__text">
+      <h2 id="conductors-title" class="conductors__title">{page.conductors.title}</h2>
+      <p class="conductors__intro">{page.conductors.text}</p>
+      <ul class="conductors__list" role="list">
+        {
+          conductors.map((person) => (
+            <li>
+              <h3>{person.data.name}</h3>
+              <p>{localized(person.data.role, locale)}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="arrow-link" href={pageUrl('lustrum', locale)}>
+        <span>{t(locale, 'lustrum.team')}</span>
+        <Icon name="arrow" />
+      </a>
+    </div>
+    <CurtainFrame sides="left" tone="navy" curtainWidth="30%" class="conductors__media">
+      <Image
+        src={page.conductors.image}
+        alt={page.conductors.imageAlt}
+        widths={[480, 720, 1000, 1400]}
+        sizes="(min-width: 48rem) 45vw, 100vw"
+      />
+    </CurtainFrame>
+  </section>
+</BaseLayout>
+
+<style>
+  .home-news__title {
+    padding-block: clamp(2rem, 4.5vw, 3.6rem) clamp(1.25rem, 2.6vw, 2.2rem);
+  }
+
+  .home-news__posts {
+    padding-bottom: var(--space-section);
+  }
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 3.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .home-news__more {
+    margin-top: clamp(2rem, 4vw, 3rem);
+    font-size: 1.3rem;
+  }
+
+  .conductors {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    padding-block: var(--space-section);
+  }
+
+  .conductors__text {
+    padding-left: var(--gutter);
+    max-width: calc(var(--measure) + var(--gutter));
+  }
+
+  .conductors__title {
+    font-size: var(--fs-h2);
+  }
+
+  .conductors__intro {
+    margin-top: 1.25rem;
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+  }
+
+  .conductors__list {
+    display: grid;
+    gap: 1.25rem;
+    margin: 2rem 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .conductors__list h3 {
+    font-size: var(--fs-h3);
+  }
+
+  .conductors__list p {
+    margin-top: 0.2rem;
+  }
+
+  /* Foto loopt door tot de rechterrand van het scherm, met een gordijn links (zoals in het ontwerp). */
+  .conductors :global(.conductors__media) {
+    height: clamp(22rem, 36vw, 34rem);
+  }
+
+  @media (max-width: 64rem) {
+    .post-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .post-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .conductors {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .conductors__text {
+      padding-right: var(--gutter);
+    }
+
+    .conductors :global(.conductors__media) {
+      height: auto;
+      aspect-ratio: 4 / 3;
+      margin-left: var(--gutter);
+    }
+  }
+</style>

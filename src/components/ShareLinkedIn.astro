@@ -1,0 +1,43 @@
+---
+/** Knop om een pagina op LinkedIn te delen (opent het deelvenster van LinkedIn). */
+import Icon from './Icon.astro';
+import type { Locale } from '@/i18n/routes';
+import { t } from '@/i18n/ui';
+
+interface Props {
+  url: string;
+  locale: Locale;
+}
+
+const { url, locale } = Astro.props;
+const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+---
+
+<a class="share-linkedin" href={shareUrl} target="_blank" rel="noopener noreferrer">
+  <Icon name="linkedin" />
+  <span>{t(locale, 'news.share')}</span>
+</a>
+
+<style>
+  .share-linkedin {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem 1.1rem;
+    border: 2px solid currentColor;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .share-linkedin :global(.icon) {
+    font-size: 1.4rem;
+  }
+
+  .share-linkedin:hover {
+    background: var(--navy);
+    color: var(--white);
+  }
+</style>

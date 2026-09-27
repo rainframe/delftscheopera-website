@@ -1,0 +1,21 @@
+# Algemene gegevens van de stichting. Deze worden op meerdere plekken gebruikt
+# (footer, contact, organisatie, ANBI).
+name: Delftsche Opera
+legalName: Stichting Delftsche Opera Compagnie
+email: info@delftscheopera.nl
+address:
+  street: Mekelweg 10
+  postcode: 2628 CD
+  city: Delft
+kvk: '41146911'
+rsin: '8036313217'
+# Vul een IBAN in om het op de pagina 'Steun ons' te tonen.
+iban: ''
+ibanName: Stichting Delftsche Opera Compagnie
+socials:
+  instagram: https://www.instagram.com/delftscheopera
+  linkedin: https://www.linkedin.com/company/delftsche-opera
+newsletter:
+  provider: laposta
+  # Het formulieradres van de Laposta-lijst; zolang dit leeg is, wordt er geen aanmeldformulier getoond.
+  formAction: ''

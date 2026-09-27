@@ -1,0 +1,29 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+
+# environment variables
+.env
+.env.production
+.dev.vars*
+.wrangler/
+
+# macOS-specific files
+.DS_Store
+
+# editors
+.idea/
+
+# Ontwerpbronnen (Canva-export, branding, losse foto's): alleen lokaal.
+# De gebruikte beelden staan bewerkt in src/assets/.
+/Website Delftsche Opera Rebrand vormgeving/
+/Website Delftsche Opera Rebrand vormgeving.pdf
+/branding assets/
+/photos/

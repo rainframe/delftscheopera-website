@@ -1,0 +1,37 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageTitle from '@/components/PageTitle.astro';
+import ProjectBlock from '@/components/ProjectBlock.astro';
+import { alternatesFor, type Locale } from '@/i18n/routes';
+import { getPage, getProjects } from '@/lib/content';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const page = await getPage('projectenPagina', locale);
+const projects = await getProjects(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={page.seo.title}
+  description={page.seo.description}
+  alternates={alternatesFor('projecten')}
+  current="projecten"
+  image={projects.find((project) => project.entry.data.image)?.entry.data.image}
+>
+  <PageTitle title={page.title}>
+    <p class="statement projects-intro">{page.intro}</p>
+  </PageTitle>
+
+  {projects.map((project, index) => <ProjectBlock project={project} locale={locale} index={index} />)}
+</BaseLayout>
+
+<style>
+  .projects-intro {
+    max-width: 44rem;
+    margin-top: clamp(2.5rem, 6vw, 5rem);
+  }
+</style>

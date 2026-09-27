@@ -1,0 +1,204 @@
+---
+/**
+ * De lustrum-banner uit het ontwerp: foto tussen twee gordijnen, met logo, titel,
+ * ondertitel en jaartal eroverheen. Met `href` wordt de hele banner een link.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import logoWhite from '@/assets/brand/logo-white.png';
+import CurtainFrame from './CurtainFrame.astro';
+import Icon from './Icon.astro';
+import type { Locale } from '@/i18n/routes';
+import { t } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  subtitle: string;
+  year: string;
+  image: ImageMetadata;
+  imageAlt: string;
+  credit?: string;
+  href?: string;
+  linkLabel?: string;
+  headingLevel?: 'h1' | 'h2' | 'h3';
+  /** Kleur van het vlak rond de banner (en dus van de gordijnen). */
+  tone?: 'navy' | 'white';
+  eager?: boolean;
+}
+
+const {
+  locale,
+  title,
+  subtitle,
+  year,
+  image,
+  imageAlt,
+  credit,
+  href,
+  linkLabel,
+  headingLevel = 'h2',
+  tone = 'navy',
+  eager = false,
+} = Astro.props;
+const Heading = headingLevel;
+---
+
+<div class:list={['stage', `stage--${tone}`]}>
+  <CurtainFrame sides="both" tone={tone} class="stage__frame">
+    <Image
+      src={image}
+      alt={imageAlt}
+      layout="full-width"
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : undefined}
+    />
+    <div class="stage__overlay">
+      <Image class="stage__logo" src={logoWhite} alt="" width={132} layout="fixed" />
+      <Heading class="stage__title">{title}</Heading>
+      <p class="stage__subtitle">{subtitle}</p>
+      <p class="stage__year">{year}</p>
+      {
+        href && (
+          <a class="stage__link" href={href}>
+            <Icon name="arrow" />
+            <span class="visually-hidden">{linkLabel ?? title}</span>
+          </a>
+        )
+      }
+    </div>
+    {
+      credit && (
+        <p class="stage__credit">
+          {t(locale, 'photo.credit')}: {credit}
+        </p>
+      )
+    }
+  </CurtainFrame>
+</div>
+
+<style>
+  .stage {
+    --curtain-w: clamp(2rem, 9.8%, 9rem);
+    padding-block: clamp(2.5rem, 6vw, 5.25rem);
+  }
+
+  .stage--navy {
+    background: var(--navy);
+  }
+
+  .stage :global(.stage__frame) {
+    max-width: 90rem;
+    margin-inline: auto;
+    aspect-ratio: 2.3;
+    color: var(--navy);
+  }
+
+  .stage--white :global(.stage__frame) {
+    color: var(--white);
+  }
+
+  .stage__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem calc(var(--curtain-w) + 1rem);
+    color: var(--white);
+    text-align: center;
+    background: radial-gradient(ellipse at center, rgb(0 0 0 / 0.28), rgb(0 0 0 / 0.08) 70%);
+  }
+
+  .stage__overlay :global(.stage__logo) {
+    width: clamp(78px, 9.7vw, 132px);
+    height: auto;
+    margin-bottom: clamp(0.5rem, 1.6vw, 1.5rem);
+  }
+
+  .stage__title {
+    font-size: var(--fs-mega);
+    line-height: 0.9;
+    text-shadow: 0 3px 30px rgb(0 0 0 / 0.35);
+  }
+
+  .stage__subtitle {
+    margin-top: 0.35em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 5vw, 4.25rem);
+    line-height: 1;
+    text-shadow: 0 2px 20px rgb(0 0 0 / 0.35);
+  }
+
+  .stage__year {
+    margin-top: 0.3em;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.25rem, 3.2vw, 2.75rem);
+    line-height: 1;
+  }
+
+  .stage__link {
+    display: inline-flex;
+    margin-top: clamp(0.6rem, 1.8vw, 1.4rem);
+    font-size: clamp(1.9rem, 3.8vw, 3.25rem);
+    color: var(--white);
+    transition: transform 0.2s ease;
+  }
+
+  /* De hele banner is klikbaar via de pijl-link. */
+  .stage__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .stage__link:hover {
+    transform: translateX(0.2em);
+  }
+
+  .stage__link:focus-visible {
+    outline: none;
+  }
+
+  .stage__link:focus-visible::after {
+    outline: 3px solid var(--white);
+    outline-offset: -8px;
+  }
+
+  .stage__credit {
+    position: absolute;
+    z-index: 3;
+    right: calc(var(--curtain-w) * 0.78 + 0.5rem);
+    bottom: 0.55rem;
+    color: var(--white);
+    font-size: var(--fs-tiny);
+    line-height: 1.2;
+    text-shadow: 0 1px 6px rgb(0 0 0 / 0.6);
+  }
+
+  @media (max-width: 64rem) {
+    .stage :global(.stage__frame) {
+      aspect-ratio: 3 / 2;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .stage :global(.stage__frame) {
+      aspect-ratio: 4 / 5;
+    }
+
+    .stage {
+      --curtain-w: 2.4rem;
+    }
+
+    .stage__credit {
+      right: 50%;
+      transform: translateX(50%);
+      white-space: nowrap;
+    }
+  }
+</style>

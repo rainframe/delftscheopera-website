@@ -1,0 +1,160 @@
+---
+/**
+ * Eén productie op de projectenpagina: tekst naast een foto met gordijn.
+ * Blokken wisselen af tussen navy en wit, met de foto afwisselend rechts en links.
+ */
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import CurtainFrame from './CurtainFrame.astro';
+import stadhuis from '@/assets/decor/stadhuis.svg?url';
+import bladmuziek from '@/assets/decor/bladmuziek-hoog.png';
+import type { Locale } from '@/i18n/routes';
+import type { Project } from '@/lib/content';
+
+interface Props {
+  project: Project;
+  locale: Locale;
+  index: number;
+}
+
+const { project, locale, index } = Astro.props;
+const { title, year, image, imageAlt, imageCredit, quote, quoteSource } = project.entry.data;
+const { Content } = await render(project.entry);
+const dark = index % 2 === 0;
+const mediaSide = dark ? 'right' : 'left';
+---
+
+<section
+  class:list={['project', dark ? 'band' : 'project--light', `project--media-${mediaSide}`]}
+  aria-labelledby={`project-${project.slug}`}
+  lang={project.locale !== locale ? project.locale : undefined}
+>
+  <div class="project__grid container">
+    <div class="project__text">
+      <h2 class="project__title" id={`project-${project.slug}`}>{title} ({year})</h2>
+      <div class="project__body prose">
+        <Content />
+      </div>
+      {
+        quote && (
+          <blockquote class="project__quote">
+            <p>“{quote}”</p>
+            {quoteSource && <footer>– {quoteSource}</footer>}
+          </blockquote>
+        )
+      }
+    </div>
+
+    <div class="project__media">
+      {
+        image ? (
+          <figure>
+            <CurtainFrame sides={mediaSide} tone="navy" curtainWidth="17%">
+              <Image
+                src={image}
+                alt={imageAlt ?? ''}
+                widths={[480, 720, 1000, 1400]}
+                sizes="(min-width: 56rem) 45vw, 100vw"
+              />
+            </CurtainFrame>
+            {imageCredit && <figcaption>Foto: {imageCredit}</figcaption>}
+          </figure>
+        ) : (
+          <div class="project__decor" aria-hidden="true">
+            <Image src={bladmuziek} alt="" width={420} class="project__paper" />
+            <img src={stadhuis} alt="" class="project__silhouette" width="300" height="352" loading="lazy" />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .project {
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .project__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 6vw, 7rem);
+    align-items: center;
+  }
+
+  .project--media-left .project__text {
+    order: 2;
+  }
+
+  .project__title {
+    font-size: clamp(1.9rem, 3.1vw, 2.6rem);
+    line-height: 1.1;
+  }
+
+  .project__body {
+    margin-top: 1.75rem;
+    font-size: clamp(1.1rem, 1.45vw, 1.3rem);
+    line-height: 1.55;
+  }
+
+  .project__quote {
+    margin-top: 2rem;
+    font-size: var(--fs-small);
+    line-height: 1.45;
+    max-width: 22rem;
+  }
+
+  .project__quote footer {
+    margin-top: 0.75rem;
+  }
+
+  .project__media :global(.curtain-frame) {
+    aspect-ratio: 5 / 6;
+    max-height: 40rem;
+  }
+
+  .project__media figcaption {
+    margin-top: 0.5rem;
+    font-size: var(--fs-tiny);
+  }
+
+  .project__decor {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 22rem;
+  }
+
+  .project__decor :global(.project__paper) {
+    width: min(78%, 22rem);
+    height: auto;
+    transform: rotate(-4deg);
+    filter: drop-shadow(0 12px 18px rgb(0 0 0 / 0.18));
+  }
+
+  .project__silhouette {
+    position: absolute;
+    right: 6%;
+    bottom: 0;
+    width: 42%;
+    height: auto;
+  }
+
+  @media (max-width: 56rem) {
+    .project__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .project--media-left .project__text {
+      order: 0;
+    }
+
+    .project__media :global(.curtain-frame) {
+      aspect-ratio: 4 / 3;
+    }
+
+    .project__decor {
+      min-height: 16rem;
+    }
+  }
+</style>

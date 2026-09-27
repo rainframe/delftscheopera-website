@@ -1,0 +1,98 @@
+---
+/** Algemene gegevens van de stichting (naam, adres, KvK, RSIN, …) als definitielijst. */
+import { pageUrl, type Locale } from '@/i18n/routes';
+import { t } from '@/i18n/ui';
+import { getSettings } from '@/lib/content';
+
+interface Props {
+  locale: Locale;
+  showAnbi?: boolean;
+  showIban?: boolean;
+}
+
+const { locale, showAnbi = true, showIban = false } = Astro.props;
+const settings = await getSettings();
+// Een RSIN heeft altijd 9 cijfers; het nummer van de oude site moet gecontroleerd worden.
+const rsinLooksValid = /^\d{9}$/.test(settings.rsin);
+---
+
+<dl class="info-list">
+  <div>
+    <dt>{t(locale, 'info.name')}</dt>
+    <dd>{settings.legalName}</dd>
+  </div>
+  <div>
+    <dt>{t(locale, 'info.address')}</dt>
+    <dd>{`${settings.address.street}, ${settings.address.postcode} ${settings.address.city}`}</dd>
+  </div>
+  <div>
+    <dt>{t(locale, 'info.email')}</dt>
+    <dd><a href={`mailto:${settings.email}`}>{settings.email}</a></dd>
+  </div>
+  <div>
+    <dt>{t(locale, 'info.kvk')}</dt>
+    <dd>{settings.kvk}</dd>
+  </div>
+  <div>
+    <dt>{t(locale, 'info.rsin')}</dt>
+    <dd>
+      {settings.rsin}{' '}
+      {!rsinLooksValid && <mark class="todo">controleren: een RSIN heeft 9 cijfers</mark>}
+    </dd>
+  </div>
+  {
+    showIban && settings.iban && (
+      <div>
+        <dt>{t(locale, 'info.iban')}</dt>
+        <dd>
+          {settings.iban}
+          {settings.ibanName && ` ${t(locale, 'info.ibanName')} ${settings.ibanName}`}
+        </dd>
+      </div>
+    )
+  }
+  {
+    showAnbi && (
+      <div>
+        <dt>{t(locale, 'info.anbi')}</dt>
+        <dd>
+          <a href={pageUrl('anbi', locale)}>{t(locale, 'info.anbiStatus')}</a>
+        </dd>
+      </div>
+    )
+  }
+</dl>
+
+<style>
+  .info-list {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .info-list > div {
+    display: grid;
+    grid-template-columns: minmax(9rem, 14rem) minmax(0, 1fr);
+    gap: 0.25rem 1.5rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid rgb(var(--navy-rgb) / 0.18);
+  }
+
+  :global(.band) .info-list > div {
+    border-bottom-color: rgb(255 255 255 / 0.25);
+  }
+
+  dt {
+    font-weight: 700;
+  }
+
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 34rem) {
+    .info-list > div {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

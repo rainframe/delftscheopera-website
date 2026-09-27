@@ -1,0 +1,140 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageTitle from '@/components/PageTitle.astro';
+import PersonCard from '@/components/PersonCard.astro';
+import InfoList from '@/components/InfoList.astro';
+import { alternatesFor, type Locale } from '@/i18n/routes';
+import { getPage, getPeople, localized, md } from '@/lib/content';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const page = await getPage('organisatie', locale);
+const board = await getPeople('bestuur');
+const supervisory = await getPeople('raad-van-toezicht');
+---
+
+<BaseLayout
+  locale={locale}
+  title={page.seo.title}
+  description={page.seo.description}
+  alternates={alternatesFor('organisatie')}
+  current="organisatie"
+>
+  <PageTitle title={page.title}>
+    <div class="org-intro prose lead" set:html={md(page.intro)} />
+  </PageTitle>
+
+  <section class="org-board container" aria-labelledby="board-title">
+    <h2 id="board-title" class="org-heading">{page.boardTitle}</h2>
+    <ul class="board-grid" role="list">
+      {
+        board.map((person) => (
+          <li>
+            <PersonCard person={person} locale={locale} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="org-supervisory band" aria-labelledby="supervisory-title">
+    <div class="container">
+      <h2 id="supervisory-title" class="org-heading">{page.supervisoryTitle}</h2>
+      <p class="org-supervisory__text">{page.supervisoryText}</p>
+      <ul class="supervisory-list" role="list">
+        {
+          supervisory.map((person) => (
+            <li>
+              <h3>{person.data.name}</h3>
+              <p>{localized(person.data.role, locale)}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="org-info container" aria-labelledby="info-title">
+    <h2 id="info-title" class="org-heading">{page.infoTitle}</h2>
+    <InfoList locale={locale} />
+  </section>
+</BaseLayout>
+
+<style>
+  .org-intro {
+    margin: clamp(2rem, 5vw, 4rem) auto 0;
+    max-width: 44rem;
+  }
+
+  .org-heading {
+    font-size: var(--fs-h2);
+    margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .org-board {
+    padding-bottom: var(--space-section);
+  }
+
+  .board-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2.5rem, 4vw, 3.5rem) clamp(1.5rem, 4vw, 3.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .org-supervisory {
+    padding-block: var(--space-section);
+  }
+
+  .org-supervisory__text {
+    max-width: var(--measure);
+    margin-top: -0.75rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    font-size: var(--fs-lead);
+  }
+
+  .supervisory-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    gap: 2rem clamp(1.5rem, 4vw, 3.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .supervisory-list li {
+    padding-top: 1rem;
+    border-top: 2px solid rgb(255 255 255 / 0.5);
+  }
+
+  .supervisory-list h3 {
+    font-size: var(--fs-h3);
+  }
+
+  .supervisory-list p {
+    margin-top: 0.35rem;
+    line-height: 1.45;
+  }
+
+  .org-info {
+    max-width: 56rem;
+    padding-block: var(--space-section);
+  }
+
+  @media (max-width: 56rem) {
+    .board-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .board-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

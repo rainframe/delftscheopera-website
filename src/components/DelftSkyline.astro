@@ -1,0 +1,50 @@
+---
+/**
+ * Decoratieve rij onderaan het community-opera-blok: gescheurd bladmuziek,
+ * de Oostpoort en het Stadhuis van Delft op één lijn (zoals in het ontwerp).
+ */
+import { Image } from 'astro:assets';
+import bladmuziek from '@/assets/decor/bladmuziek-breed.png';
+import oostpoort from '@/assets/decor/oostpoort.svg?url';
+import stadhuis from '@/assets/decor/stadhuis.svg?url';
+---
+
+<div class="skyline" aria-hidden="true">
+  <Image class="skyline__paper" src={bladmuziek} alt="" width={960} />
+  <img class="skyline__oostpoort" src={oostpoort} alt="" width="99" height="251" loading="lazy" />
+  <img class="skyline__stadhuis" src={stadhuis} alt="" width="176" height="207" loading="lazy" />
+</div>
+
+<style>
+  .skyline {
+    display: grid;
+    grid-template-columns: 35.5% 7.3% 1fr 12.8% 10%;
+    align-items: end;
+    gap: 0 2.6%;
+    width: min(100% - 2 * var(--gutter), 90rem);
+    margin-inline: auto;
+  }
+
+  .skyline :global(.skyline__paper) {
+    width: 100%;
+    height: auto;
+    align-self: end;
+    margin-bottom: -2px;
+  }
+
+  .skyline__oostpoort,
+  .skyline__stadhuis {
+    width: 100%;
+    height: auto;
+  }
+
+  .skyline__stadhuis {
+    grid-column: 4;
+  }
+
+  @media (max-width: 40rem) {
+    .skyline {
+      grid-template-columns: 48% 12% 1fr 26%;
+    }
+  }
+</style>

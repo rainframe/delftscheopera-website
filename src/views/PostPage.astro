@@ -1,0 +1,208 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CurtainFrame from '@/components/CurtainFrame.astro';
+import PostCard from '@/components/PostCard.astro';
+import ShareLinkedIn from '@/components/ShareLinkedIn.astro';
+import Icon from '@/components/Icon.astro';
+import { pageUrl, type Locale } from '@/i18n/routes';
+import { formatDate, t } from '@/i18n/ui';
+import { getPosts, type Post } from '@/lib/content';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const locale = post.locale;
+const { title, summary, date, author, cover, coverAlt, coverCredit } = post.entry.data;
+const { Content } = await render(post.entry);
+const more = (await getPosts(locale)).filter((other) => other.slug !== post.slug).slice(0, 3);
+const alternates = {
+  nl: post.translations.nl ?? pageUrl('nieuws', 'nl'),
+  en: post.translations.en ?? pageUrl('nieuws', 'en'),
+} satisfies Record<Locale, string>;
+const canonical = new URL(post.url, Astro.site ?? 'https://delftscheopera.nl').href;
+---
+
+<BaseLayout
+  locale={locale}
+  title={title}
+  description={summary}
+  alternates={alternates}
+  translations={post.translations}
+  current="nieuws"
+  image={cover}
+  imageAlt={coverAlt}
+  type="article"
+  published={date}
+>
+  <article class="post">
+    <header class="post__header container">
+      <p class="post__meta">
+        <time datetime={date.toISOString().slice(0, 10)}>{formatDate(date, locale)}</time>
+        {author && <span>{`${t(locale, 'news.by')} ${author}`}</span>}
+      </p>
+      <h1 class="post__title">{title}</h1>
+      <p class="post__summary">{summary}</p>
+    </header>
+
+    {
+      cover && (
+        <figure class="post__cover band">
+          <CurtainFrame sides="both" tone="navy" curtainWidth="9%" class="post__cover-frame">
+            <Image
+              src={cover}
+              alt={coverAlt ?? ''}
+              layout="full-width"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </CurtainFrame>
+          {coverCredit && (
+            <figcaption class="container">
+              {t(locale, 'photo.credit')}: {coverCredit}
+            </figcaption>
+          )}
+        </figure>
+      )
+    }
+
+    <div class="post__body container">
+      <div class="prose post__content">
+        <Content />
+      </div>
+      <footer class="post__footer">
+        <ShareLinkedIn url={canonical} locale={locale} />
+        <a class="arrow-link post__back" href={pageUrl('nieuws', locale)}>
+          <span>{t(locale, 'news.back')}</span>
+          <Icon name="arrow" />
+        </a>
+      </footer>
+    </div>
+  </article>
+
+  {
+    more.length > 0 && (
+      <section class="post-more band" aria-labelledby="more-title">
+        <div class="container">
+          <h2 id="more-title" class="post-more__title">
+            {t(locale, 'news.more')}
+          </h2>
+          <ul class="post-more__grid" role="list">
+            {more.map((other) => (
+              <li>
+                <PostCard post={other} locale={locale} tone="navy" />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .post__header {
+    max-width: 56rem;
+    padding-block: clamp(1rem, 3vw, 2rem) clamp(2rem, 4vw, 3rem);
+    text-align: center;
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem 1rem;
+    font-size: var(--fs-small);
+  }
+
+  .post__title {
+    margin-top: 1rem;
+    font-size: clamp(2.3rem, 5.4vw, 4.6rem);
+    line-height: 1;
+  }
+
+  .post__summary {
+    margin-top: 1.25rem;
+    font-size: var(--fs-lead);
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  .post__cover {
+    padding-block: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .post__cover :global(.post__cover-frame) {
+    max-width: 75rem;
+    margin-inline: auto;
+    aspect-ratio: 2.1;
+  }
+
+  .post__cover figcaption {
+    margin-top: 0.75rem;
+    font-size: var(--fs-tiny);
+    text-align: right;
+  }
+
+  .post__body {
+    max-width: calc(var(--measure) + 2 * var(--gutter));
+    padding-block: clamp(2.5rem, 5vw, 4rem) var(--space-section);
+  }
+
+  .post__content {
+    font-size: 1.1875rem;
+    line-height: 1.65;
+  }
+
+  .post__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    padding-top: 1.75rem;
+    border-top: 2px solid var(--navy);
+  }
+
+  .post__back {
+    font-size: 1.1rem;
+  }
+
+  .post-more {
+    padding-block: var(--space-section);
+  }
+
+  .post-more__title {
+    font-size: var(--fs-h2);
+    margin-bottom: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .post-more__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 3.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (max-width: 64rem) {
+    .post-more__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .post__cover :global(.post__cover-frame) {
+      aspect-ratio: 4 / 3;
+    }
+
+    .post-more__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

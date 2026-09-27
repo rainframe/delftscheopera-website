@@ -1,0 +1,24 @@
+name: Annemiek van Elst
+group: artistiek-team
+role:
+  nl: Regisseur
+  en: Stage director
+photo: ../../assets/uploads/annemiek-van-elst.jpg
+bio:
+  nl: >-
+    Annemiek van Elst is regisseur in opera, theater en film. Ze werkt met het bestaande operarepertoire,
+    maar maakt ook nieuw werk, vaak met een flinke dosis humor. Als assistent-regisseur werkte ze met onder
+    anderen Simon McBurney, Barrie Kosky en Damiano Michieletto, voor huizen als het Royal Opera House, English
+    National Opera en het Opernhaus Zürich. Onlangs regisseerde ze de familieopera *Atman!*, een coproductie van
+    De Nationale Opera, Opera Zuid en de Nederlandse Reisopera.
+  en: >-
+    Annemiek van Elst is a director working in opera, theatre and film. She stages the existing opera
+    repertoire but also creates new work, often with a generous dose of humour. As an assistant director she
+    worked with Simon McBurney, Barrie Kosky and Damiano Michieletto, among others, at houses such as the Royal
+    Opera House, English National Opera and Opernhaus Zürich. She recently directed the family opera *Atman!*, a
+    co-production of Dutch National Opera, Opera Zuid and the Nederlandse Reisopera.
+workImage: ../../assets/uploads/annemiek-van-elst-productie.jpg
+workImageAlt:
+  nl: Scène uit een voorstelling van Annemiek van Elst, met een zangeres, cellist en pianist
+  en: Scene from a production by Annemiek van Elst, with a singer, cellist and pianist
+order: 1

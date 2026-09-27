@@ -1,0 +1,51 @@
+nl:
+  seo:
+    title: Delftsche Opera
+    description: De Delftsche Opera (Stichting Delftsche Opera Compagnie) organiseert grootse producties voor het Delftse studentenorkest en -koor Krashna Musika.
+  hero:
+    title: Steun ons!
+    subtitle: Help ons met het realiseren van prachtige concerten
+    intro: De Delftsche Opera organiseert grootse producties voor het Delftse studentenorkest en -koor Krashna Musika.
+    linkLabel: Zo kun je ons steunen
+    image: ../../assets/uploads/orkest-dirigent.jpg
+    imageAlt: Het orkest van Krashna Musika tijdens een concert, met de dirigent rechts
+  news:
+    title: Nieuws
+    moreLabel: Al het nieuws
+  feature:
+    title: Lustrum
+    subtitle: 60 jaar Krashna Musika
+    year: '2028'
+    credit: Eduardus Lee
+    linkLabel: Lees meer over het lustrum
+    image: ../../assets/uploads/concertgebouw-lustrum.jpg
+    imageAlt: Koor en orkest op het podium van een concertzaal met een groot orgel
+  conductors:
+    title: Dirigenten
+    text: Koor en orkest van Krashna Musika staan onder leiding van twee vaste dirigenten. Met hen brengen de studenten groot symfonisch repertoire op hoog niveau ten gehore.
+    people:
+      - ruben-de-grauw
+      - stijn-berkouwer
+    image: ../../assets/uploads/carmina-burana-2023.jpg
+    imageAlt: Koor en orkest van Krashna Musika op het podium tijdens Carmina Burana
+en:
+  seo:
+    title: Delftsche Opera
+    description: Delftsche Opera (Stichting Delftsche Opera Compagnie) organises large-scale productions for Krashna Musika, the student orchestra and choir of Delft.
+  hero:
+    title: Support us!
+    subtitle: Help us make wonderful concerts happen
+    intro: Delftsche Opera organises large-scale productions for Krashna Musika, the student orchestra and choir of Delft.
+    linkLabel: How you can support us
+    imageAlt: The Krashna Musika orchestra in concert, with the conductor on the right
+  news:
+    title: News
+    moreLabel: All news
+  feature:
+    subtitle: 60 years of Krashna Musika
+    linkLabel: Read more about the anniversary
+    imageAlt: Choir and orchestra on the stage of a concert hall with a large organ
+  conductors:
+    title: Conductors
+    text: Krashna Musika's choir and orchestra are led by two permanent conductors. Together with them, the students perform large-scale symphonic repertoire at a high level.
+    imageAlt: Krashna Musika's choir and orchestra on stage during Carmina Burana

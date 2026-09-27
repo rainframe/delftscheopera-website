@@ -1,0 +1,28 @@
+nl:
+  seo:
+    title: ANBI
+    description: Informatie over de ANBI-status van Stichting Delftsche Opera Compagnie.
+  title: ANBI
+  status: '**Stichting Delftsche Opera Compagnie is (nog) geen ANBI.** We werken toe naar de ANBI-status. Deze pagina wordt aangevuld zodra we aan alle wettelijke en administratieve eisen voldoen.'
+  text: Een ANBI (algemeen nut beogende instelling) maakt onder meer haar doelstelling, beleidsplan, bestuurssamenstelling, beloningsbeleid, activiteiten en financiële verantwoording openbaar. Hieronder staat wat we nu al kunnen delen.
+  goalTitle: Doelstelling
+  goal: De stichting heeft als doel grootschalige projecten te organiseren voor het Delftse studentenmuziekgezelschap Krashna Musika, zoals opera's en grote symfonische concerten.
+  documentsTitle: Documenten
+  documents:
+    - title: Beleidsplan
+    - title: Beloningsbeleid
+    - title: Jaarverslag
+en:
+  seo:
+    title: ANBI
+    description: Information about the ANBI (Dutch charity) status of Stichting Delftsche Opera Compagnie.
+  title: ANBI
+  status: '**Stichting Delftsche Opera Compagnie is not (yet) an ANBI.** We are working towards ANBI status (a Dutch registered charity). This page will be completed once we meet all legal and administrative requirements.'
+  text: An ANBI (a Dutch public benefit organisation) publishes, among other things, its aims, policy plan, board composition, remuneration policy, activities and financial statements. Below is what we can already share.
+  goalTitle: Aim
+  goal: The foundation's aim is to organise large-scale projects for Krashna Musika, the student music society of Delft, such as operas and large symphonic concerts.
+  documentsTitle: Documents
+  documents:
+    - title: Policy plan
+    - title: Remuneration policy
+    - title: Annual report

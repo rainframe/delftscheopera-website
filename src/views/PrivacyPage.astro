@@ -1,0 +1,36 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageTitle from '@/components/PageTitle.astro';
+import { alternatesFor, type Locale } from '@/i18n/routes';
+import { getPage, md } from '@/lib/content';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const page = await getPage('privacy', locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={page.seo.title}
+  description={page.seo.description}
+  alternates={alternatesFor('privacy')}
+>
+  <PageTitle title={page.title} class="privacy-title" />
+  <div class="privacy container">
+    <div class="prose" set:html={md(page.text)} />
+  </div>
+</BaseLayout>
+
+<style>
+  :global(.privacy-title .display-title) {
+    font-size: clamp(2.4rem, 6vw, 5rem);
+  }
+
+  .privacy {
+    max-width: calc(var(--measure) + 2 * var(--gutter));
+    padding-bottom: var(--space-section);
+  }
+</style>

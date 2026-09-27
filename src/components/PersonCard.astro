@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets';
+import CurtainFrame from './CurtainFrame.astro';
+import CurtainMark from './CurtainMark.astro';
+import type { Locale } from '@/i18n/routes';
+import { t } from '@/i18n/ui';
+import { localized, type Person } from '@/lib/content';
+
+interface Props {
+  person: Person;
+  locale: Locale;
+  showEmail?: boolean;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { person, locale, showEmail = true, headingLevel = 'h3' } = Astro.props;
+const { name, role, email, photo } = person.data;
+const Heading = headingLevel;
+const initials = name
+  .split(' ')
+  .filter((part) => /^[A-Z]/.test(part))
+  .map((part) => part[0])
+  .slice(0, 2)
+  .join('');
+---
+
+<article class="person-card">
+  <div class="person-card__media">
+    {
+      photo ? (
+        <CurtainFrame sides="left" tone="navy" curtainWidth="15%">
+          <Image
+            src={photo}
+            alt={`${t(locale, 'people.photoAlt')} ${name}`}
+            widths={[320, 480, 720]}
+            sizes="(min-width: 64rem) 22vw, (min-width: 40rem) 40vw, 90vw"
+          />
+        </CurtainFrame>
+      ) : (
+        <CurtainMark label={initials}>
+          <span class="visually-hidden">{t(locale, 'people.noPhoto')}</span>
+        </CurtainMark>
+      )
+    }
+  </div>
+  <Heading class="person-card__name">{name}</Heading>
+  <p class="person-card__role">{localized(role, locale)}</p>
+  {
+    showEmail && email && (
+      <p class="person-card__email">
+        <a href={`mailto:${email}`}>{email}</a>
+      </p>
+    )
+  }
+</article>
+
+<style>
+  .person-card__media :global(.curtain-frame),
+  .person-card__media :global(.curtain-mark) {
+    aspect-ratio: 4 / 5;
+  }
+
+  .person-card__media :global(img) {
+    object-position: 50% 25%;
+  }
+
+  .person-card__name {
+    margin-top: 1rem;
+    font-size: var(--fs-h3);
+    line-height: 1.1;
+  }
+
+  .person-card__role {
+    margin-top: 0.3rem;
+    font-weight: 700;
+  }
+
+  .person-card__email {
+    margin-top: 0.2rem;
+    font-size: var(--fs-small);
+    overflow-wrap: anywhere;
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+/**
+ * Navy vlak met twee witte gordijnen (het vierkante beeldmerk). Wordt gebruikt als
+ * vervanging wanneer er (nog) geen foto is, eventueel met initialen of een label.
+ */
+import Curtain from './Curtain.astro';
+
+interface Props {
+  label?: string;
+  class?: string;
+}
+
+const { label, class: className } = Astro.props;
+---
+
+<div class:list={['curtain-mark', className]}>
+  <Curtain side="left" />
+  <Curtain side="right" />
+  {label && <span class="curtain-mark__label">{label}</span>}
+  <slot />
+</div>
+
+<style>
+  .curtain-mark {
+    position: relative;
+    display: grid;
+    place-items: center;
+    background: var(--navy);
+    color: var(--white);
+    overflow: hidden;
+  }
+
+  .curtain-mark > :global(.curtain) {
+    position: absolute;
+    top: 12%;
+    height: 76%;
+    width: 17%;
+  }
+
+  .curtain-mark > :global(.curtain--left) {
+    left: 16%;
+  }
+
+  .curtain-mark > :global(.curtain--right) {
+    right: 16%;
+  }
+
+  .curtain-mark__label {
+    position: relative;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    letter-spacing: 0.02em;
+  }
+</style>

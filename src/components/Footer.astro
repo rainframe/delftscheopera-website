@@ -1,0 +1,126 @@
+---
+import { Image } from 'astro:assets';
+import logoWhite from '@/assets/brand/logo-white.png';
+import SocialLinks from './SocialLinks.astro';
+import { pageUrl, type Locale } from '@/i18n/routes';
+import { navLabel, t } from '@/i18n/ui';
+import { getSettings } from '@/lib/content';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const settings = await getSettings();
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer band">
+  <div class="site-footer__grid container container--wide">
+    <a class="site-footer__logo" href={pageUrl('home', locale)}>
+      <Image src={logoWhite} alt="Delftsche Opera – home" width={214} layout="fixed" />
+    </a>
+
+    <div class="site-footer__follow">
+      <p class="site-footer__title">{t(locale, 'footer.follow')}</p>
+      <SocialLinks locale={locale} />
+    </div>
+
+    <div class="site-footer__contact">
+      <p class="site-footer__title">{t(locale, 'footer.contact')}</p>
+      <address>
+        {settings.legalName}<br />
+        {settings.address.street}<br />
+        {`${settings.address.postcode} ${settings.address.city}`}<br />
+        <a href={`mailto:${settings.email}`}>{settings.email}</a>
+      </address>
+      <p class="site-footer__meta">{`${t(locale, 'footer.kvk')} ${settings.kvk}`}</p>
+    </div>
+
+    <nav class="site-footer__links" aria-label="Footer">
+      <ul>
+        <li><a href={pageUrl('steunOns', locale)}>{navLabel(locale, 'steunOns')}</a></li>
+        <li><a href={pageUrl('anbi', locale)}>{navLabel(locale, 'anbi')}</a></li>
+        <li><a href={pageUrl('privacy', locale)}>{navLabel(locale, 'privacy')}</a></li>
+        <li><a href={pageUrl('contact', locale)}>{navLabel(locale, 'contact')}</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="site-footer__bottom container container--wide">
+    <p>© {year} {settings.legalName}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: clamp(2.75rem, 5vw, 4.5rem) 1.5rem;
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr));
+    gap: 2.5rem clamp(1.5rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  .site-footer__logo {
+    align-self: start;
+  }
+
+  .site-footer__logo img {
+    width: clamp(150px, 15.7vw, 214px);
+    height: auto;
+  }
+
+  .site-footer__title {
+    margin-bottom: 1rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+    line-height: 1.1;
+  }
+
+  address {
+    font-style: normal;
+    line-height: 1.55;
+  }
+
+  .site-footer__meta {
+    margin-top: 0.75rem;
+    font-size: var(--fs-small);
+  }
+
+  .site-footer__links {
+    padding-top: 0.4rem;
+  }
+
+  .site-footer__links ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__links li + li {
+    margin-top: 0.45rem;
+  }
+
+  .site-footer__bottom {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-top: 1.25rem;
+    border-top: 1px solid rgb(255 255 255 / 0.25);
+    font-size: var(--fs-tiny);
+  }
+
+  @media (max-width: 62rem) {
+    .site-footer__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .site-footer__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,139 @@
+---
+import { Image } from 'astro:assets';
+import logoNavy from '@/assets/brand/logo-navy.png';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SocialLinks from '@/components/SocialLinks.astro';
+import InfoList from '@/components/InfoList.astro';
+import Icon from '@/components/Icon.astro';
+import { alternatesFor, type Locale } from '@/i18n/routes';
+import { getPage, getPeople, getSettings, localized } from '@/lib/content';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const page = await getPage('contact', locale);
+const settings = await getSettings();
+const board = await getPeople('bestuur');
+---
+
+<BaseLayout
+  locale={locale}
+  title={page.seo.title}
+  description={page.seo.description}
+  alternates={alternatesFor('contact')}
+  current="contact"
+>
+  <section class="contact container" aria-labelledby="contact-title">
+    <h1 id="contact-title" class="visually-hidden">{page.title}</h1>
+    <Image class="contact__logo" src={logoNavy} alt="Delftsche Opera" width={490} layout="fixed" />
+    <p class="statement contact__intro">{page.intro}</p>
+    <a class="contact__email" href={`mailto:${settings.email}`}>
+      <Icon name="mail" />
+      <span>{settings.email}</span>
+    </a>
+    <SocialLinks locale={locale} class="contact__social" />
+  </section>
+
+  <section class="contact-board band" aria-labelledby="contact-board-title">
+    <div class="container">
+      <h2 id="contact-board-title" class="contact-board__title">{page.boardTitle}</h2>
+      <ul class="contact-board__list" role="list">
+        {
+          board.map((person) => (
+            <li>
+              <p class="contact-board__role">{localized(person.data.role, locale)}</p>
+              <p class="contact-board__name">{person.data.name}</p>
+              {person.data.email && <a href={`mailto:${person.data.email}`}>{person.data.email}</a>}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="contact-info container">
+    <InfoList locale={locale} />
+  </section>
+</BaseLayout>
+
+<style>
+  .contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: clamp(2rem, 6vw, 5rem) var(--space-section);
+    text-align: center;
+  }
+
+  .contact :global(.contact__logo) {
+    width: min(490px, 78vw);
+    height: auto;
+  }
+
+  .contact__intro {
+    margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  .contact__email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    font-weight: 700;
+  }
+
+  .contact__email :global(.icon) {
+    font-size: 1.1em;
+  }
+
+  .contact :global(.contact__social) {
+    margin-top: 2rem;
+    font-size: 2.75rem;
+  }
+
+  .contact-board {
+    padding-block: var(--space-section);
+  }
+
+  .contact-board__title {
+    font-size: var(--fs-h2);
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .contact-board__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    gap: 2rem clamp(1.5rem, 4vw, 3.5rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact-board__list li {
+    padding-top: 1rem;
+    border-top: 2px solid rgb(255 255 255 / 0.5);
+  }
+
+  .contact-board__role {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--fs-h3);
+    line-height: 1.1;
+  }
+
+  .contact-board__name {
+    margin-top: 0.3rem;
+  }
+
+  .contact-board__list a {
+    overflow-wrap: anywhere;
+  }
+
+  .contact-info {
+    max-width: 56rem;
+    padding-block: var(--space-section);
+  }
+</style>

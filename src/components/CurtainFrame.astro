@@ -1,0 +1,72 @@
+---
+/**
+ * Omlijst een afbeelding met gordijnen, zoals de foto's in het ontwerp: de foto lijkt
+ * door een toneelopening gezien te worden. Gebruik `tone` in de kleur van de achtergrond
+ * (navy op een navy vlak, wit op wit) of juist contrasterend (navy op wit).
+ *
+ * De afbeelding (of <picture>) is het eerste kind van de slot; overige inhoud
+ * (bijv. tekst over de foto) kan erna volgen.
+ */
+import Curtain from './Curtain.astro';
+
+interface Props {
+  sides?: 'both' | 'left' | 'right';
+  tone?: 'navy' | 'white';
+  /** Breedte van één gordijn als CSS-waarde, bijv. "9.5%" of "3rem". */
+  curtainWidth?: string;
+  class?: string;
+}
+
+const { sides = 'both', tone = 'navy', curtainWidth, class: className } = Astro.props;
+---
+
+<div
+  class:list={['curtain-frame', `curtain-frame--${tone}`, className]}
+  style={curtainWidth ? `--curtain-w: ${curtainWidth}` : undefined}
+>
+  <slot />
+  {sides !== 'right' && <Curtain side="left" />}
+  {sides !== 'left' && <Curtain side="right" />}
+</div>
+
+<style>
+  .curtain-frame {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .curtain-frame--navy {
+    color: var(--navy);
+  }
+
+  .curtain-frame--white {
+    color: var(--white);
+  }
+
+  .curtain-frame > :global(img),
+  .curtain-frame > :global(picture),
+  .curtain-frame > :global(picture > img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .curtain-frame > :global(.curtain) {
+    position: absolute;
+    z-index: 2;
+    top: -1px;
+    height: calc(100% + 2px);
+    width: var(--curtain-w, 9.5%);
+    pointer-events: none;
+  }
+
+  .curtain-frame > :global(.curtain--left) {
+    left: -1px;
+  }
+
+  .curtain-frame > :global(.curtain--right) {
+    right: -1px;
+  }
+</style>

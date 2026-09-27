@@ -1,0 +1,124 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import Curtain from '@/components/Curtain.astro';
+import { alternatesFor, type Locale } from '@/i18n/routes';
+import { t } from '@/i18n/ui';
+import { getPage, getSettings, md, mdInline } from '@/lib/content';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const page = await getPage('steunOns', locale);
+const settings = await getSettings();
+---
+
+<BaseLayout
+  locale={locale}
+  title={page.seo.title}
+  description={page.seo.description}
+  alternates={alternatesFor('steunOns')}
+  image={page.hero.image}
+  imageAlt={page.hero.imageAlt}
+>
+  <Hero title={page.hero.title} subtitle={page.hero.subtitle} image={page.hero.image} imageAlt={page.hero.imageAlt} />
+
+  <section class="support container">
+    <p class="support__intro lead">{page.intro}</p>
+
+    <ul class="support__ways" role="list">
+      {
+        page.ways.map((way) => (
+          <li class="way band">
+            <Curtain side="right" class="way__curtain" />
+            <h2 class="way__title">{way.title}</h2>
+            <div class="way__text" set:html={md(way.text)} />
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      settings.iban && (
+        <p class="support__iban">
+          <strong>{t(locale, 'info.iban')}:</strong> {settings.iban}
+          {settings.ibanName && ` ${t(locale, 'info.ibanName')} ${settings.ibanName}`}
+        </p>
+      )
+    }
+
+    <aside class="support__anbi" aria-labelledby="anbi-title">
+      <h2 id="anbi-title">{page.anbi.title}</h2>
+      <p set:html={mdInline(page.anbi.text)} />
+    </aside>
+  </section>
+</BaseLayout>
+
+<style>
+  .support {
+    padding-block: var(--space-section);
+  }
+
+  .support__intro {
+    max-width: 44rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .support__ways {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .way {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    padding-right: clamp(4.5rem, 12%, 6.5rem);
+  }
+
+  .way :global(.way__curtain) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: clamp(2.5rem, 9%, 4rem);
+    color: var(--white);
+  }
+
+  .way__title {
+    font-size: var(--fs-h3);
+  }
+
+  .way__text {
+    margin-top: 1rem;
+  }
+
+  .way__text :global(p + p) {
+    margin-top: 0.75em;
+  }
+
+  .support__iban {
+    margin-top: 2rem;
+    font-size: var(--fs-lead);
+    text-align: center;
+  }
+
+  .support__anbi {
+    max-width: 44rem;
+    margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+    padding: 1.5rem 1.75rem;
+    border: 2px solid var(--navy);
+  }
+
+  .support__anbi h2 {
+    font-size: var(--fs-h3);
+    margin-bottom: 0.6rem;
+  }
+</style>

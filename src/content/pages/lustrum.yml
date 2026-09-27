@@ -1,0 +1,50 @@
+nl:
+  seo:
+    title: Lustrum 2028
+    description: In 2028 bestaat Krashna Musika zestig jaar. De Delftsche Opera viert dat met een community opera, samen met de mensen in Delft.
+  banner:
+    title: Lustrum
+    subtitle: 60 jaar Krashna Musika
+    year: '2028'
+    credit: Eduardus Lee
+    image: ../../assets/uploads/concertgebouw-lustrum.jpg
+    imageAlt: Koor en orkest op het podium van een concertzaal met een groot orgel
+  intro:
+    title: Community Opera
+    text: |-
+      In 2028 staat een heel bijzonder project voor de deur. Samen met de mensen in Delft maken we een community opera, onder leiding van regisseur Annemiek van Elst, die onlangs verraste met de familieopera *Atman!* voor De Nationale Opera.
+
+      <mark class="todo">Meer over de opzet, de speellocaties en de data volgt.</mark>
+  krashna:
+    title: Krashna Musika
+    text: |-
+      Krashna Musika is hét studentenorkest en -koor uit Delft. Koor en orkest brengen op hoog niveau groot symfonisch repertoire ten gehore. In 2028 bestaat de vereniging zestig jaar.
+
+      In 2023 won Krashna Musika de verkiezing *Het Leukste Studentenorkest van Nederland* van het AVROTROS-programma De Klassieken op NPO Klassiek.
+    linkLabel: Naar de website van Krashna Musika
+    linkUrl: https://www.krashna.nl
+    image: ../../assets/uploads/krashna-leukste-studentenorkest.jpg
+    imageAlt: Krashna Musika na afloop van een concert, met het beeldmerk van Het Leukste Studentenorkest van Nederland
+  team:
+    - annemiek-van-elst
+    - ruben-de-grauw
+    - stijn-berkouwer
+en:
+  seo:
+    title: Lustrum 2028
+    description: In 2028 Krashna Musika turns sixty. Delftsche Opera celebrates with a community opera, created together with the people of Delft.
+  banner:
+    subtitle: 60 years of Krashna Musika
+    imageAlt: Choir and orchestra on the stage of a concert hall with a large organ
+  intro:
+    text: |-
+      In 2028 a very special project lies ahead. Together with the people of Delft we will create a community opera, directed by Annemiek van Elst, who recently amazed audiences with the family opera *Atman!* for Dutch National Opera.
+
+      <mark class="todo">More about the concept, venues and dates will follow.</mark>
+  krashna:
+    text: |-
+      Krashna Musika is the student orchestra and choir of Delft. Its choir and orchestra perform large-scale symphonic repertoire at a high level. In 2028 the association turns sixty.
+
+      In 2023 Krashna Musika won the public vote for *Het Leukste Studentenorkest van Nederland* (the most fun student orchestra in the Netherlands), organised by the AVROTROS programme De Klassieken on NPO Klassiek.
+    linkLabel: Visit the Krashna Musika website
+    imageAlt: Krashna Musika after a concert, with the logo of Het Leukste Studentenorkest van Nederland
