@@ -177,7 +177,11 @@ veranderen en de MX-records (e-mail) blijven zoals ze zijn. Maak ze aan via _(do
 Redirect Rules → Create rule_, kies _Custom filter expression_ → _Edit expression_, en stel de
 doorverwijzing in als **301** zonder _Preserve query string_ (behalve bij www).
 
-**delftscheopera.nl**, één regel:
+Zet voor beide domeinen ook _SSL/TLS → Edge Certificates → **Always Use HTTPS**_ aan, zodat
+`http://` altijd naar `https://` gaat.
+
+**delftscheopera.nl**, één regel (die gaat vóór de worker, dus het maakt niet uit of www zelf ook als
+_Custom domain_ aan de worker hangt):
 
 - `www naar delftscheopera.nl`: expressie `(http.host eq "www.delftscheopera.nl")`, type _Dynamic_,
   doel `concat("https://delftscheopera.nl", http.request.uri.path)`, _Preserve query string_ aan.
