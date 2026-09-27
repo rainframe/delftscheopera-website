@@ -17,6 +17,6 @@
     // Client ID van de GitHub OAuth-app. Die is openbaar en hoort hier te staan: variabelen in dit
     // bestand overschrijven bij elke deploy wat in het Cloudflare-dashboard is ingesteld. Het
     // bijbehorende secret (GITHUB_CLIENT_SECRET) staat alleen als "Secret" in Cloudflare.
-    "GITHUB_CLIENT_ID": ""
+    "GITHUB_CLIENT_ID": "Ov23li2hQ7G9sM5BR3pm"
   }
 }
