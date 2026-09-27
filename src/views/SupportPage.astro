@@ -23,31 +23,32 @@ const settings = await getSettings();
   image={page.hero.image}
   imageAlt={page.hero.imageAlt}
 >
-  <Hero title={page.hero.title} subtitle={page.hero.subtitle} image={page.hero.image} imageAlt={page.hero.imageAlt} />
+  <Hero
+    title={page.hero.title}
+    subtitle={page.hero.subtitle}
+    image={page.hero.image}
+    imageAlt={page.hero.imageAlt}
+  />
 
   <section class="support container">
     <p class="support__intro lead">{page.intro}</p>
 
     <ul class="support__ways" role="list">
-      {
-        page.ways.map((way) => (
-          <li class="way band">
-            <Curtain side="right" class="way__curtain" />
-            <h2 class="way__title">{way.title}</h2>
-            <div class="way__text" set:html={md(way.text)} />
-          </li>
-        ))
-      }
+      {page.ways.map((way) => (
+        <li class="way band">
+          <Curtain side="right" class="way__curtain" />
+          <h2 class="way__title">{way.title}</h2>
+          <div class="way__text" set:html={md(way.text)} />
+        </li>
+      ))}
     </ul>
 
-    {
-      settings.iban && (
-        <p class="support__iban">
-          <strong>{t(locale, 'info.iban')}:</strong> {settings.iban}
-          {settings.ibanName && ` ${t(locale, 'info.ibanName')} ${settings.ibanName}`}
-        </p>
-      )
-    }
+    {settings.iban && (
+      <p class="support__iban">
+        <strong>{t(locale, 'info.iban')}:</strong> {settings.iban}
+        {settings.ibanName && ` ${t(locale, 'info.ibanName')} ${settings.ibanName}`}
+      </p>
+    )}
 
     <aside class="support__anbi" aria-labelledby="anbi-title">
       <h2 id="anbi-title">{page.anbi.title}</h2>

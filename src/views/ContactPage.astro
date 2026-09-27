@@ -26,7 +26,9 @@ const board = await getPeople('bestuur');
   current="contact"
 >
   <section class="contact container" aria-labelledby="contact-title">
-    <h1 id="contact-title" class="visually-hidden">{page.title}</h1>
+    <h1 id="contact-title" class="visually-hidden">
+      {page.title}
+    </h1>
     <Image class="contact__logo" src={logoNavy} alt="Delftsche Opera" width={490} layout="fixed" />
     <p class="statement contact__intro">{page.intro}</p>
     <a class="contact__email" href={`mailto:${settings.email}`}>
@@ -38,17 +40,17 @@ const board = await getPeople('bestuur');
 
   <section class="contact-board band" aria-labelledby="contact-board-title">
     <div class="container">
-      <h2 id="contact-board-title" class="contact-board__title">{page.boardTitle}</h2>
+      <h2 id="contact-board-title" class="contact-board__title">
+        {page.boardTitle}
+      </h2>
       <ul class="contact-board__list" role="list">
-        {
-          board.map((person) => (
-            <li>
-              <p class="contact-board__role">{localized(person.data.role, locale)}</p>
-              <p class="contact-board__name">{person.data.name}</p>
-              {person.data.email && <a href={`mailto:${person.data.email}`}>{person.data.email}</a>}
-            </li>
-          ))
-        }
+        {board.map((person) => (
+          <li>
+            <p class="contact-board__role">{localized(person.data.role, locale)}</p>
+            <p class="contact-board__name">{person.data.name}</p>
+            {person.data.email && <a href={`mailto:${person.data.email}`}>{person.data.email}</a>}
+          </li>
+        ))}
       </ul>
     </div>
   </section>

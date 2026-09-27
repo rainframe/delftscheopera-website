@@ -29,9 +29,12 @@ const year = new Date().getFullYear();
     <div class="site-footer__contact">
       <p class="site-footer__title">{t(locale, 'footer.contact')}</p>
       <address>
-        {settings.legalName}<br />
-        {settings.address.street}<br />
-        {`${settings.address.postcode} ${settings.address.city}`}<br />
+        {settings.legalName}
+        <br />
+        {settings.address.street}
+        <br />
+        {`${settings.address.postcode} ${settings.address.city}`}
+        <br />
         <a href={`mailto:${settings.email}`}>{settings.email}</a>
       </address>
       <p class="site-footer__meta">{`${t(locale, 'footer.kvk')} ${settings.kvk}`}</p>
@@ -39,16 +42,26 @@ const year = new Date().getFullYear();
 
     <nav class="site-footer__links" aria-label="Footer">
       <ul>
-        <li><a href={pageUrl('steunOns', locale)}>{navLabel(locale, 'steunOns')}</a></li>
-        <li><a href={pageUrl('anbi', locale)}>{navLabel(locale, 'anbi')}</a></li>
-        <li><a href={pageUrl('privacy', locale)}>{navLabel(locale, 'privacy')}</a></li>
-        <li><a href={pageUrl('contact', locale)}>{navLabel(locale, 'contact')}</a></li>
+        <li>
+          <a href={pageUrl('steunOns', locale)}>{navLabel(locale, 'steunOns')}</a>
+        </li>
+        <li>
+          <a href={pageUrl('anbi', locale)}>{navLabel(locale, 'anbi')}</a>
+        </li>
+        <li>
+          <a href={pageUrl('privacy', locale)}>{navLabel(locale, 'privacy')}</a>
+        </li>
+        <li>
+          <a href={pageUrl('contact', locale)}>{navLabel(locale, 'contact')}</a>
+        </li>
       </ul>
     </nav>
   </div>
 
   <div class="site-footer__bottom container container--wide">
-    <p>© {year} {settings.legalName}</p>
+    <p>
+      © {year} {settings.legalName}
+    </p>
   </div>
 </footer>
 

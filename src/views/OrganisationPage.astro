@@ -28,37 +28,39 @@ const supervisory = await getPeople('raad-van-toezicht');
   </PageTitle>
 
   <section class="org-board container" aria-labelledby="board-title">
-    <h2 id="board-title" class="org-heading">{page.boardTitle}</h2>
+    <h2 id="board-title" class="org-heading">
+      {page.boardTitle}
+    </h2>
     <ul class="board-grid" role="list">
-      {
-        board.map((person) => (
-          <li>
-            <PersonCard person={person} locale={locale} />
-          </li>
-        ))
-      }
+      {board.map((person) => (
+        <li>
+          <PersonCard person={person} locale={locale} />
+        </li>
+      ))}
     </ul>
   </section>
 
   <section class="org-supervisory band" aria-labelledby="supervisory-title">
     <div class="container">
-      <h2 id="supervisory-title" class="org-heading">{page.supervisoryTitle}</h2>
+      <h2 id="supervisory-title" class="org-heading">
+        {page.supervisoryTitle}
+      </h2>
       <p class="org-supervisory__text">{page.supervisoryText}</p>
       <ul class="supervisory-list" role="list">
-        {
-          supervisory.map((person) => (
-            <li>
-              <h3>{person.data.name}</h3>
-              <p>{localized(person.data.role, locale)}</p>
-            </li>
-          ))
-        }
+        {supervisory.map((person) => (
+          <li>
+            <h3>{person.data.name}</h3>
+            <p>{localized(person.data.role, locale)}</p>
+          </li>
+        ))}
       </ul>
     </div>
   </section>
 
   <section class="org-info container" aria-labelledby="info-title">
-    <h2 id="info-title" class="org-heading">{page.infoTitle}</h2>
+    <h2 id="info-title" class="org-heading">
+      {page.infoTitle}
+    </h2>
     <InfoList locale={locale} />
   </section>
 </BaseLayout>
@@ -134,7 +136,7 @@ const supervisory = await getPeople('raad-van-toezicht');
 
   @media (max-width: 30rem) {
     .board-grid {
-      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem 1rem;
     }
   }
 </style>

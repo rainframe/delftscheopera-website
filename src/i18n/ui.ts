@@ -42,7 +42,8 @@ const strings = {
     'anbi.board': 'Bestuurssamenstelling',
     'anbi.info': 'Gegevens',
     'notFound.title': 'Het doek is gevallen',
-    'notFound.text': 'Deze pagina bestaat niet (meer). Misschien vind je wat je zoekt via het menu of op de homepage.',
+    'notFound.text':
+      'Deze pagina bestaat niet (meer). Misschien vind je wat je zoekt via het menu of op de homepage.',
     'notFound.home': 'Naar de homepage',
     'lustrum.more': 'Lees meer over het lustrum',
     'lustrum.team': 'Het artistieke team',
@@ -96,7 +97,8 @@ const strings = {
     'anbi.board': 'Board composition',
     'anbi.info': 'Details',
     'notFound.title': 'The curtain has fallen',
-    'notFound.text': 'This page does not exist (anymore). You may find what you are looking for in the menu or on the homepage.',
+    'notFound.text':
+      'This page does not exist (anymore). You may find what you are looking for in the menu or on the homepage.',
     'notFound.home': 'Go to the homepage',
     'lustrum.more': 'Read more about the anniversary',
     'lustrum.team': 'The artistic team',
@@ -123,8 +125,18 @@ export function navLabel(locale: Locale, key: RouteKey): string {
 }
 
 const dateFormats: Record<Locale, Intl.DateTimeFormat> = {
-  nl: new Intl.DateTimeFormat('nl-NL', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Amsterdam' }),
-  en: new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Amsterdam' }),
+  nl: new Intl.DateTimeFormat('nl-NL', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Europe/Amsterdam',
+  }),
+  en: new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Europe/Amsterdam',
+  }),
 };
 
 export function formatDate(date: Date, locale: Locale): string {

@@ -48,26 +48,18 @@ const canonical = new URL(post.url, Astro.site ?? 'https://delftscheopera.nl').h
       <p class="post__summary">{summary}</p>
     </header>
 
-    {
-      cover && (
-        <figure class="post__cover band">
-          <CurtainFrame sides="both" tone="navy" curtainWidth="9%" class="post__cover-frame">
-            <Image
-              src={cover}
-              alt={coverAlt ?? ''}
-              layout="full-width"
-              loading="eager"
-              fetchpriority="high"
-            />
-          </CurtainFrame>
-          {coverCredit && (
-            <figcaption class="container">
-              {t(locale, 'photo.credit')}: {coverCredit}
-            </figcaption>
-          )}
-        </figure>
-      )
-    }
+    {cover && (
+      <figure class="post__cover band">
+        <CurtainFrame sides="both" tone="navy" curtainWidth="9%" class="post__cover-frame">
+          <Image src={cover} alt={coverAlt ?? ''} layout="full-width" loading="eager" fetchpriority="high" />
+        </CurtainFrame>
+        {coverCredit && (
+          <figcaption class="container">
+            {t(locale, 'photo.credit')}: {coverCredit}
+          </figcaption>
+        )}
+      </figure>
+    )}
 
     <div class="post__body container">
       <div class="prose post__content">
@@ -83,24 +75,22 @@ const canonical = new URL(post.url, Astro.site ?? 'https://delftscheopera.nl').h
     </div>
   </article>
 
-  {
-    more.length > 0 && (
-      <section class="post-more band" aria-labelledby="more-title">
-        <div class="container">
-          <h2 id="more-title" class="post-more__title">
-            {t(locale, 'news.more')}
-          </h2>
-          <ul class="post-more__grid" role="list">
-            {more.map((other) => (
-              <li>
-                <PostCard post={other} locale={locale} tone="navy" />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-    )
-  }
+  {more.length > 0 && (
+    <section class="post-more band" aria-labelledby="more-title">
+      <div class="container">
+        <h2 id="more-title" class="post-more__title">
+          {t(locale, 'news.more')}
+        </h2>
+        <ul class="post-more__grid" role="list">
+          {more.map((other) => (
+            <li>
+              <PostCard post={other} locale={locale} tone="navy" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 </BaseLayout>
 
 <style>

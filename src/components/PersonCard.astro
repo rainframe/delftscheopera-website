@@ -26,32 +26,31 @@ const initials = name
 
 <article class="person-card">
   <div class="person-card__media">
-    {
-      photo ? (
-        <CurtainFrame sides="left" tone="navy" curtainWidth="15%">
-          <Image
-            src={photo}
-            alt={`${t(locale, 'people.photoAlt')} ${name}`}
-            widths={[320, 480, 720]}
-            sizes="(min-width: 64rem) 22vw, (min-width: 40rem) 40vw, 90vw"
-          />
-        </CurtainFrame>
-      ) : (
-        <CurtainMark label={initials}>
-          <span class="visually-hidden">{t(locale, 'people.noPhoto')}</span>
-        </CurtainMark>
-      )
-    }
+    {photo ? (
+      <CurtainFrame sides="left" tone="navy" curtainWidth="15%">
+        <Image
+          src={photo}
+          alt={`${t(locale, 'people.photoAlt')} ${name}`}
+          widths={[320, 480, 720]}
+          sizes="(min-width: 64rem) 22vw, (min-width: 40rem) 40vw, 90vw"
+        />
+      </CurtainFrame>
+    ) : (
+      <CurtainMark label={initials}>
+        <span class="visually-hidden">{t(locale, 'people.noPhoto')}</span>
+      </CurtainMark>
+    )}
   </div>
   <Heading class="person-card__name">{name}</Heading>
   <p class="person-card__role">{localized(role, locale)}</p>
-  {
-    showEmail && email && (
-      <p class="person-card__email">
-        <a href={`mailto:${email}`}>{email}</a>
-      </p>
-    )
-  }
+  {showEmail && email && (
+    <p class="person-card__email">
+      <a href={`mailto:${email}`}>
+        {email.split('@')[0]}
+        <wbr />@{email.split('@')[1]}
+      </a>
+    </p>
+  )}
 </article>
 
 <style>
@@ -78,6 +77,17 @@ const initials = name
   .person-card__email {
     margin-top: 0.2rem;
     font-size: var(--fs-small);
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
+  }
+
+  @media (max-width: 30rem) {
+    .person-card__name {
+      font-size: 1.15rem;
+    }
+
+    .person-card__role,
+    .person-card__email {
+      font-size: var(--fs-tiny);
+    }
   }
 </style>

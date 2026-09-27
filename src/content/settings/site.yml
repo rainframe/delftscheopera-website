@@ -17,5 +17,5 @@ socials:
   linkedin: https://www.linkedin.com/company/delftsche-opera
 newsletter:
   provider: laposta
-  # Het formulieradres van de Laposta-lijst; zolang dit leeg is, wordt er geen aanmeldformulier getoond.
+  # Wordt in fase 4 gekoppeld aan een aanmeldformulier (adres van de Laposta-lijst).
   formAction: ''

@@ -28,7 +28,8 @@ type PageCollection =
 type PageData<C extends PageCollection> = CollectionEntry<C>['data']['nl'];
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
-  if (typeof value !== 'object' || value === null || Array.isArray(value) || value instanceof Date) return false;
+  if (typeof value !== 'object' || value === null || Array.isArray(value) || value instanceof Date)
+    return false;
   // Geoptimaliseerde afbeeldingen zijn objecten, maar moeten als geheel vervangen worden.
   return !('src' in value && 'format' in value);
 }

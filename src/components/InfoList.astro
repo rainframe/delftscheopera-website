@@ -27,7 +27,9 @@ const rsinLooksValid = /^\d{9}$/.test(settings.rsin);
   </div>
   <div>
     <dt>{t(locale, 'info.email')}</dt>
-    <dd><a href={`mailto:${settings.email}`}>{settings.email}</a></dd>
+    <dd>
+      <a href={`mailto:${settings.email}`}>{settings.email}</a>
+    </dd>
   </div>
   <div>
     <dt>{t(locale, 'info.kvk')}</dt>
@@ -36,31 +38,26 @@ const rsinLooksValid = /^\d{9}$/.test(settings.rsin);
   <div>
     <dt>{t(locale, 'info.rsin')}</dt>
     <dd>
-      {settings.rsin}{' '}
-      {!rsinLooksValid && <mark class="todo">controleren: een RSIN heeft 9 cijfers</mark>}
+      {settings.rsin} {!rsinLooksValid && <mark class="todo">controleren: een RSIN heeft 9 cijfers</mark>}
     </dd>
   </div>
-  {
-    showIban && settings.iban && (
-      <div>
-        <dt>{t(locale, 'info.iban')}</dt>
-        <dd>
-          {settings.iban}
-          {settings.ibanName && ` ${t(locale, 'info.ibanName')} ${settings.ibanName}`}
-        </dd>
-      </div>
-    )
-  }
-  {
-    showAnbi && (
-      <div>
-        <dt>{t(locale, 'info.anbi')}</dt>
-        <dd>
-          <a href={pageUrl('anbi', locale)}>{t(locale, 'info.anbiStatus')}</a>
-        </dd>
-      </div>
-    )
-  }
+  {showIban && settings.iban && (
+    <div>
+      <dt>{t(locale, 'info.iban')}</dt>
+      <dd>
+        {settings.iban}
+        {settings.ibanName && ` ${t(locale, 'info.ibanName')} ${settings.ibanName}`}
+      </dd>
+    </div>
+  )}
+  {showAnbi && (
+    <div>
+      <dt>{t(locale, 'info.anbi')}</dt>
+      <dd>
+        <a href={pageUrl('anbi', locale)}>{t(locale, 'info.anbiStatus')}</a>
+      </dd>
+    </div>
+  )}
 </dl>
 
 <style>

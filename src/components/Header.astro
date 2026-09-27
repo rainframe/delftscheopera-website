@@ -16,8 +16,20 @@ interface Props {
 const { locale, alternates, current } = Astro.props;
 
 const languages = [
-  { code: 'nl', flag: nlFlag, width: 36, label: t(locale, 'lang.nl'), href: alternates.nl ?? pageUrl('home', 'nl') },
-  { code: 'en', flag: gbFlag, width: 48, label: t(locale, 'lang.en'), href: alternates.en ?? pageUrl('home', 'en') },
+  {
+    code: 'nl',
+    flag: nlFlag,
+    width: 36,
+    label: t(locale, 'lang.nl'),
+    href: alternates.nl ?? pageUrl('home', 'nl'),
+  },
+  {
+    code: 'en',
+    flag: gbFlag,
+    width: 48,
+    label: t(locale, 'lang.en'),
+    href: alternates.en ?? pageUrl('home', 'en'),
+  },
 ] as const;
 ---
 
@@ -29,35 +41,31 @@ const languages = [
 
     <nav id="hoofdmenu" class="main-nav" aria-label={t(locale, 'nav.label')}>
       <ul>
-        {
-          mainNav.map((key) => (
-            <li>
-              <a href={pageUrl(key, locale)} aria-current={current === key ? 'page' : undefined}>
-                {navLabel(locale, key)}
-              </a>
-            </li>
-          ))
-        }
+        {mainNav.map((key) => (
+          <li>
+            <a href={pageUrl(key, locale)} aria-current={current === key ? 'page' : undefined}>
+              {navLabel(locale, key)}
+            </a>
+          </li>
+        ))}
       </ul>
     </nav>
 
     <ul class="lang-switch" aria-label={t(locale, 'lang.label')}>
-      {
-        languages.map((lang) => (
-          <li>
-            <a
-              href={lang.href}
-              hreflang={lang.code}
-              lang={lang.code}
-              aria-current={lang.code === locale ? 'true' : undefined}
-              title={lang.label}
-            >
-              <img src={lang.flag} alt="" width={lang.width} height="26" />
-              <span class="visually-hidden">{lang.label}</span>
-            </a>
-          </li>
-        ))
-      }
+      {languages.map((lang) => (
+        <li>
+          <a
+            href={lang.href}
+            hreflang={lang.code}
+            lang={lang.code}
+            aria-current={lang.code === locale ? 'true' : undefined}
+            title={lang.label}
+          >
+            <img src={lang.flag} alt="" width={lang.width} height="26" />
+            <span class="visually-hidden">{lang.label}</span>
+          </a>
+        </li>
+      ))}
     </ul>
 
     <button

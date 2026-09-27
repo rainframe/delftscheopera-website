@@ -43,7 +43,9 @@ const team = await resolvePeople(page.team);
   <section class="community" aria-labelledby="community-title">
     <Image class="community__paper" src={bladmuziek} alt="" width={480} />
     <div class="container">
-      <h2 id="community-title" class="display-title community__title">{page.intro.title}</h2>
+      <h2 id="community-title" class="display-title community__title">
+        {page.intro.title}
+      </h2>
       <div class="community__text lead" set:html={md(page.intro.text)} />
     </div>
     <DelftSkyline />
@@ -52,7 +54,9 @@ const team = await resolvePeople(page.team);
   <section class="krashna" aria-labelledby="krashna-title">
     <div class="krashna__grid container">
       <div class="krashna__text">
-        <h2 id="krashna-title" class="section-heading">{page.krashna.title}</h2>
+        <h2 id="krashna-title" class="section-heading">
+          {page.krashna.title}
+        </h2>
         <div class="prose" set:html={md(page.krashna.text)} />
         <a class="arrow-link krashna__link" href={page.krashna.linkUrl}>
           <span>{page.krashna.linkLabel}</span>
@@ -71,54 +75,55 @@ const team = await resolvePeople(page.team);
   </section>
 
   <div class="team">
-    {
-      team.map((person, index) => {
-        const bio = localized(person.data.bio, locale);
-        const role = localized(person.data.role, locale);
-        const id = `team-${person.id}`;
-        if (person.data.photo) {
-          return (
-            <section class="member member--feature band" aria-labelledby={id}>
-              <div class="member__grid">
-                <CurtainFrame sides="left" tone="navy" curtainWidth="22%" class="member__portrait">
-                  <Image
-                    src={person.data.photo}
-                    alt={`${t(locale, 'people.photoAlt')} ${person.data.name}`}
-                    widths={[300, 450, 620]}
-                    sizes="(min-width: 56rem) 22vw, 60vw"
-                  />
-                </CurtainFrame>
-                <div class="member__text">
-                  <h2 id={id} class="member__name">
-                    {person.data.name}
-                  </h2>
-                  <p class="member__role">{role}</p>
-                  {bio && <div class="member__bio prose" set:html={md(bio)} />}
-                </div>
-                {person.data.workImage && (
-                  <Image
-                    class="member__work"
-                    src={person.data.workImage}
-                    alt={localized(person.data.workImageAlt, locale)}
-                    widths={[400, 600, 820]}
-                    sizes="(min-width: 56rem) 28vw, 100vw"
-                  />
-                )}
-              </div>
-            </section>
-          );
-        }
+    {team.map((person, index) => {
+      const bio = localized(person.data.bio, locale);
+      const role = localized(person.data.role, locale);
+      const id = `team-${person.id}`;
+      if (person.data.photo) {
         return (
-          <section class:list={['member', 'container', index % 2 === 1 ? 'member--end' : 'member--start']} aria-labelledby={id}>
-            <h2 id={id} class="member__name">
-              {person.data.name}
-            </h2>
-            <p class="member__role">{role}</p>
-            {bio && <div class="member__bio prose" set:html={md(bio)} />}
+          <section class="member member--feature band" aria-labelledby={id}>
+            <div class="member__grid">
+              <CurtainFrame sides="left" tone="navy" curtainWidth="22%" class="member__portrait">
+                <Image
+                  src={person.data.photo}
+                  alt={`${t(locale, 'people.photoAlt')} ${person.data.name}`}
+                  widths={[300, 450, 620]}
+                  sizes="(min-width: 56rem) 22vw, 60vw"
+                />
+              </CurtainFrame>
+              <div class="member__text">
+                <h2 id={id} class="member__name">
+                  {person.data.name}
+                </h2>
+                <p class="member__role">{role}</p>
+                {bio && <div class="member__bio prose" set:html={md(bio)} />}
+              </div>
+              {person.data.workImage && (
+                <Image
+                  class="member__work"
+                  src={person.data.workImage}
+                  alt={localized(person.data.workImageAlt, locale)}
+                  widths={[400, 600, 820]}
+                  sizes="(min-width: 56rem) 28vw, 100vw"
+                />
+              )}
+            </div>
           </section>
         );
-      })
-    }
+      }
+      return (
+        <section
+          class:list={['member', 'container', index % 2 === 1 ? 'member--end' : 'member--start']}
+          aria-labelledby={id}
+        >
+          <h2 id={id} class="member__name">
+            {person.data.name}
+          </h2>
+          <p class="member__role">{role}</p>
+          {bio && <div class="member__bio prose" set:html={md(bio)} />}
+        </section>
+      );
+    })}
   </div>
 </BaseLayout>
 

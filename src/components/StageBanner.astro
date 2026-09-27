@@ -58,22 +58,18 @@ const Heading = headingLevel;
       <Heading class="stage__title">{title}</Heading>
       <p class="stage__subtitle">{subtitle}</p>
       <p class="stage__year">{year}</p>
-      {
-        href && (
-          <a class="stage__link" href={href}>
-            <Icon name="arrow" />
-            <span class="visually-hidden">{linkLabel ?? title}</span>
-          </a>
-        )
-      }
+      {href && (
+        <a class="stage__link" href={href}>
+          <Icon name="arrow" />
+          <span class="visually-hidden">{linkLabel ?? title}</span>
+        </a>
+      )}
     </div>
-    {
-      credit && (
-        <p class="stage__credit">
-          {t(locale, 'photo.credit')}: {credit}
-        </p>
-      )
-    }
+    {credit && (
+      <p class="stage__credit">
+        {t(locale, 'photo.credit')}: {credit}
+      </p>
+    )}
   </CurtainFrame>
 </div>
 

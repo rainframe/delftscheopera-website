@@ -60,15 +60,13 @@ const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical.href} />
-    {
-      hasBothLanguages && (
-        <>
-          <link rel="alternate" hreflang="nl" href={absolute(translations.nl!)} />
-          <link rel="alternate" hreflang="en" href={absolute(translations.en!)} />
-          <link rel="alternate" hreflang="x-default" href={absolute(translations.nl!)} />
-        </>
-      )
-    }
+    {hasBothLanguages && (
+      <>
+        <link rel="alternate" hreflang="nl" href={absolute(translations.nl!)} />
+        <link rel="alternate" hreflang="en" href={absolute(translations.en!)} />
+        <link rel="alternate" hreflang="x-default" href={absolute(translations.nl!)} />
+      </>
+    )}
 
     <meta property="og:type" content={type} />
     <meta property="og:site_name" content={siteName} />
@@ -87,7 +85,12 @@ const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#042d64" />
-    <link rel="alternate" type="application/rss+xml" title={`${siteName} – ${t(locale, 'nav.nieuws')}`} href={rssUrl} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${siteName} – ${t(locale, 'nav.nieuws')}`}
+      href={rssUrl}
+    />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <Font cssVariable="--font-spartan" preload />
@@ -96,7 +99,9 @@ const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#inhoud">{t(locale, 'site.skip')}</a>
+    <a class="skip-link" href="#inhoud">
+      {t(locale, 'site.skip')}
+    </a>
     <Header locale={locale} alternates={alternates} current={current} />
     <main id="inhoud">
       <slot />

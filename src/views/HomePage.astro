@@ -42,7 +42,9 @@ const conductors = await resolvePeople(page.conductors.people);
   />
 
   <section class="home-news" aria-labelledby="home-news-title">
-    <h2 id="home-news-title" class="display-title home-news__title">{page.news.title}</h2>
+    <h2 id="home-news-title" class="display-title home-news__title">
+      {page.news.title}
+    </h2>
     <div class="band">
       <StageBanner
         locale={locale}
@@ -56,39 +58,37 @@ const conductors = await resolvePeople(page.conductors.people);
         linkLabel={page.feature.linkLabel}
         headingLevel="h3"
       />
-      {
-        posts.length > 0 && (
-          <div class="home-news__posts container">
-            <ul class="post-grid" role="list">
-              {posts.map((post) => (
-                <li>
-                  <PostCard post={post} locale={locale} tone="navy" />
-                </li>
-              ))}
-            </ul>
-            <a class="arrow-link home-news__more" href={pageUrl('nieuws', locale)}>
-              <span>{page.news.moreLabel}</span>
-              <Icon name="arrow" />
-            </a>
-          </div>
-        )
-      }
+      {posts.length > 0 && (
+        <div class="home-news__posts container">
+          <ul class="post-grid" role="list">
+            {posts.map((post) => (
+              <li>
+                <PostCard post={post} locale={locale} tone="navy" />
+              </li>
+            ))}
+          </ul>
+          <a class="arrow-link home-news__more" href={pageUrl('nieuws', locale)}>
+            <span>{page.news.moreLabel}</span>
+            <Icon name="arrow" />
+          </a>
+        </div>
+      )}
     </div>
   </section>
 
   <section class="conductors" aria-labelledby="conductors-title">
     <div class="conductors__text">
-      <h2 id="conductors-title" class="conductors__title">{page.conductors.title}</h2>
+      <h2 id="conductors-title" class="conductors__title">
+        {page.conductors.title}
+      </h2>
       <p class="conductors__intro">{page.conductors.text}</p>
       <ul class="conductors__list" role="list">
-        {
-          conductors.map((person) => (
-            <li>
-              <h3>{person.data.name}</h3>
-              <p>{localized(person.data.role, locale)}</p>
-            </li>
-          ))
-        }
+        {conductors.map((person) => (
+          <li>
+            <h3>{person.data.name}</h3>
+            <p>{localized(person.data.role, locale)}</p>
+          </li>
+        ))}
       </ul>
       <a class="arrow-link" href={pageUrl('lustrum', locale)}>
         <span>{t(locale, 'lustrum.team')}</span>

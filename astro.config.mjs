@@ -51,7 +51,9 @@ export default defineConfig({
       options: {
         variants: [
           {
-            src: ['./node_modules/@fontsource-variable/league-spartan/files/league-spartan-latin-wght-normal.woff2'],
+            src: [
+              './node_modules/@fontsource-variable/league-spartan/files/league-spartan-latin-wght-normal.woff2',
+            ],
             weight: '100 900',
             style: 'normal',
           },

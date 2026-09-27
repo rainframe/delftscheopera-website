@@ -6,7 +6,12 @@ import { alternatesFor, pageUrl } from '@/i18n/routes';
 import { t } from '@/i18n/ui';
 ---
 
-<BaseLayout locale="nl" title={t('nl', 'notFound.title')} description={t('nl', 'notFound.text')} alternates={alternatesFor('home')}>
+<BaseLayout
+  locale="nl"
+  title={t('nl', 'notFound.title')}
+  description={t('nl', 'notFound.text')}
+  alternates={alternatesFor('home')}
+>
   <section class="not-found">
     <Curtain side="left" />
     <Curtain side="right" />
@@ -14,10 +19,18 @@ import { t } from '@/i18n/ui';
       <p class="not-found__code">404</p>
       <h1>{t('nl', 'notFound.title')}</h1>
       <p>{t('nl', 'notFound.text')}</p>
-      <a class="arrow-link" href={pageUrl('home', 'nl')}><span>{t('nl', 'notFound.home')}</span><Icon name="arrow" /></a>
+      <a class="arrow-link" href={pageUrl('home', 'nl')}>
+        <span>{t('nl', 'notFound.home')}</span>
+        <Icon name="arrow" />
+      </a>
       <div class="not-found__en" lang="en">
-        <p><strong>{t('en', 'notFound.title')}.</strong> {t('en', 'notFound.text')}</p>
-        <a class="arrow-link" href={pageUrl('home', 'en')}><span>{t('en', 'notFound.home')}</span><Icon name="arrow" /></a>
+        <p>
+          <strong>{t('en', 'notFound.title')}.</strong> {t('en', 'notFound.text')}
+        </p>
+        <a class="arrow-link" href={pageUrl('home', 'en')}>
+          <span>{t('en', 'notFound.home')}</span>
+          <Icon name="arrow" />
+        </a>
       </div>
     </div>
   </section>

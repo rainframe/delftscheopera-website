@@ -33,14 +33,12 @@ const Heading = headingLevel;
     <div class="hero__content">
       <Heading class="hero__title">{title}</Heading>
       <p class="hero__subtitle">{subtitle}</p>
-      {
-        link && (
-          <a class="arrow-link hero__link" href={link.href}>
-            <span>{link.label}</span>
-            <Icon name="arrow" />
-          </a>
-        )
-      }
+      {link && (
+        <a class="arrow-link hero__link" href={link.href}>
+          <span>{link.label}</span>
+          <Icon name="arrow" />
+        </a>
+      )}
     </div>
   </div>
 </section>

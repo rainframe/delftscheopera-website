@@ -31,41 +31,39 @@ const mediaSide = dark ? 'right' : 'left';
 >
   <div class="project__grid container">
     <div class="project__text">
-      <h2 class="project__title" id={`project-${project.slug}`}>{title} ({year})</h2>
+      <h2 class="project__title" id={`project-${project.slug}`}>
+        {title} ({year})
+      </h2>
       <div class="project__body prose">
         <Content />
       </div>
-      {
-        quote && (
-          <blockquote class="project__quote">
-            <p>“{quote}”</p>
-            {quoteSource && <footer>– {quoteSource}</footer>}
-          </blockquote>
-        )
-      }
+      {quote && (
+        <blockquote class="project__quote">
+          <p>“{quote}”</p>
+          {quoteSource && <footer>– {quoteSource}</footer>}
+        </blockquote>
+      )}
     </div>
 
     <div class="project__media">
-      {
-        image ? (
-          <figure>
-            <CurtainFrame sides={mediaSide} tone="navy" curtainWidth="17%">
-              <Image
-                src={image}
-                alt={imageAlt ?? ''}
-                widths={[480, 720, 1000, 1400]}
-                sizes="(min-width: 56rem) 45vw, 100vw"
-              />
-            </CurtainFrame>
-            {imageCredit && <figcaption>Foto: {imageCredit}</figcaption>}
-          </figure>
-        ) : (
-          <div class="project__decor" aria-hidden="true">
-            <Image src={bladmuziek} alt="" width={420} class="project__paper" />
-            <img src={stadhuis} alt="" class="project__silhouette" width="300" height="352" loading="lazy" />
-          </div>
-        )
-      }
+      {image ? (
+        <figure>
+          <CurtainFrame sides={mediaSide} tone="navy" curtainWidth="17%">
+            <Image
+              src={image}
+              alt={imageAlt ?? ''}
+              widths={[480, 720, 1000, 1400]}
+              sizes="(min-width: 56rem) 45vw, 100vw"
+            />
+          </CurtainFrame>
+          {imageCredit && <figcaption>Foto: {imageCredit}</figcaption>}
+        </figure>
+      ) : (
+        <div class="project__decor" aria-hidden="true">
+          <Image src={bladmuziek} alt="" width={420} class="project__paper" />
+          <img src={stadhuis} alt="" class="project__silhouette" width="300" height="352" loading="lazy" />
+        </div>
+      )}
     </div>
   </div>
 </section>

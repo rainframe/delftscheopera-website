@@ -41,32 +41,28 @@ const board = await getPeople('bestuur');
     <section aria-labelledby="anbi-board">
       <h2 id="anbi-board">{t(locale, 'anbi.board')}</h2>
       <ul class="anbi__board" role="list">
-        {
-          board.map((person) => (
-            <li>
-              <strong>{localized(person.data.role, locale)}</strong>: {person.data.name}
-            </li>
-          ))
-        }
+        {board.map((person) => (
+          <li>
+            <strong>{localized(person.data.role, locale)}</strong>: {person.data.name}
+          </li>
+        ))}
       </ul>
     </section>
 
     <section aria-labelledby="anbi-documents">
       <h2 id="anbi-documents">{page.documentsTitle}</h2>
       <ul class="anbi__documents" role="list">
-        {
-          page.documents.map((document) => (
-            <li>
-              {document.url ? (
-                <a href={document.url}>{document.title}</a>
-              ) : (
-                <>
-                  {document.title}: <em>{t(locale, 'anbi.pending')}</em>
-                </>
-              )}
-            </li>
-          ))
-        }
+        {page.documents.map((document) => (
+          <li>
+            {document.url ? (
+              <a href={document.url}>{document.title}</a>
+            ) : (
+              <>
+                {document.title}: <em>{t(locale, 'anbi.pending')}</em>
+              </>
+            )}
+          </li>
+        ))}
       </ul>
     </section>
   </div>

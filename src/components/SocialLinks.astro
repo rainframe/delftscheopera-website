@@ -19,17 +19,15 @@ const links = [
 ---
 
 <ul class:list={['social-links', className]}>
-  {
-    links
-      .filter((link) => link.href)
-      .map((link) => (
-        <li>
-          <a href={link.href} rel="me noopener" aria-label={link.label}>
-            <Icon name={link.name} />
-          </a>
-        </li>
-      ))
-  }
+  {links
+    .filter((link) => link.href)
+    .map((link) => (
+      <li>
+        <a href={link.href} rel="me noopener" aria-label={link.label}>
+          <Icon name={link.name} />
+        </a>
+      </li>
+    ))}
 </ul>
 
 <style>

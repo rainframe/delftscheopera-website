@@ -26,30 +26,28 @@ const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
 >
   <PageTitle title={page.title} />
 
-  {
-    featured ? (
-      <>
-        <section class="news-featured band" aria-label={featured.entry.data.title}>
-          <div class="container">
-            <PostCard post={featured} locale={locale} tone="navy" size="large" headingLevel="h2" eager />
-          </div>
+  {featured ? (
+    <>
+      <section class="news-featured band" aria-label={featured.entry.data.title}>
+        <div class="container">
+          <PostCard post={featured} locale={locale} tone="navy" size="large" headingLevel="h2" eager />
+        </div>
+      </section>
+      {rest.length > 0 && (
+        <section class="news-list section container" aria-label={page.title}>
+          <ul class="news-grid" role="list">
+            {rest.map((post) => (
+              <li>
+                <PostCard post={post} locale={locale} tone="white" headingLevel="h2" />
+              </li>
+            ))}
+          </ul>
         </section>
-        {rest.length > 0 && (
-          <section class="news-list section container" aria-label={page.title}>
-            <ul class="news-grid" role="list">
-              {rest.map((post) => (
-                <li>
-                  <PostCard post={post} locale={locale} tone="white" headingLevel="h2" />
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-      </>
-    ) : (
-      <p class="news-empty container">{page.empty}</p>
-    )
-  }
+      )}
+    </>
+  ) : (
+    <p class="news-empty container">{page.empty}</p>
+  )}
 
   <p class="news-rss container">
     <a class="arrow-link" href={rssUrl}>

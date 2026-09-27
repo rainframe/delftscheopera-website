@@ -26,21 +26,23 @@ const otherLanguage = post.locale !== locale;
 
 <article class:list={['post-card', `post-card--${tone}`, `post-card--${size}`]}>
   <div class="post-card__media">
-    {
-      cover ? (
-        <CurtainFrame sides="both" tone={tone} curtainWidth="10%">
-          <Image
-            src={cover}
-            alt=""
-            loading={eager ? 'eager' : 'lazy'}
-            widths={size === 'large' ? [480, 800, 1200, 1600] : [400, 640, 900]}
-            sizes={size === 'large' ? '(min-width: 64rem) 55vw, 100vw' : '(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 100vw'}
-          />
-        </CurtainFrame>
-      ) : (
-        <CurtainMark />
-      )
-    }
+    {cover ? (
+      <CurtainFrame sides="both" tone={tone} curtainWidth="10%">
+        <Image
+          src={cover}
+          alt=""
+          loading={eager ? 'eager' : 'lazy'}
+          widths={size === 'large' ? [480, 800, 1200, 1600] : [400, 640, 900]}
+          sizes={
+            size === 'large'
+              ? '(min-width: 64rem) 55vw, 100vw'
+              : '(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 100vw'
+          }
+        />
+      </CurtainFrame>
+    ) : (
+      <CurtainMark />
+    )}
   </div>
   <div class="post-card__body">
     <p class="post-card__meta">
@@ -48,9 +50,13 @@ const otherLanguage = post.locale !== locale;
       {otherLanguage && <span class="post-card__badge">{t(locale, 'news.dutchOnly')}</span>}
     </p>
     <Heading class="post-card__title" lang={otherLanguage ? post.locale : undefined}>
-      <a href={post.url} hreflang={otherLanguage ? post.locale : undefined}>{title}</a>
+      <a href={post.url} hreflang={otherLanguage ? post.locale : undefined}>
+        {title}
+      </a>
     </Heading>
-    <p class="post-card__summary" lang={otherLanguage ? post.locale : undefined}>{summary}</p>
+    <p class="post-card__summary" lang={otherLanguage ? post.locale : undefined}>
+      {summary}
+    </p>
   </div>
 </article>
 

@@ -1,0 +1,12 @@
+// Cloudflare Workers: de gebouwde site (dist/) wordt als statische bestanden geserveerd.
+// Wordt pas gebruikt in fase 3 (koppelen aan GitHub via Workers Builds).
+{
+  "name": "delftscheopera-website",
+  "compatibility_date": "2026-09-27",
+  "assets": {
+    "directory": "./dist",
+    // Onbekende adressen krijgen de 404-pagina ("Het doek is gevallen").
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}
