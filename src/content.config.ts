@@ -91,8 +91,12 @@ const settings = defineCollection({
   loader: glob({ pattern: 'site.yml', base: './src/content/settings' }),
   schema: z.object({
     name: z.string(),
-    /** Mogen zoekmachines de site opnemen? Pas aanzetten bij de lancering. */
-    indexable: z.boolean().default(false),
+    /**
+     * Is de site gelanceerd? Zo niet, dan toont delftscheopera.nl alleen "Binnenkort online" (zie
+     * worker/index.ts), staat de site op preview.delftscheopera.nl en houden alle pagina's
+     * zoekmachines buiten.
+     */
+    launched: z.boolean().default(false),
     legalName: z.string(),
     email: z.email(),
     address: z.object({ street: z.string(), postcode: z.string(), city: z.string() }),

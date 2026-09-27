@@ -1,5 +1,5 @@
-// Cloudflare Workers: de gebouwde site (dist/) wordt als statische bestanden geserveerd.
-// De worker (worker/index.ts) handelt alleen het inloggen in het beheer af (/cms/*).
+// Cloudflare Workers: de gebouwde site (dist/) wordt als statische bestanden geserveerd. De worker
+// (worker/index.ts) kiest per domein wat er getoond wordt en handelt het inloggen in het beheer af.
 {
   "name": "delftscheopera-website",
   "main": "worker/index.ts",
@@ -10,9 +10,15 @@
     // Onbekende adressen krijgen de 404-pagina ("Het doek is gevallen").
     "not_found_handling": "404-page",
     "html_handling": "auto-trailing-slash",
-    // Alleen deze adressen gaan eerst langs de worker; al het andere komt direct uit dist/.
-    "run_worker_first": ["/cms/*"]
+    // De worker komt vóór de bestanden, zodat hij per domein kan kiezen (bouwpagina, preview,
+    // doorverwijzingen, inloggen). Alleen /_astro/ (bestanden met een hash in de naam) gaat er
+    // rechtstreeks omheen.
+    "run_worker_first": ["/*", "!/_astro/*"]
   },
+  // De site is alleen via de eigen domeinen bereikbaar (in Cloudflare aan de worker gekoppeld), niet
+  // via *.workers.dev.
+  "workers_dev": false,
+  "preview_urls": false,
   "vars": {
     // Client ID van de GitHub OAuth-app. Die is openbaar en hoort hier te staan: variabelen in dit
     // bestand overschrijven bij elke deploy wat in het Cloudflare-dashboard is ingesteld. Het

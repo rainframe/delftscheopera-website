@@ -19,7 +19,16 @@
       const useTestBackend = isLocal && new URLSearchParams(location.search).has('test');
 
       CMS.registerPreviewStyle('/admin/preview.css');
-      CMS.init(useTestBackend ? { config: { backend: { name: 'test-repo' } } } : undefined);
+
+      // Tot de lancering staat de site op preview.delftscheopera.nl; daar linkt het beheer dan naartoe.
+      fetch('/site-status.json')
+        .then((response) => response.json())
+        .catch(() => ({ launched: true }))
+        .then(({ launched }) => {
+          const config = useTestBackend ? { backend: { name: 'test-repo' } } : {};
+          if (!launched) config.site_url = 'https://preview.delftscheopera.nl';
+          CMS.init({ config });
+        });
     </script>
   </body>
 </html>

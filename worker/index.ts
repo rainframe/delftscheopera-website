@@ -1,10 +1,14 @@
 /**
  * Cloudflare Worker voor delftscheopera.nl.
  *
- * De site zelf bestaat uit statische bestanden (dist/) die Cloudflare direct serveert. Deze worker
- * doet alleen wat niet statisch kan:
- * - /cms/auth en /cms/callback: inloggen in het beheer (Sveltia CMS) via GitHub (OAuth);
- * - alle andere adressen doorgeven aan de statische bestanden (onbekend = de 404-pagina).
+ * De site zelf bestaat uit statische bestanden (dist/). Deze worker komt vóór die bestanden
+ * (behalve /_astro/, zie wrangler.jsonc) en kiest per adres wat er gebeurt:
+ * - stichtingdoc.nl en www.stichtingdoc.nl: elke oude pagina gaat permanent naar haar nieuwe adres;
+ * - www.delftscheopera.nl en http://: permanent naar https://delftscheopera.nl;
+ * - vóór de lancering (Instellingen → Website gelanceerd staat uit) toont delftscheopera.nl alleen de
+ *   pagina "Binnenkort online" (het beheer blijft bereikbaar); de site staat op preview.delftscheopera.nl;
+ * - na de lancering verwijst preview.delftscheopera.nl door naar delftscheopera.nl;
+ * - /cms/auth en /cms/callback: inloggen in het beheer (Sveltia CMS) via GitHub (OAuth).
  *
  * Het inloggen is overgenomen van Sveltia CMS Authenticator (MIT-licentie,
  * https://github.com/sveltia/sveltia-cms-auth), beperkt tot GitHub en tot deze ene site: het token
@@ -151,12 +155,71 @@ async function handleCallback(request: Request, url: URL, env: Env): Promise<Res
   }
 }
 
+const SITE_HOST = 'delftscheopera.nl';
+const PREVIEW_HOST = 'preview.delftscheopera.nl';
+const OLD_HOSTS = new Set(['stichtingdoc.nl', 'www.stichtingdoc.nl']);
+
+/** Pagina's van de oude site met hun nieuwe adres; al het andere van de oude site gaat naar de homepage. */
+const OLD_PAGES = new Map([
+  ['/producties', '/projecten/'],
+  ['/organisatie', '/organisatie/'],
+  ['/contact', '/contact/'],
+]);
+
+/** Wat op delftscheopera.nl ook vóór de lancering bereikbaar is: het beheer en een paar losse bestanden. */
+const OPEN_BEFORE_LAUNCH =
+  /^\/(admin(\/.*)?|robots\.txt|site-status\.json|favicon\.(ico|svg)|apple-touch-icon\.png|og-default\.png)$/;
+
+let launched: boolean | undefined;
+
+/** Of de site gelanceerd is (/site-status.json, gemaakt uit de instellingen); per instantie onthouden. */
+async function isLaunched(env: Env, url: URL): Promise<boolean> {
+  if (launched === undefined) {
+    const response = await env.ASSETS.fetch(new Request(new URL('/site-status.json', url)));
+    if (!response.ok) return false;
+    launched = ((await response.json()) as { launched?: unknown }).launched === true;
+  }
+  return launched;
+}
+
+/** De pagina "Binnenkort online", op elk adres van delftscheopera.nl. */
+async function underConstruction(env: Env, url: URL): Promise<Response> {
+  const page = await env.ASSETS.fetch(new Request(new URL('/binnenkort/', url)));
+  const headers = new Headers(page.headers);
+  headers.set('X-Robots-Tag', 'noindex');
+  return new Response(page.body, { status: 200, headers });
+}
+
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
+    const host = url.hostname;
+
+    if (OLD_HOSTS.has(host)) {
+      const path = url.pathname.replace(/\/+$/, '').toLowerCase();
+      return Response.redirect(`https://${SITE_HOST}${OLD_PAGES.get(path) ?? '/'}`, 301);
+    }
+    if (host === `www.${SITE_HOST}`) {
+      return Response.redirect(`https://${SITE_HOST}${url.pathname}${url.search}`, 301);
+    }
+    if (url.protocol === 'http:' && (host === SITE_HOST || host === PREVIEW_HOST)) {
+      return Response.redirect(`https://${host}${url.pathname}${url.search}`, 301);
+    }
+
     if (request.method === 'GET' && url.pathname === '/cms/auth') return handleAuth(url, env);
     if (request.method === 'GET' && url.pathname === '/cms/callback')
       return handleCallback(request, url, env);
+
+    if (host === SITE_HOST && !OPEN_BEFORE_LAUNCH.test(url.pathname) && !(await isLaunched(env, url))) {
+      return underConstruction(env, url);
+    }
+    if (host === PREVIEW_HOST) {
+      if (await isLaunched(env, url)) {
+        return Response.redirect(`https://${SITE_HOST}${url.pathname}${url.search}`, 301);
+      }
+      // Het inloggen in het beheer is aan delftscheopera.nl gekoppeld (callback-URL van GitHub).
+      if (url.pathname.startsWith('/admin')) return Response.redirect(`https://${SITE_HOST}/admin/`, 302);
+    }
     return env.ASSETS.fetch(request);
   },
 };

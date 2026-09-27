@@ -146,12 +146,34 @@ nooit ongemerkt live gaat.
 ## Publiceren
 
 De site wordt gehost op **Cloudflare Workers** (statische bestanden, gratis) en automatisch gebouwd vanuit
-GitHub: elke wijziging op `main` gaat live, andere branches krijgen een eigen voorbeeld-URL. De
-configuratie staat in `wrangler.jsonc`; het domein delftscheopera.nl is in Cloudflare als _Custom
-domain_ aan de worker gekoppeld (niet in `wrangler.jsonc`, dus een deploy laat het ongemoeid).
+GitHub: elke wijziging op `main` staat binnen een paar minuten online. De configuratie staat in
+`wrangler.jsonc`. De domeinen (delftscheopera.nl, www.delftscheopera.nl en
+preview.delftscheopera.nl) zijn in Cloudflare als _Custom domain_ aan de worker gekoppeld, niet in
+`wrangler.jsonc`, dus een deploy laat ze ongemoeid. Via `*.workers.dev` is de site niet bereikbaar.
+
+De worker ([worker/index.ts](worker/index.ts)) komt vóór de statische bestanden en kiest per domein
+wat er gebeurt: de pagina _Binnenkort online_, de preview, doorverwijzingen en het inloggen in het
+beheer. Alleen `/_astro/` (bestanden met een hash in de naam) gaat er rechtstreeks omheen.
 
 `npm run check:live` controleert de live site: alle pagina's en bestanden, de headers, de
-doorverwijzingen hieronder, het inloggen in het beheer, het nieuwsbriefformulier en de statistieken.
+doorverwijzingen, _Binnenkort online_, het inloggen in het beheer, het nieuwsbriefformulier en de
+statistieken.
+
+### Preview en lancering
+
+Zolang in het beheer onder _Instellingen_ **Website gelanceerd** uit staat (`launched: false` in
+`settings/site.yml`):
+
+- toont delftscheopera.nl op elk adres alleen _Binnenkort online_
+  ([src/pages/binnenkort.astro](src/pages/binnenkort.astro));
+- staat de site zelf, met alle wijzigingen, op **https://preview.delftscheopera.nl**;
+- blijft het beheer op https://delftscheopera.nl/admin/ (de preview verwijst daarheen, omdat het
+  inloggen via GitHub aan dat adres gekoppeld is);
+- hebben alle pagina's `noindex` en blokkeert robots.txt alles.
+
+**Lanceren** = _Website gelanceerd_ aanzetten. Na de build staat de site op delftscheopera.nl, mogen
+zoekmachines hem opnemen en verwijst preview.delftscheopera.nl door naar delftscheopera.nl. De worker
+leest die instelling uit `/site-status.json`, dat bij het bouwen gemaakt wordt.
 
 ### Inloggen in het beheer
 
@@ -166,38 +188,29 @@ doorverwijzingen hieronder, het inloggen in het beheer, het nieuwsbriefformulier
    [rainframe/delftscheopera-website](https://github.com/rainframe/delftscheopera-website)
    (_Settings → Collaborators → Add people_).
 
-Het beheer werkt daarna op https://delftscheopera.nl/admin/. Gebruik altijd het domein zonder `www`:
-de callback-URL van de OAuth App is aan dat domein gekoppeld.
+Het beheer werkt daarna op https://delftscheopera.nl/admin/, ook vóór de lancering. Gebruik altijd
+het domein zonder `www`: de callback-URL van de OAuth App is aan dat domein gekoppeld.
 
-### Doorverwijzingen (www en stichtingdoc.nl)
+### Doorverwijzingen (www, http en stichtingdoc.nl)
 
-Beide domeinen staan in hetzelfde Cloudflare-account en hun webadressen lopen al via Cloudflare
-(oranje wolkje). De doorverwijzingen zijn daarom _Redirect Rules_ in het dashboard; DNS hoeft niet te
-veranderen en de MX-records (e-mail) blijven zoals ze zijn. Maak ze aan via _(domein) → Rules →
-Redirect Rules → Create rule_, kies _Custom filter expression_ → _Edit expression_, en stel de
-doorverwijzing in als **301** zonder _Preserve query string_ (behalve bij www).
+De worker verwijst permanent (301) door:
 
-Zet voor beide domeinen ook _SSL/TLS → Edge Certificates → **Always Use HTTPS**_ aan, zodat
-`http://` altijd naar `https://` gaat.
+- `www.delftscheopera.nl` en `http://` → `https://delftscheopera.nl` (zelfde pagina);
+- de oude pagina's van stichtingdoc.nl → hun nieuwe tegenhanger: `/producties` → `/projecten/`,
+  `/organisatie` → `/organisatie/`, `/contact` → `/contact/`, en al het andere → de homepage. De
+  lijst staat in `OLD_PAGES` in [worker/index.ts](worker/index.ts) en in `scripts/check-live.mjs`;
+  houd die twee gelijk.
 
-**delftscheopera.nl**, één regel (die gaat vóór de worker, dus het maakt niet uit of www zelf ook als
-_Custom domain_ aan de worker hangt):
+Daarvoor moeten stichtingdoc.nl en www.stichtingdoc.nl aan de worker gekoppeld zijn:
 
-- `www naar delftscheopera.nl`: expressie `(http.host eq "www.delftscheopera.nl")`, type _Dynamic_,
-  doel `concat("https://delftscheopera.nl", http.request.uri.path)`, _Preserve query string_ aan.
+1. Verwijder in Cloudflare bij stichtingdoc.nl → _DNS_ de A-, AAAA- en CNAME-records van
+   `stichtingdoc.nl` en `www` (die wijzen naar de oude Google Site). Laat de MX- en TXT-records
+   staan, anders werkt de e-mail niet meer.
+2. Voeg bij de worker onder _Domains → Add domain_ `stichtingdoc.nl` en `www.stichtingdoc.nl` toe als
+   _Custom domain_.
 
-**stichtingdoc.nl**, vier regels in deze volgorde (de eerste die past, wint), type _Static_:
-
-1. `Producties`: `(http.host in {"stichtingdoc.nl" "www.stichtingdoc.nl"} and http.request.uri.path in {"/producties" "/producties/"})`
-   → `https://delftscheopera.nl/projecten/`
-2. `Organisatie`: `(http.host in {"stichtingdoc.nl" "www.stichtingdoc.nl"} and http.request.uri.path in {"/organisatie" "/organisatie/"})`
-   → `https://delftscheopera.nl/organisatie/`
-3. `Contact`: `(http.host in {"stichtingdoc.nl" "www.stichtingdoc.nl"} and http.request.uri.path in {"/contact" "/contact/"})`
-   → `https://delftscheopera.nl/contact/`
-4. `Overige pagina's`: `(http.host in {"stichtingdoc.nl" "www.stichtingdoc.nl"})` → `https://delftscheopera.nl/`
-
-De oude site op Google Sites is daarna niet meer via stichtingdoc.nl te bereiken en kan offline. De
-lijst met oude adressen staat ook in `scripts/check-live.mjs`; houd die twee gelijk.
+De oude Google Site is daarna niet meer via stichtingdoc.nl te bereiken en kan offline. _Always Use
+HTTPS_ (_SSL/TLS → Edge Certificates_) aanzetten mag, maar is niet nodig: de worker doet het al.
 
 ### Nieuwsbrief (Laposta)
 
@@ -263,10 +276,11 @@ het al.
 - [ ] Nieuwsbrief: Laposta-account en -lijst aanmaken en het formulier koppelen (zie _Nieuwsbrief_)
 - [ ] IBAN invullen in `settings/site.yml` als dat op _Steun ons_ moet staan
 - [ ] Het client secret van de GitHub OAuth App als Secret in Cloudflare zetten (zie _Inloggen in het beheer_)
-- [ ] Doorverwijzingen voor www en stichtingdoc.nl aanmaken (zie _Doorverwijzingen_)
+- [ ] preview.delftscheopera.nl als _Custom domain_ aan de worker koppelen (zie _Preview en lancering_)
+- [ ] stichtingdoc.nl en www.stichtingdoc.nl aan de worker koppelen (zie _Doorverwijzingen_)
 - [ ] Cloudflare Web Analytics aanzetten (zie _Statistieken_)
 - [ ] `npm run check:live` draaien: er mogen geen ✗ meer staan
 - [ ] Een bericht in de [Post Inspector](https://www.linkedin.com/post-inspector/) van LinkedIn bekijken
-- [ ] Bij de lancering: in het beheer onder _Instellingen_ **Zichtbaar voor zoekmachines** aanzetten
-      (tot dan staat op elke pagina `noindex` en blokkeert robots.txt alles), en eventueel de sitemap
-      `https://delftscheopera.nl/sitemap-index.xml` aanmelden bij Google Search Console
+- [ ] Bij de lancering: in het beheer onder _Instellingen_ **Website gelanceerd** aanzetten, en
+      eventueel de sitemap `https://delftscheopera.nl/sitemap-index.xml` aanmelden bij Google Search
+      Console

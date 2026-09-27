@@ -6,6 +6,9 @@ gegevens van de website aan, zonder iets van websites bouwen te weten. Deze hand
 Het beheer staat op **https://delftscheopera.nl/admin/** en werkt in elke moderne browser, ook op je
 telefoon of tablet.
 
+> **Tot de lancering** toont delftscheopera.nl alleen de melding _Binnenkort online_. De website zelf,
+> met al je wijzigingen, bekijk je dan op **https://preview.delftscheopera.nl**.
+
 ## Voordat je begint
 
 Je hebt twee dingen nodig:
@@ -157,8 +160,10 @@ en **Statistieken** staan de koppelingen met Laposta en Cloudflare; die stelt de
 Het beheer controleert of het KvK-nummer 8 cijfers heeft en het RSIN 9. Klopt dat niet, dan kun je
 de instellingen pas opslaan als het nummer verbeterd is.
 
-**Zichtbaar voor zoekmachines** staat uit zolang de website nog niet officieel gelanceerd is. Google
-neemt de site dan niet op. Zet dit pas aan als alles klaar is.
+**Website gelanceerd** staat uit zolang de website nog niet officieel gelanceerd is. Op
+delftscheopera.nl staat dan alleen de melding _Binnenkort online_; de site zelf, met al je wijzigingen,
+bekijk je op **https://preview.delftscheopera.nl**. Google neemt de site dan niet op. Zet dit pas aan
+als alles klaar is: dan staat de site binnen een paar minuten op delftscheopera.nl.
 
 ## Gele markeringen: tekst die nog moet komen
 

@@ -58,6 +58,10 @@ const strings = {
     'newsletterThanks.text':
       'Je bent aangemeld voor onze nieuwsbrief. Afmelden kan altijd via de link onderaan elke nieuwsbrief.',
     'newsletterThanks.home': 'Naar de homepage',
+    'construction.title': 'Binnenkort online',
+    'construction.text':
+      'Stichting DOC heet voortaan Delftsche Opera, en daar hoort een nieuwe website bij. Die is bijna klaar.',
+    'construction.contact': 'Vragen? Mail naar',
     'nav.home': 'Home',
     'nav.lustrum': 'Lustrum',
     'nav.nieuws': 'Nieuws',
@@ -124,6 +128,10 @@ const strings = {
     'newsletterThanks.text':
       'You are now subscribed to our newsletter. You can unsubscribe at any time using the link at the bottom of every newsletter.',
     'newsletterThanks.home': 'Go to the homepage',
+    'construction.title': 'Coming soon',
+    'construction.text':
+      'Stichting DOC is now called Delftsche Opera, and a new website is on its way. It is almost ready.',
+    'construction.contact': 'Questions? Email',
     'nav.home': 'Home',
     'nav.lustrum': 'Lustrum',
     'nav.nieuws': 'News',

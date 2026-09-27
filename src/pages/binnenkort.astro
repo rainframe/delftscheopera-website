@@ -1,0 +1,75 @@
+---
+/**
+ * "Binnenkort online": tot de lancering toont delftscheopera.nl alleen deze pagina, op elk adres
+ * (zie worker/index.ts). De site zelf staat dan op preview.delftscheopera.nl.
+ */
+import { Image } from 'astro:assets';
+import logoWhite from '@/assets/brand/logo-white.png';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SocialLinks from '@/components/SocialLinks.astro';
+import StageMessage from '@/components/StageMessage.astro';
+import { t } from '@/i18n/ui';
+import { getSettings } from '@/lib/content';
+
+const { email } = await getSettings();
+---
+
+<BaseLayout
+  locale="nl"
+  title={t('nl', 'construction.title')}
+  description={t('nl', 'construction.text')}
+  alternates={{}}
+  standalone
+  bare
+>
+  <div class="construction">
+    <StageMessage>
+      <Image class="construction__logo" src={logoWhite} alt="Delftsche Opera" width={260} loading="eager" />
+      <h1>{t('nl', 'construction.title')}</h1>
+      <p class="stage-message__lead">{t('nl', 'construction.text')}</p>
+      <p>
+        {`${t('nl', 'construction.contact')} `}
+        <a href={`mailto:${email}`}>{email}</a>
+      </p>
+      <SocialLinks locale="nl" class="construction__social" />
+      <div class="construction__en" lang="en">
+        <p>
+          <strong>{t('en', 'construction.title')}.</strong>
+          {` ${t('en', 'construction.text')} ${t('en', 'construction.contact')} `}
+          <a href={`mailto:${email}`}>{email}</a>
+        </p>
+      </div>
+    </StageMessage>
+  </div>
+</BaseLayout>
+
+<style>
+  .construction :global(.stage-message) {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .construction :global(.construction__logo) {
+    width: clamp(160px, 22vw, 260px);
+    height: auto;
+    margin: 0 auto 1.5rem;
+  }
+
+  .construction a {
+    color: inherit;
+  }
+
+  .construction :global(.construction__social) {
+    justify-content: center;
+    margin-top: 1.25rem;
+    font-size: 2.5rem;
+  }
+
+  .construction__en {
+    max-width: 32rem;
+    margin: 2.5rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 0.3);
+    font-size: var(--fs-small);
+  }
+</style>

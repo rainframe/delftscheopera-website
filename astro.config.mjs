@@ -10,7 +10,9 @@ import { routes } from './src/i18n/routes.ts';
 const site = 'https://delftscheopera.nl';
 
 /** Pagina's die niet in de sitemap horen. */
-const unlisted = Object.values(routes.nieuwsbriefBedankt).map((path) => new URL(path, site).href);
+const unlisted = [...Object.values(routes.nieuwsbriefBedankt), '/binnenkort/'].map(
+  (path) => new URL(path, site).href,
+);
 
 /**
  * Lists every visible placeholder (class "todo") left after a build, grouped by text, so nothing
