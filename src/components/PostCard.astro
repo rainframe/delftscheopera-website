@@ -14,9 +14,11 @@ interface Props {
   tone?: 'navy' | 'white';
   headingLevel?: 'h2' | 'h3';
   size?: 'default' | 'large';
+  /** Direct laden (voor een kaart bovenaan de pagina). */
+  eager?: boolean;
 }
 
-const { post, locale, tone = 'white', headingLevel = 'h3', size = 'default' } = Astro.props;
+const { post, locale, tone = 'white', headingLevel = 'h3', size = 'default', eager = false } = Astro.props;
 const { title, summary, date, cover } = post.entry.data;
 const Heading = headingLevel;
 const otherLanguage = post.locale !== locale;
@@ -30,6 +32,7 @@ const otherLanguage = post.locale !== locale;
           <Image
             src={cover}
             alt=""
+            loading={eager ? 'eager' : 'lazy'}
             widths={size === 'large' ? [480, 800, 1200, 1600] : [400, 640, 900]}
             sizes={size === 'large' ? '(min-width: 64rem) 55vw, 100vw' : '(min-width: 64rem) 30vw, (min-width: 40rem) 45vw, 100vw'}
           />

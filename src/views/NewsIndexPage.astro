@@ -31,7 +31,7 @@ const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
       <>
         <section class="news-featured band" aria-label={featured.entry.data.title}>
           <div class="container">
-            <PostCard post={featured} locale={locale} tone="navy" size="large" headingLevel="h2" />
+            <PostCard post={featured} locale={locale} tone="navy" size="large" headingLevel="h2" eager />
           </div>
         </section>
         {rest.length > 0 && (

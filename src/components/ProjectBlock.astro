@@ -140,6 +140,11 @@ const mediaSide = dark ? 'right' : 'left';
     height: auto;
   }
 
+  /* Het silhouet is navy; op een navy vlak wordt het wit. */
+  .band .project__silhouette {
+    filter: brightness(0) invert(1);
+  }
+
   @media (max-width: 56rem) {
     .project__grid {
       grid-template-columns: minmax(0, 1fr);

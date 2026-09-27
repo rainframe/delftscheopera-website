@@ -11,7 +11,7 @@
  * Afbeeldingen staan in src/assets/uploads/ en worden relatief vanaf het contentbestand verwezen,
  * zodat Astro ze kan optimaliseren.
  */
-import { defineCollection, reference } from 'astro:content';
+import { defineCollection, reference, type SchemaContext } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
@@ -107,7 +107,7 @@ const settings = defineCollection({
 });
 
 // Losse afbeelding met alt-tekst, gebruikt in paginablokken.
-const pictureFields = (image: () => z.ZodType) => ({
+const pictureFields = (image: SchemaContext['image']) => ({
   image: image(),
   imageAlt: z.string(),
 });
