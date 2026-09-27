@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Beheer | Delftsche Opera</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+    </script>
+    <script src="/admin/sveltia-cms.js"></script>
+    <script>
+      // Lokaal testen zonder GitHub: open /admin/index.html?test op localhost.
+      // Wijzigingen blijven dan alleen in deze browser (virtueel bestandssysteem).
+      const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+      const useTestBackend = isLocal && new URLSearchParams(location.search).has('test');
+
+      CMS.registerPreviewStyle('/admin/preview.css');
+      CMS.init(useTestBackend ? { config: { backend: { name: 'test-repo' } } } : undefined);
+    </script>
+  </body>
+</html>

@@ -27,3 +27,8 @@ npm-debug.log*
 /Website Delftsche Opera Rebrand vormgeving.pdf
 /branding assets/
 /photos/
+
+# Sveltia CMS wordt bij dev/build uit node_modules gekopieerd (scripts/copy-cms.mjs)
+/public/admin/sveltia-cms.js
+/public/admin/chunks/
+/public/admin/league-spartan.woff2

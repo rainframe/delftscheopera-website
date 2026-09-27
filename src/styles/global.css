@@ -205,7 +205,9 @@ a:hover {
   margin-block: 1.5em;
 }
 
-/* Zichtbare placeholder voor tekst die nog aangevuld moet worden. */
+/* Zichtbare placeholder voor tekst die nog aangevuld moet worden
+   (in content: een alinea die begint met "TODO:"). */
+p.todo,
 mark.todo {
   background: var(--todo);
   color: #3a2c00;
@@ -215,6 +217,11 @@ mark.todo {
   font-weight: 400;
   font-family: var(--font-body);
   font-size: 0.85em;
+}
+
+p.todo {
+  width: fit-content;
+  padding: 0.4em 0.7em;
 }
 
 /* Pijl-link zoals in de lustrum-banner (▶). */

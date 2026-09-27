@@ -7,7 +7,7 @@ nl:
     subtitle: Help ons met het realiseren van prachtige concerten
     intro: De Delftsche Opera organiseert grootse producties voor het Delftse studentenorkest en -koor Krashna Musika.
     linkLabel: Zo kun je ons steunen
-    image: ../../assets/uploads/orkest-dirigent.jpg
+    image: /src/assets/uploads/orkest-dirigent.jpg
     imageAlt: Het orkest van Krashna Musika tijdens een concert, met de dirigent rechts
   news:
     title: Nieuws
@@ -18,7 +18,7 @@ nl:
     year: '2028'
     credit: Eduardus Lee
     linkLabel: Lees meer over het lustrum
-    image: ../../assets/uploads/concertgebouw-lustrum.jpg
+    image: /src/assets/uploads/concertgebouw-lustrum.jpg
     imageAlt: Koor en orkest op het podium van een concertzaal met een groot orgel
   conductors:
     title: Dirigenten
@@ -26,7 +26,7 @@ nl:
     people:
       - ruben-de-grauw
       - stijn-berkouwer
-    image: ../../assets/uploads/carmina-burana-2023.jpg
+    image: /src/assets/uploads/carmina-burana-2023.jpg
     imageAlt: Koor en orkest van Krashna Musika op het podium tijdens Carmina Burana
 en:
   seo:
@@ -37,15 +37,24 @@ en:
     subtitle: Help us make wonderful concerts happen
     intro: Delftsche Opera organises large-scale productions for Krashna Musika, the student orchestra and choir of Delft.
     linkLabel: How you can support us
+    image: /src/assets/uploads/orkest-dirigent.jpg
     imageAlt: The Krashna Musika orchestra in concert, with the conductor on the right
   news:
     title: News
     moreLabel: All news
   feature:
+    title: Lustrum
     subtitle: 60 years of Krashna Musika
+    year: '2028'
+    credit: Eduardus Lee
     linkLabel: Read more about the anniversary
+    image: /src/assets/uploads/concertgebouw-lustrum.jpg
     imageAlt: Choir and orchestra on the stage of a concert hall with a large organ
   conductors:
     title: Conductors
     text: Krashna Musika's choir and orchestra are led by two permanent conductors. Together with them, the students perform large-scale symphonic repertoire at a high level.
+    people:
+      - ruben-de-grauw
+      - stijn-berkouwer
+    image: /src/assets/uploads/carmina-burana-2023.jpg
     imageAlt: Krashna Musika's choir and orchestra on stage during Carmina Burana

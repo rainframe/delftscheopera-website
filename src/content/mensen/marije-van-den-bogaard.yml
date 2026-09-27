@@ -4,5 +4,5 @@ role:
   nl: Voorzitter
   en: Chair
 email: voorzitter@delftscheopera.nl
-photo: ../../assets/uploads/marije-van-den-bogaard.jpg
+photo: /src/assets/uploads/marije-van-den-bogaard.jpg
 order: 1

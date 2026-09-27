@@ -1,0 +1,38 @@
+/* Huisstijl in het voorbeeldvenster van het beheer. */
+@font-face {
+  font-family: 'League Spartan';
+  src: url('/admin/league-spartan.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #042d64;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'League Spartan', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+a {
+  color: #042d64;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+blockquote {
+  margin-left: 0;
+  padding-left: 1em;
+  border-left: 3px solid #042d64;
+  font-style: italic;
+}

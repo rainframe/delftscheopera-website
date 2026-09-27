@@ -4,5 +4,5 @@ role:
   nl: Penningmeester
   en: Treasurer
 email: penningmeester@delftscheopera.nl
-photo: ../../assets/uploads/rein-lakerveld.jpg
+photo: /src/assets/uploads/rein-lakerveld.jpg
 order: 2

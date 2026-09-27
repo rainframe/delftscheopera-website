@@ -5,7 +5,7 @@ nl:
   hero:
     title: Steun ons!
     subtitle: Help ons met het realiseren van prachtige concerten
-    image: ../../assets/uploads/orkest-panorama.jpg
+    image: /src/assets/uploads/orkest-panorama.jpg
     imageAlt: Het orkest van Krashna Musika op het podium, in blauw licht
   intro: Grote producties met orkest, koor, solisten en regie zijn niet mogelijk zonder steun van buiten. Met jouw bijdrage helpen we studenten om op hoog niveau opera en symfonische muziek te maken, en brengen we die muziek naar een breed publiek.
   ways:
@@ -23,6 +23,7 @@ en:
   hero:
     title: Support us!
     subtitle: Help us make wonderful concerts happen
+    image: /src/assets/uploads/orkest-panorama.jpg
     imageAlt: The Krashna Musika orchestra on stage, in blue light
   intro: Large-scale productions with orchestra, choir, soloists and a stage director are not possible without outside support. Your contribution helps students make opera and symphonic music at a high level, and bring that music to a wide audience.
   ways:

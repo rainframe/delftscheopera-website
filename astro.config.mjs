@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { satteri } from '@astrojs/markdown-satteri';
 
 /**
  * Lists every page that still contains a visible placeholder
@@ -32,6 +33,39 @@ function todoReport() {
     },
   };
 }
+
+/**
+ * Het CMS slaat afbeeldingen op in src/assets/uploads/ en schrijft paden als
+ * `/src/assets/uploads/foto.jpg`. In frontmatter begrijpt Astro dat, maar in de tekst van een
+ * bericht optimaliseert Astro alleen relatieve paden en aliassen. Deze plug-in zet zulke paden
+ * daarom om naar de alias `@/assets/uploads/foto.jpg`.
+ * @type {import('satteri').MdastPluginDefinition}
+ */
+const cmsImagePaths = {
+  name: 'cms-image-paths',
+  image(node, ctx) {
+    if (node.url?.startsWith('/src/')) {
+      ctx.setProperty(node, 'url', `@/${node.url.slice('/src/'.length)}`);
+    }
+  },
+};
+
+/**
+ * Een alinea die begint met "TODO:" is een placeholder voor tekst die nog moet komen. Die wordt
+ * geel gemarkeerd (class "todo") en telt mee in het build-rapport hieronder. Het CMS laat zo'n
+ * alinea ongemoeid, anders dan HTML, die het in gewone tekst zou omzetten.
+ * @type {import('satteri').MdastPluginDefinition}
+ */
+const todoParagraphs = {
+  name: 'todo-paragraphs',
+  paragraph(node, ctx) {
+    const first = node.children?.[0];
+    if (first?.type === 'text' && first.value.startsWith('TODO:')) {
+      ctx.setProperty(first, 'value', first.value.replace(/^TODO:\s*/, ''));
+      ctx.setProperty(node, 'data', { hProperties: { className: ['todo'] } });
+    }
+  },
+};
 
 // https://astro.build/config
 export default defineConfig({
@@ -63,6 +97,9 @@ export default defineConfig({
   ],
   image: {
     layout: 'constrained',
+  },
+  markdown: {
+    processor: satteri({ mdastPlugins: [cmsImagePaths, todoParagraphs] }),
   },
   integrations: [sitemap(), todoReport()],
 });

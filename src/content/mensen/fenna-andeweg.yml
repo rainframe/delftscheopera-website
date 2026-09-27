@@ -3,5 +3,5 @@ group: bestuur
 role:
   nl: Algemeen bestuurslid
   en: General board member
-photo: ../../assets/uploads/fenna-andeweg.jpg
+photo: /src/assets/uploads/fenna-andeweg.jpg
 order: 6

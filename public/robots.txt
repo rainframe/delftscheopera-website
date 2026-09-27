@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /cms/
 
 Sitemap: https://delftscheopera.nl/sitemap-index.xml

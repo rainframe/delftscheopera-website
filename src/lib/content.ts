@@ -4,9 +4,11 @@ import { locales, postUrl, type Locale } from '@/i18n/routes';
 
 marked.use({ gfm: true });
 
-/** Markdown (uit YAML-velden) naar HTML. */
+/** Markdown (uit YAML-velden) naar HTML. Een alinea die begint met "TODO:" wordt een gele placeholder. */
 export function md(text: string | undefined): string {
-  return text ? (marked.parse(text, { async: false }) as string) : '';
+  if (!text) return '';
+  const html = marked.parse(text, { async: false }) as string;
+  return html.replace(/<p>TODO:\s*/g, '<p class="todo">');
 }
 
 /** Markdown zonder omringende <p>, voor korte teksten in koppen en labels. */

@@ -1,12 +1,22 @@
 // Cloudflare Workers: de gebouwde site (dist/) wordt als statische bestanden geserveerd.
-// Wordt pas gebruikt in fase 3 (koppelen aan GitHub via Workers Builds).
+// De worker (worker/index.ts) handelt alleen het inloggen in het beheer af (/cms/*).
 {
   "name": "delftscheopera-website",
+  "main": "worker/index.ts",
   "compatibility_date": "2026-09-27",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     // Onbekende adressen krijgen de 404-pagina ("Het doek is gevallen").
     "not_found_handling": "404-page",
-    "html_handling": "auto-trailing-slash"
+    "html_handling": "auto-trailing-slash",
+    // Alleen deze adressen gaan eerst langs de worker; al het andere komt direct uit dist/.
+    "run_worker_first": ["/cms/*"]
+  },
+  "vars": {
+    // Client ID van de GitHub OAuth-app. Die is openbaar en hoort hier te staan: variabelen in dit
+    // bestand overschrijven bij elke deploy wat in het Cloudflare-dashboard is ingesteld. Het
+    // bijbehorende secret (GITHUB_CLIENT_SECRET) staat alleen als "Secret" in Cloudflare.
+    "GITHUB_CLIENT_ID": ""
   }
 }

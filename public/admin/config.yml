@@ -1,0 +1,599 @@
+# yaml-language-server: $schema=../../node_modules/@sveltia/cms/schema/sveltia-cms.json
+#
+# Configuratie van het beheer (Sveltia CMS) op https://delftscheopera.nl/admin/
+# Documentatie: https://sveltiacms.app/en/docs
+#
+# De velden hieronder moeten overeenkomen met het contentmodel in src/content.config.ts.
+# Controleer na een wijziging met `npm run check:cms`.
+
+backend:
+  name: github
+  repo: delftscheopera/website # Wordt definitief in fase 3 (GitHub-repository van de stichting)
+  branch: main
+  base_url: https://delftscheopera.nl
+  auth_endpoint: cms/auth # Afgehandeld door worker/index.ts (inloggen met GitHub)
+  commit_messages:
+    create: 'Nieuw ({{collection}}): {{slug}}'
+    update: 'Bijgewerkt ({{collection}}): {{slug}}'
+    delete: 'Verwijderd ({{collection}}): {{slug}}'
+    uploadMedia: 'Upload: {{path}}'
+    deleteMedia: 'Upload verwijderd: {{path}}'
+
+app_title: Delftsche Opera – beheer
+logo:
+  src: /favicon.svg
+site_url: https://delftscheopera.nl
+
+# Alle foto's komen in één map. Astro maakt er bij het bouwen verschillende formaten van.
+media_folder: /src/assets/uploads
+public_folder: /src/assets/uploads
+media_libraries:
+  all:
+    transformations:
+      # Foto's worden bij het uploaden verkleind en omgezet naar WebP (ook iPhone-foto's);
+      # locatiegegevens (Exif) worden daarbij verwijderd.
+      raster_image:
+        format: webp
+        quality: 82
+        width: 2400
+        height: 2400
+      svg:
+        optimize: true
+
+# Adressen van nieuwe pagina's: kleine letters, zonder accenten, maximaal 60 tekens.
+slug:
+  encoding: ascii
+  clean_accents: true
+  maxlength: 60
+
+output:
+  # Lege optionele velden weglaten, zodat de controle van het contentmodel slaagt.
+  omit_empty_optional_fields: true
+
+i18n:
+  structure: multiple_folders
+  locales: [nl, en]
+  default_locale: nl
+
+collections:
+  # ------------------------------------------------------------------ Nieuws
+  - name: nieuws
+    label: Nieuws
+    label_singular: Nieuwsbericht
+    description: >-
+      Berichten op de nieuwspagina. Schrijf eerst de Nederlandse versie. Een Engelse vertaling is
+      optioneel: zet die aan via het menu ⋮ rechtsboven in het bericht.
+    folder: src/content/nieuws
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    slug: '{{slug}}'
+    summary: '{{title}}'
+    thumbnail: cover
+    sortable_fields:
+      fields: [date, title]
+      default:
+        field: date
+        direction: descending
+    view_filters:
+      - label: Concepten
+        field: draft
+        pattern: true
+    i18n:
+      initial_locales: [nl]
+    fields:
+      - name: title
+        label: Titel
+        widget: string
+        i18n: true
+      - name: date
+        label: Datum
+        widget: datetime
+        type: date
+        default: '{{now}}'
+        i18n: duplicate
+      - name: summary
+        label: Samenvatting
+        widget: text
+        i18n: true
+        hint: >-
+          Eén of twee zinnen. Staat op de nieuwspagina, in de RSS-feed en onder de link als je het
+          bericht op LinkedIn deelt.
+      - name: author
+        label: Auteur
+        widget: string
+        required: false
+        i18n: true
+        default: Bestuur Delftsche Opera
+      - name: cover
+        label: Omslagfoto
+        widget: image
+        required: false
+        i18n: duplicate
+        hint: Liggend formaat werkt het best. Dit is ook het plaatje als je het bericht op LinkedIn deelt.
+      - name: coverAlt
+        label: Beschrijving van de omslagfoto
+        widget: string
+        required: false
+        i18n: true
+        hint: >-
+          Voor wie de foto niet kan zien (bijvoorbeeld met een schermlezer). Beschrijf kort wat erop
+          staat, zoals "Koor en orkest op het podium van de Aula".
+      - name: coverCredit
+        label: Fotograaf
+        widget: string
+        required: false
+        i18n: duplicate
+      - name: draft
+        label: Concept
+        widget: boolean
+        default: false
+        i18n: duplicate
+        hint: Aan = het bericht is nog niet zichtbaar op de website.
+      - name: body
+        label: Tekst
+        widget: richtext
+        i18n: true
+        buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list, quote]
+        editor_components: [image]
+
+  # ------------------------------------------------------------------ Projecten
+  - name: projecten
+    label: Projecten
+    label_singular: Project
+    description: Producties op de projectenpagina, nieuwste eerst.
+    folder: src/content/projecten
+    extension: md
+    format: yaml-frontmatter
+    create: true
+    slug: '{{slug}}'
+    summary: '{{title}} ({{year}})'
+    thumbnail: image
+    sortable_fields:
+      fields: [year, title]
+      default:
+        field: year
+        direction: descending
+    i18n: true
+    fields:
+      - name: title
+        label: Titel
+        widget: string
+        i18n: true
+      - name: year
+        label: Jaar
+        widget: number
+        value_type: int
+        i18n: duplicate
+      - name: image
+        label: Foto
+        widget: image
+        required: false
+        i18n: duplicate
+      - name: imageAlt
+        label: Beschrijving van de foto
+        widget: string
+        required: false
+        i18n: true
+      - name: imageCredit
+        label: Fotograaf
+        widget: string
+        required: false
+        i18n: duplicate
+      - name: quote
+        label: Citaat uit een recensie
+        widget: string
+        required: false
+        i18n: true
+      - name: quoteSource
+        label: Bron van het citaat
+        widget: string
+        required: false
+        i18n: duplicate
+      - name: body
+        label: Tekst
+        widget: richtext
+        i18n: true
+        minimal: true
+        buttons: [bold, italic, link]
+        editor_components: []
+
+  # ------------------------------------------------------------------ Mensen
+  - name: mensen
+    label: Mensen
+    label_singular: Persoon
+    description: Bestuur, Raad van Toezicht en artistiek team.
+    folder: src/content/mensen
+    extension: yml
+    format: yaml
+    create: true
+    identifier_field: name
+    slug: '{{slug}}'
+    summary: '{{name}}'
+    thumbnail: photo
+    sortable_fields:
+      fields: [order, name]
+      default:
+        field: order
+        direction: ascending
+    view_groups:
+      - label: Groep
+        field: group
+    editor:
+      preview: false
+    fields:
+      - name: name
+        label: Naam
+        widget: string
+      - name: group
+        label: Groep
+        widget: select
+        options:
+          - { label: Bestuur, value: bestuur }
+          - { label: Raad van Toezicht, value: raad-van-toezicht }
+          - { label: Artistiek team, value: artistiek-team }
+      - name: role
+        label: Functie
+        widget: object
+        fields:
+          - { name: nl, label: Nederlands, widget: string }
+          - { name: en, label: Engels, widget: string, required: false }
+      - name: email
+        label: E-mailadres
+        widget: string
+        type: email
+        required: false
+        hint: Het functieadres, bijvoorbeeld voorzitter@delftscheopera.nl.
+      - name: photo
+        label: Portretfoto
+        widget: image
+        required: false
+        hint: Staand formaat. Zonder foto verschijnen de initialen.
+      - name: bio
+        label: Korte biografie
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - name: nl
+            label: Nederlands
+            widget: richtext
+            required: false
+            minimal: true
+            buttons: [bold, italic, link]
+            editor_components: []
+          - name: en
+            label: Engels
+            widget: richtext
+            required: false
+            minimal: true
+            buttons: [bold, italic, link]
+            editor_components: []
+      - name: workImage
+        label: Foto van een voorstelling
+        widget: image
+        required: false
+        hint: Alleen voor het artistiek team; verschijnt naast de biografie op de lustrumpagina.
+      - name: workImageAlt
+        label: Beschrijving van die foto
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: nl, label: Nederlands, widget: string, required: false }
+          - { name: en, label: Engels, widget: string, required: false }
+      - name: order
+        label: Volgorde
+        widget: number
+        value_type: int
+        default: 99
+        hint: Een lager nummer staat eerder in de lijst.
+
+  # ------------------------------------------------------------------ Pagina's
+  - name: paginas
+    label: Pagina's
+    label_singular: Pagina
+    description: Teksten van de vaste pagina's. De opmaak zelf zit in de code.
+    i18n: true
+    editor:
+      preview: false
+    files:
+      - name: home
+        label: Homepage
+        file: src/content/pages/home.yml
+        i18n: true
+        fields:
+          - &seo
+            name: seo
+            label: Zoekmachines en delen
+            widget: object
+            i18n: true
+            collapsed: true
+            hint: Titel en omschrijving voor Google en voor links die op sociale media gedeeld worden.
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: description, label: Omschrijving, widget: text, i18n: true }
+          - name: hero
+            label: Grote foto bovenaan (Steun ons)
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: subtitle, label: Ondertitel, widget: string, i18n: true }
+              - { name: intro, label: Korte introductie, widget: text, i18n: true }
+              - { name: linkLabel, label: Tekst van de link naar Steun ons, widget: string, i18n: true }
+              - { name: image, label: Foto, widget: image, i18n: duplicate }
+              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
+          - name: news
+            label: Nieuwsblok
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: moreLabel, label: Tekst van de link naar al het nieuws, widget: string, i18n: true }
+          - name: feature
+            label: Uitgelichte banner (lustrum)
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: subtitle, label: Ondertitel, widget: string, i18n: true }
+              - { name: year, label: Jaartal, widget: string, i18n: duplicate }
+              - { name: credit, label: Fotograaf, widget: string, required: false, i18n: duplicate }
+              - { name: linkLabel, label: Omschrijving van de link, widget: string, i18n: true }
+              - { name: image, label: Foto, widget: image, i18n: duplicate }
+              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
+          - name: conductors
+            label: Dirigenten
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: text, label: Tekst, widget: text, i18n: true }
+              - name: people
+                label: Dirigenten
+                widget: relation
+                collection: mensen
+                search_fields: [name]
+                display_fields: [name]
+                multiple: true
+                i18n: duplicate
+              - { name: image, label: Foto, widget: image, i18n: duplicate }
+              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
+
+      - name: lustrum
+        label: Lustrum
+        file: src/content/pages/lustrum.yml
+        i18n: true
+        fields:
+          - *seo
+          - name: banner
+            label: Banner bovenaan
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: subtitle, label: Ondertitel, widget: string, i18n: true }
+              - { name: year, label: Jaartal, widget: string, i18n: duplicate }
+              - { name: credit, label: Fotograaf, widget: string, required: false, i18n: duplicate }
+              - { name: image, label: Foto, widget: image, i18n: duplicate }
+              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
+          - name: intro
+            label: Community Opera
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - name: text
+                label: Tekst
+                widget: richtext
+                i18n: true
+                minimal: true
+                buttons: [bold, italic, link]
+                editor_components: []
+          - name: krashna
+            label: Krashna Musika
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - name: text
+                label: Tekst
+                widget: richtext
+                i18n: true
+                minimal: true
+                buttons: [bold, italic, link]
+                editor_components: []
+              - { name: linkLabel, label: Tekst van de link, widget: string, i18n: true }
+              - { name: linkUrl, label: Adres van de link, widget: string, type: url, i18n: duplicate }
+              - { name: image, label: Foto, widget: image, i18n: duplicate }
+              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
+          - name: team
+            label: Artistiek team (in deze volgorde)
+            widget: relation
+            collection: mensen
+            search_fields: [name]
+            display_fields: [name]
+            multiple: true
+            i18n: duplicate
+
+      - name: nieuws
+        label: Nieuwspagina
+        file: src/content/pages/nieuws.yml
+        i18n: true
+        fields:
+          - *seo
+          - { name: title, label: Titel, widget: string, i18n: true }
+          - { name: empty, label: Tekst als er nog geen nieuws is, widget: string, i18n: true }
+
+      - name: projecten
+        label: Projectenpagina
+        file: src/content/pages/projecten.yml
+        i18n: true
+        fields:
+          - *seo
+          - { name: title, label: Titel, widget: string, i18n: true }
+          - { name: intro, label: Introductie, widget: text, i18n: true }
+
+      - name: organisatie
+        label: Organisatie
+        file: src/content/pages/organisatie.yml
+        i18n: true
+        fields:
+          - *seo
+          - { name: title, label: Titel, widget: string, i18n: true }
+          - name: intro
+            label: Introductie
+            widget: richtext
+            i18n: true
+            minimal: true
+            buttons: [bold, italic, link]
+            editor_components: []
+          - { name: boardTitle, label: Kop boven het bestuur, widget: string, i18n: true }
+          - { name: supervisoryTitle, label: Kop boven de Raad van Toezicht, widget: string, i18n: true }
+          - { name: supervisoryText, label: Tekst over de Raad van Toezicht, widget: text, i18n: true }
+          - { name: infoTitle, label: Kop boven de algemene gegevens, widget: string, i18n: true }
+
+      - name: contact
+        label: Contact
+        file: src/content/pages/contact.yml
+        i18n: true
+        fields:
+          - *seo
+          - { name: title, label: Titel, widget: string, i18n: true }
+          - { name: intro, label: Introductie, widget: string, i18n: true }
+          - { name: boardTitle, label: Kop boven het bestuur, widget: string, i18n: true }
+
+      - name: steun-ons
+        label: Steun ons
+        file: src/content/pages/steun-ons.yml
+        i18n: true
+        fields:
+          - *seo
+          - name: hero
+            label: Grote foto bovenaan
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: subtitle, label: Ondertitel, widget: string, i18n: true }
+              - { name: image, label: Foto, widget: image, i18n: duplicate }
+              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
+          - { name: intro, label: Introductie, widget: text, i18n: true }
+          - name: ways
+            label: Manieren om te steunen
+            label_singular: Manier
+            widget: list
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string }
+              - name: text
+                label: Tekst
+                widget: richtext
+                minimal: true
+                buttons: [bold, italic, link]
+                editor_components: []
+          - name: anbi
+            label: Blok over de ANBI-status
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: text, label: Tekst, widget: text, i18n: true }
+
+      - name: anbi
+        label: ANBI
+        file: src/content/pages/anbi.yml
+        i18n: true
+        fields:
+          - *seo
+          - { name: title, label: Titel, widget: string, i18n: true }
+          - name: status
+            label: Status
+            widget: richtext
+            i18n: true
+            minimal: true
+            buttons: [bold, italic, link]
+            editor_components: []
+          - { name: text, label: Toelichting, widget: text, i18n: true }
+          - { name: goalTitle, label: Kop boven de doelstelling, widget: string, i18n: true }
+          - { name: goal, label: Doelstelling, widget: text, i18n: true }
+          - { name: documentsTitle, label: Kop boven de documenten, widget: string, i18n: true }
+          - name: documents
+            label: Documenten
+            label_singular: Document
+            widget: list
+            i18n: true
+            hint: Zonder bestand staat er "volgt" achter de titel.
+            fields:
+              - { name: title, label: Titel, widget: string }
+              - name: url
+                label: Bestand (pdf)
+                widget: file
+                required: false
+                media_folder: /public/documenten
+                public_folder: /documenten
+
+      - name: privacy
+        label: Privacyverklaring
+        file: src/content/pages/privacy.yml
+        i18n: true
+        fields:
+          - *seo
+          - { name: title, label: Titel, widget: string, i18n: true }
+          - name: text
+            label: Tekst
+            widget: richtext
+            i18n: true
+            buttons: [bold, italic, link, heading-two, heading-three, bulleted-list]
+            editor_components: []
+
+  # ------------------------------------------------------------------ Instellingen
+  - name: instellingen
+    label: Instellingen
+    description: Gegevens van de stichting die op meerdere pagina's staan.
+    editor:
+      preview: false
+    files:
+      - name: site
+        label: Gegevens van de stichting
+        file: src/content/settings/site.yml
+        fields:
+          - { name: name, label: Naam (zoals op de website), widget: string }
+          - { name: legalName, label: Statutaire naam, widget: string }
+          - { name: email, label: Algemeen e-mailadres, widget: string, type: email }
+          - name: address
+            label: Adres
+            widget: object
+            fields:
+              - { name: street, label: Straat en huisnummer, widget: string }
+              - { name: postcode, label: Postcode, widget: string }
+              - { name: city, label: Plaats, widget: string }
+          - { name: kvk, label: KvK-nummer, widget: string, pattern: ['^\d{8}$', 'Een KvK-nummer bestaat uit 8 cijfers.'] }
+          - { name: rsin, label: RSIN, widget: string, pattern: ['^\d{9}$', 'Een RSIN bestaat uit 9 cijfers.'] }
+          - name: iban
+            label: IBAN
+            widget: string
+            required: false
+            hint: Als dit is ingevuld, staat het rekeningnummer op de pagina Steun ons.
+          - { name: ibanName, label: Ten name van, widget: string, required: false }
+          - name: socials
+            label: Sociale media
+            widget: object
+            fields:
+              - { name: instagram, label: Instagram, widget: string, type: url, required: false }
+              - { name: linkedin, label: LinkedIn, widget: string, type: url, required: false }
+          - name: newsletter
+            label: Nieuwsbrief
+            widget: object
+            collapsed: true
+            fields:
+              - name: provider
+                label: Dienst
+                widget: select
+                options: [laposta]
+              - name: formAction
+                label: Formulieradres
+                widget: string
+                required: false
+                hint: Wordt in fase 4 gekoppeld aan het aanmeldformulier.

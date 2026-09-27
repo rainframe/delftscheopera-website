@@ -4,5 +4,5 @@ role:
   nl: Secretaris
   en: Secretary
 email: secretaris@delftscheopera.nl
-photo: ../../assets/uploads/iris-wegewijs.jpg
+photo: /src/assets/uploads/iris-wegewijs.jpg
 order: 3
