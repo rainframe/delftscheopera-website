@@ -1,0 +1,165 @@
+---
+/**
+ * Aanmeldformulier voor de nieuwsbrief, bovenaan de footer. Het formulier gaat rechtstreeks naar de
+ * nieuwsbriefdienst (nu Laposta), die de bezoeker daarna naar onze bedankpagina stuurt. Alle
+ * gegevens van de dienst staan in Instellingen → Nieuwsbrief, zodat een andere dienst met een
+ * gewoon HTML-formulier geen codewijziging vraagt.
+ */
+import { pageUrl, type Locale } from '@/i18n/routes';
+import { t } from '@/i18n/ui';
+import { getSettings } from '@/lib/content';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const { newsletter } = await getSettings();
+const { action, emailField, redirectField, honeypotField } = newsletter;
+const ready = Boolean(action && emailField);
+const hiddenFields = newsletter.hiddenFields.filter(
+  ({ name }) => name !== redirectField && name !== honeypotField,
+);
+const thanksUrl = new URL(pageUrl('nieuwsbriefBedankt', locale), Astro.site ?? 'https://delftscheopera.nl')
+  .href;
+---
+
+<section class="newsletter" aria-labelledby="newsletter-title">
+  <div class="newsletter__intro">
+    <h2 id="newsletter-title" class="newsletter__title">
+      {t(locale, 'newsletter.title')}
+    </h2>
+    <p>{t(locale, 'newsletter.text')}</p>
+  </div>
+
+  <form class="newsletter__form" action={action} method="post" accept-charset="utf-8">
+    {hiddenFields.map(({ name, value }) => (
+      <input type="hidden" name={name} value={value} />
+    ))}
+    {redirectField && <input type="hidden" name={redirectField} value={thanksUrl} />}
+    <div class="newsletter__row">
+      <label class="visually-hidden" for="newsletter-email">
+        {t(locale, 'newsletter.email')}
+      </label>
+      <input
+        id="newsletter-email"
+        type="email"
+        name={emailField}
+        required
+        autocomplete="email"
+        placeholder={t(locale, 'newsletter.placeholder')}
+        disabled={!ready}
+      />
+      <button type="submit" disabled={!ready}>
+        {t(locale, 'newsletter.submit')}
+      </button>
+    </div>
+    {honeypotField && (
+      <input
+        class="newsletter__trap"
+        type="text"
+        name={honeypotField}
+        tabindex="-1"
+        autocomplete="new-password"
+        aria-hidden="true"
+      />
+    )}
+    <p class="newsletter__note">
+      {`${t(locale, 'newsletter.privacy')} `}
+      <a href={pageUrl('privacy', locale)}>{t(locale, 'newsletter.privacyLink')}</a>
+    </p>
+    {!ready && (
+      <p class="todo">
+        Nieuwsbrief nog niet gekoppeld: vul de gegevens van het aanmeldformulier in bij Instellingen →
+        Nieuwsbrief.
+      </p>
+    )}
+  </form>
+</section>
+
+<style>
+  .newsletter {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 1.25rem clamp(1.5rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  .newsletter__title {
+    margin-bottom: 0.6rem;
+    font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+    line-height: 1.1;
+  }
+
+  .newsletter__row {
+    display: flex;
+  }
+
+  .newsletter__row input,
+  .newsletter__row button {
+    padding: 0.8rem 1.1rem;
+    border: 2px solid var(--white);
+    border-radius: 0;
+    font: inherit;
+  }
+
+  .newsletter__row input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    color: var(--white);
+  }
+
+  .newsletter__row input::placeholder {
+    color: rgb(255 255 255 / 0.75);
+    opacity: 1;
+  }
+
+  .newsletter__row button {
+    flex: none;
+    background: var(--white);
+    color: var(--navy);
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .newsletter__row button:hover:not(:disabled) {
+    background: transparent;
+    color: var(--white);
+  }
+
+  .newsletter__row :disabled {
+    cursor: not-allowed;
+  }
+
+  /* Anti-spamveld: onzichtbaar voor bezoekers, maar spambots vullen het in. */
+  .newsletter__trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .newsletter__note {
+    margin-top: 0.6rem;
+    font-size: var(--fs-tiny);
+  }
+
+  .newsletter__note a {
+    color: inherit;
+  }
+
+  .newsletter .todo {
+    margin-top: 0.75rem;
+  }
+
+  @media (max-width: 48rem) {
+    .newsletter {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

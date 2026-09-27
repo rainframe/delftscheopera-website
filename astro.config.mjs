@@ -5,10 +5,17 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig, fontProviders } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { satteri } from '@astrojs/markdown-satteri';
+import { routes } from './src/i18n/routes.ts';
+
+const site = 'https://delftscheopera.nl';
+
+/** Pagina's die niet in de sitemap horen. */
+const unlisted = Object.values(routes.nieuwsbriefBedankt).map((path) => new URL(path, site).href);
 
 /**
- * Lists every page that still contains a visible placeholder
- * (<mark class="todo">) after a build, so nothing unfinished goes live unnoticed.
+ * Lists every visible placeholder (class "todo") left after a build, grouped by text, so nothing
+ * unfinished goes live unnoticed. Placeholders in the footer appear on every page and are listed
+ * once.
  * @returns {import('astro').AstroIntegration}
  */
 function todoReport() {
@@ -17,18 +24,32 @@ function todoReport() {
     hooks: {
       'astro:build:done': async ({ dir, logger }) => {
         const root = fileURLToPath(dir);
-        const hits = [];
+        /** @type {Map<string, string[]>} placeholder text → pages */
+        const todos = new Map();
+        let pageCount = 0;
         for (const entry of await readdir(root, { recursive: true })) {
-          if (!entry.endsWith('.html')) continue;
+          // admin/ is het CMS, geen pagina van de site.
+          if (!entry.endsWith('.html') || entry.startsWith('admin')) continue;
+          pageCount++;
           const html = await readFile(join(root, entry), 'utf8');
-          const count = html.match(/class="todo"/g)?.length ?? 0;
-          if (count) hits.push(`${entry} (${count})`);
+          for (const [, , inner] of html.matchAll(/<(p|mark)\b[^>]*class="todo"[^>]*>([\s\S]*?)<\/\1>/g)) {
+            const text = inner
+              .replace(/<[^>]+>/g, '')
+              .replace(/\s+/g, ' ')
+              .trim();
+            const label = text.length > 80 ? `${text.slice(0, 77)}…` : text;
+            todos.set(label, [...(todos.get(label) ?? []), entry]);
+          }
         }
-        if (hits.length) {
-          logger.warn(`Nog ${hits.length} pagina's met placeholders:\n  ${hits.join('\n  ')}`);
-        } else {
+        if (!todos.size) {
           logger.info('Geen placeholders meer gevonden.');
+          return;
         }
+        const lines = [...todos].map(
+          ([label, pages]) =>
+            `${label}\n    ${pages.length === pageCount ? `op alle ${pageCount} pagina's` : pages.join(', ')}`,
+        );
+        logger.warn(`Nog ${todos.size} placeholders:\n  ${lines.join('\n  ')}`);
       },
     },
   };
@@ -69,7 +90,7 @@ const todoParagraphs = {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://delftscheopera.nl',
+  site,
   trailingSlash: 'always',
   i18n: {
     locales: ['nl', 'en'],
@@ -101,5 +122,5 @@ export default defineConfig({
   markdown: {
     processor: satteri({ mdastPlugins: [cmsImagePaths, todoParagraphs] }),
   },
-  integrations: [sitemap(), todoReport()],
+  integrations: [sitemap({ filter: (page) => !unlisted.includes(page) }), todoReport()],
 });

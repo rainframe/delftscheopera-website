@@ -29,7 +29,7 @@ Je komt nu in het beheer. Links staan de onderdelen:
 | **Projecten**    | Producties op de projectenpagina                                     |
 | **Mensen**       | Bestuur, Raad van Toezicht en artistiek team                         |
 | **Pagina's**     | De teksten van de vaste pagina's (Homepage, Lustrum, Organisatie, …) |
-| **Instellingen** | Adres, KvK, RSIN, e-mailadres, sociale media                         |
+| **Instellingen** | Adres, KvK, RSIN, e-mailadres, sociale media, nieuwsbrief            |
 
 Tip: via het menu rechtsboven (je profielfoto) kun je ook **Inloggen met je mobiel**. Je scant dan
 een QR-code en bent op je telefoon ingelogd.
@@ -90,7 +90,8 @@ Nederlandse tekst aan, vergeet dan de Engelse niet.
 ## Delen op LinkedIn
 
 Elk bericht op de website heeft onderaan een knop **Deel op LinkedIn**. LinkedIn toont dan
-automatisch de titel, de samenvatting en de omslagfoto.
+automatisch een afbeelding met de titel en de omslagfoto in de stijl van de Delftsche Opera, met de
+samenvatting eronder. Die afbeelding maakt de website zelf; je hoeft er niets voor te doen.
 
 Delen namens de bedrijfspagina van de Delftsche Opera gaat zo:
 
@@ -105,7 +106,13 @@ nieuwe versie op.
 
 ## Nieuwsbrief
 
-De koppeling met de nieuwsbrief (Laposta) volgt nog. Deze handleiding wordt dan aangevuld.
+Onderaan elke pagina kunnen bezoekers zich aanmelden voor de nieuwsbrief. Ze krijgen eerst een
+bevestigingsmail; pas als ze op de link daarin klikken, staan ze op de lijst. De aanmeldingen komen in
+**Laposta**, en daar maak en verstuur je ook de nieuwsbrief zelf.
+
+Tip: schrijf het verhaal als nieuwsbericht op de website en zet in de nieuwsbrief een korte inleiding
+met een link naar dat bericht. Dan staat alles op één plek en kun je hetzelfde bericht ook op LinkedIn
+delen.
 
 ## Foto's
 
@@ -145,7 +152,8 @@ die gedeeld worden.
 ### Instellingen
 
 Het adres, KvK-nummer, RSIN, algemene e-mailadres, IBAN en de links naar sociale media. Deze
-gegevens staan op meerdere plekken op de site (onder meer onderaan elke pagina).
+gegevens staan op meerdere plekken op de site (onder meer onderaan elke pagina). Onder **Nieuwsbrief**
+en **Statistieken** staan de koppelingen met Laposta en Cloudflare; die stelt de websitebeheerder in.
 
 Het beheer controleert of het KvK-nummer 8 cijfers heeft en het RSIN 9. Klopt dat niet, dan kun je
 de instellingen pas opslaan als het nummer verbeterd is.
@@ -157,7 +165,8 @@ neemt de site dan niet op. Zet dit pas aan als alles klaar is.
 
 Een alinea die begint met **TODO:** is een placeholder: tekst die nog aangevuld moet worden. Op de
 website verschijnt die als geel blok, zodat niemand het over het hoofd ziet. Vervang de hele alinea
-(inclusief _TODO:_) door de echte tekst zodra die er is.
+(inclusief _TODO:_) door de echte tekst zodra die er is. Ook het nieuwsbriefformulier onderaan de
+pagina's toont een geel blok zolang het nog niet aan Laposta gekoppeld is.
 
 ## Hoe publiceren werkt
 

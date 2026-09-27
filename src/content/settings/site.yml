@@ -18,7 +18,9 @@ ibanName: Stichting Delftsche Opera Compagnie
 socials:
   instagram: https://www.instagram.com/delftscheopera
   linkedin: https://www.linkedin.com/company/delftsche-opera
+# Aanmeldformulier in de footer. action, emailField en hiddenFields komen uit de HTML-code van het
+# Laposta-formulier (zie de README); zolang die ontbreken, staat het formulier uit.
 newsletter:
-  provider: laposta
-  # Wordt in fase 4 gekoppeld aan een aanmeldformulier (adres van de Laposta-lijst).
-  formAction: ''
+  provider: Laposta
+  redirectField: next
+  honeypotField: email

@@ -1,0 +1,17 @@
+# Extra HTTP-headers voor de statische bestanden (Cloudflare Workers static assets).
+# Zie https://developers.cloudflare.com/workers/static-assets/headers/
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000
+
+# Bestanden in /_astro/ hebben een hash in hun naam en veranderen dus nooit.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Test- en voorbeeldadressen op workers.dev horen niet in zoekmachines.
+https://:worker.:subdomain.workers.dev/*
+  X-Robots-Tag: noindex

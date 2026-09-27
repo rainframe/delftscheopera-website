@@ -4,3 +4,5 @@ node_modules/
 package-lock.json
 src/assets/decor/*.svg
 public/
+# Content schrijft het beheer (Sveltia CMS) in zijn eigen opmaak; Prettier zou die veranderen.
+src/content/

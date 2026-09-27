@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Curtain from '@/components/Curtain.astro';
+import StageMessage from '@/components/StageMessage.astro';
 import Icon from '@/components/Icon.astro';
 import { alternatesFor, pageUrl } from '@/i18n/routes';
 import { t } from '@/i18n/ui';
@@ -13,75 +13,32 @@ import { t } from '@/i18n/ui';
   alternates={alternatesFor('home')}
   isNotFound
 >
-  <section class="not-found">
-    <Curtain side="left" />
-    <Curtain side="right" />
-    <div class="not-found__text">
-      <p class="not-found__code">404</p>
-      <h1>{t('nl', 'notFound.title')}</h1>
-      <p>{t('nl', 'notFound.text')}</p>
-      <a class="arrow-link" href={pageUrl('home', 'nl')}>
-        <span>{t('nl', 'notFound.home')}</span>
+  <StageMessage>
+    <p class="not-found__code">404</p>
+    <h1>{t('nl', 'notFound.title')}</h1>
+    <p class="stage-message__lead">{t('nl', 'notFound.text')}</p>
+    <a class="arrow-link" href={pageUrl('home', 'nl')}>
+      <span>{t('nl', 'notFound.home')}</span>
+      <Icon name="arrow" />
+    </a>
+    <div class="not-found__en" lang="en">
+      <p>
+        <strong>{t('en', 'notFound.title')}.</strong> {t('en', 'notFound.text')}
+      </p>
+      <a class="arrow-link" href={pageUrl('home', 'en')}>
+        <span>{t('en', 'notFound.home')}</span>
         <Icon name="arrow" />
       </a>
-      <div class="not-found__en" lang="en">
-        <p>
-          <strong>{t('en', 'notFound.title')}.</strong> {t('en', 'notFound.text')}
-        </p>
-        <a class="arrow-link" href={pageUrl('home', 'en')}>
-          <span>{t('en', 'notFound.home')}</span>
-          <Icon name="arrow" />
-        </a>
-      </div>
     </div>
-  </section>
+  </StageMessage>
 </BaseLayout>
 
 <style>
-  .not-found {
-    position: relative;
-    display: grid;
-    place-items: center;
-    min-height: clamp(28rem, 60vh, 40rem);
-    padding: 3rem calc(var(--gutter) + clamp(4rem, 14vw, 12rem));
-    overflow: hidden;
-    text-align: center;
-    background: var(--navy);
-    color: var(--white);
-  }
-
-  .not-found > :global(.curtain) {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: clamp(4rem, 14vw, 12rem);
-    color: var(--white);
-  }
-
-  .not-found > :global(.curtain--left) {
-    left: 0;
-  }
-
-  .not-found > :global(.curtain--right) {
-    right: 0;
-  }
-
   .not-found__code {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1.25rem;
     letter-spacing: 0.3em;
-  }
-
-  h1 {
-    margin-top: 0.5rem;
-    font-size: clamp(2.5rem, 6.5vw, 5.5rem);
-  }
-
-  .not-found__text > p:not(.not-found__code) {
-    max-width: 32rem;
-    margin: 1.25rem auto 1.5rem;
-    font-size: var(--fs-lead);
   }
 
   .not-found__en {

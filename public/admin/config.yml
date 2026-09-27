@@ -596,13 +596,56 @@ collections:
             label: Nieuwsbrief
             widget: object
             collapsed: true
+            hint: >-
+              Het aanmeldformulier onderaan elke pagina. Neem de gegevens over uit de HTML-code van
+              het formulier bij de nieuwsbriefdienst (voor Laposta staat in de README waar je die vindt).
             fields:
-              - name: provider
-                label: Dienst
-                widget: select
-                options: [laposta]
-              - name: formAction
+              - { name: provider, label: Dienst, widget: string, hint: 'Alleen ter informatie, bijvoorbeeld Laposta.' }
+              - name: action
                 label: Formulieradres
                 widget: string
+                type: url
                 required: false
-                hint: Wordt in fase 4 gekoppeld aan het aanmeldformulier.
+                hint: Het adres bij action="…" in de HTML-code. Zolang dit leeg is, staat het formulier uit.
+              - name: emailField
+                label: Naam van het e-mailveld
+                widget: string
+                required: false
+                hint: >-
+                  De name="…" van het invoerveld voor het e-mailadres. Bij Laposta is dat een code van
+                  10 tekens (niet het veld dat letterlijk "email" heet; dat is het anti-spamveld).
+              - name: hiddenFields
+                label: Verborgen velden
+                label_singular: verborgen veld
+                widget: list
+                required: false
+                summary: '{{name}} = {{value}}'
+                hint: >-
+                  De velden met type="hidden" (bij Laposta a en l). Laat next weg: dat vult de site zelf
+                  in.
+                fields:
+                  - { name: name, label: Naam, widget: string }
+                  - { name: value, label: Waarde, widget: string }
+              - name: redirectField
+                label: Veld voor de bedankpagina
+                widget: string
+                required: false
+                hint: Bij Laposta next. Daarmee komen nieuwe aanmeldingen op de bedankpagina van deze site.
+              - name: honeypotField
+                label: Anti-spamveld
+                widget: string
+                required: false
+                hint: Een veld dat leeg moet blijven, om spambots te herkennen (bij Laposta email).
+          - name: analytics
+            label: Statistieken
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - name: cloudflareToken
+                label: Token van Cloudflare Web Analytics
+                widget: string
+                required: false
+                hint: >-
+                  Alleen nodig als Cloudflare het meetscript niet automatisch op de site zet (zie de
+                  README).

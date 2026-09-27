@@ -9,6 +9,7 @@ import Icon from '@/components/Icon.astro';
 import { pageUrl, type Locale } from '@/i18n/routes';
 import { formatDate, t } from '@/i18n/ui';
 import { getPosts, type Post } from '@/lib/content';
+import { shareImagePath } from '@/lib/share-image';
 
 interface Props {
   post: Post;
@@ -33,8 +34,8 @@ const canonical = new URL(post.url, Astro.site ?? 'https://delftscheopera.nl').h
   alternates={alternates}
   translations={post.translations}
   current="nieuws"
-  image={cover}
-  imageAlt={coverAlt}
+  shareImage={shareImagePath(post)}
+  imageAlt={title}
   type="article"
   published={date}
 >

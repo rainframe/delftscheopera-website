@@ -14,6 +14,7 @@ npm run dev        # ontwikkelserver op http://localhost:4321
 npm run build      # bouwt de site in dist/
 npm run preview    # bekijk de gebouwde site
 npm run check      # controleert types, content en de CMS-configuratie
+npm run check:live # controleert de live site: pagina's, bestanden, headers, doorverwijzingen
 npm run format     # zet de code netjes (Prettier)
 ```
 
@@ -35,16 +36,19 @@ src/
     uploads/               ← foto's die in de content gebruikt worden
     brand/                 ← logo's (navy en wit)
     decor/                 ← bladmuziek, silhouetten van Delft
-  components/              ← bouwstenen (gordijnlijst, banner, kaarten, header, footer, …)
+  components/              ← bouwstenen (gordijnlijst, banner, kaarten, header, footer, nieuwsbrief, …)
   views/                   ← de pagina's, gedeeld door de Nederlandse en Engelse route
-  pages/                   ← routes (bepalen de URL's)
+  pages/                   ← routes (bepalen de URL's); pages/og/ maakt de deelafbeeldingen
+  lib/                     ← content ophalen, RSS-feeds, deelafbeeldingen
   i18n/                    ← vaste interface-teksten (ui.ts) en URL's per taal (routes.ts)
-public/admin/              ← het beheer (Sveltia CMS): index.html, config.yml en preview.css
-worker/index.ts            ← Cloudflare Worker: alleen het inloggen in het beheer (/cms/*)
-scripts/                   ← hulpscripts (CMS kopiëren, CMS-configuratie controleren)
-docs/                      ← handleiding voor redacteuren
   styles/global.css        ← kleuren, lettertypes en basisstijlen
   content.config.ts        ← het contentmodel (welke velden verplicht zijn)
+public/
+  admin/                   ← het beheer (Sveltia CMS): index.html, config.yml en preview.css
+  _headers                 ← extra HTTP-headers (beveiliging, caching)
+worker/index.ts            ← Cloudflare Worker: alleen het inloggen in het beheer (/cms/*)
+scripts/                   ← hulpscripts (CMS kopiëren, CMS-configuratie en live site controleren)
+docs/                      ← handleiding voor redacteuren
 ```
 
 ### Ontwerp
@@ -53,6 +57,13 @@ docs/                      ← handleiding voor redacteuren
 - Lettertypes: koppen in **League Spartan** (meegeleverd via Fontsource), al het andere in Helvetica/Arial.
 - Het theatergordijn uit het logo is het terugkerende element: `Curtain.astro` is één gordijn,
   `CurtainFrame.astro` zet gordijnen over een foto, `StageBanner.astro` is de grote lustrum-banner.
+- **Deelafbeeldingen**: elk nieuwsbericht krijgt bij het bouwen een eigen afbeelding van 1200 × 630
+  pixels voor LinkedIn en andere sociale media ([src/lib/share-image.ts](src/lib/share-image.ts)): de
+  titel in League Spartan op navy, met de omslagfoto tussen twee gordijnen (zonder foto: witte gordijnen,
+  zoals op de 404-pagina). Het adres bevat een hash van titel, datum en foto, zodat LinkedIn na een
+  wijziging de nieuwe versie ophaalt. Verander je het ontwerp, verhoog dan `DESIGN_VERSION`.
+  Satori krijgt League Spartan als TTF (`@expo-google-fonts/league-spartan`): package.json dwingt via
+  `overrides` een nieuwere fflate af vanwege een beveiligingsmelding, en daarmee leest Satori geen WOFF.
 - De logo's staan in `src/assets/brand/`. Als de officiële SVG-bestanden er zijn, kunnen die daar de
   PNG's vervangen (en de imports in `Header.astro`, `Footer.astro`, `StageBanner.astro` en
   `ContactPage.astro` aangepast).
@@ -118,7 +129,8 @@ De tekst van het bericht, in **Markdown**.
 
 - Foto's gaan in `src/assets/uploads/` en worden bij het bouwen automatisch verkleind en omgezet naar WebP.
 - Met `draft: true` is een bericht alleen zichtbaar tijdens `npm run dev`, niet op de echte site.
-- Elk bericht heeft een knop _Deel op LinkedIn_; de omslagfoto wordt dan het deelplaatje.
+- Elk bericht heeft een knop _Deel op LinkedIn_; LinkedIn toont dan de automatisch gemaakte
+  deelafbeelding met titel en omslagfoto.
 
 ### Overige content
 
@@ -134,17 +146,22 @@ nooit ongemerkt live gaat.
 ## Publiceren
 
 De site wordt gehost op **Cloudflare Workers** (statische bestanden, gratis) en automatisch gebouwd vanuit
-GitHub: elke wijziging op `main` gaat live, andere branches krijgen een eigen voorbeeld-URL.
-De configuratie staat in `wrangler.jsonc`. Dit wordt ingericht in fase 3.
+GitHub: elke wijziging op `main` gaat live, andere branches krijgen een eigen voorbeeld-URL. De
+configuratie staat in `wrangler.jsonc`; het domein delftscheopera.nl is in Cloudflare als _Custom
+domain_ aan de worker gekoppeld (niet in `wrangler.jsonc`, dus een deploy laat het ongemoeid).
 
-### Inloggen in het beheer instellen (fase 3)
+`npm run check:live` controleert de live site: alle pagina's en bestanden, de headers, de
+doorverwijzingen hieronder, het inloggen in het beheer, het nieuwsbriefformulier en de statistieken.
+
+### Inloggen in het beheer
 
 1. Maak op GitHub een **OAuth App** aan via https://github.com/settings/applications/new, met als
    _Homepage URL_ `https://delftscheopera.nl` en als _Authorization callback URL_
    `https://delftscheopera.nl/cms/callback`.
 2. Zet de **Client ID** in `wrangler.jsonc` (`vars.GITHUB_CLIENT_ID`; die is openbaar).
 3. Maak een **client secret** aan en zet die in Cloudflare als _Secret_ met de naam
-   `GITHUB_CLIENT_SECRET` (_Workers → delftscheopera-website → Settings → Variables and Secrets_).
+   `GITHUB_CLIENT_SECRET` (_Workers → delftscheopera-website → Settings → Variables and Secrets_; niet
+   bij _Build_, want die variabelen bestaan alleen tijdens het bouwen).
 4. Geef redacteuren schrijfrechten op de repository
    [rainframe/delftscheopera-website](https://github.com/rainframe/delftscheopera-website)
    (_Settings → Collaborators → Add people_).
@@ -152,14 +169,75 @@ De configuratie staat in `wrangler.jsonc`. Dit wordt ingericht in fase 3.
 Het beheer werkt daarna op https://delftscheopera.nl/admin/. Gebruik altijd het domein zonder `www`:
 de callback-URL van de OAuth App is aan dat domein gekoppeld.
 
+### Doorverwijzingen (www en stichtingdoc.nl)
+
+Beide domeinen staan in hetzelfde Cloudflare-account en hun webadressen lopen al via Cloudflare
+(oranje wolkje). De doorverwijzingen zijn daarom _Redirect Rules_ in het dashboard; DNS hoeft niet te
+veranderen en de MX-records (e-mail) blijven zoals ze zijn. Maak ze aan via _(domein) → Rules →
+Redirect Rules → Create rule_, kies _Custom filter expression_ → _Edit expression_, en stel de
+doorverwijzing in als **301** zonder _Preserve query string_ (behalve bij www).
+
+**delftscheopera.nl**, één regel:
+
+- `www naar delftscheopera.nl`: expressie `(http.host eq "www.delftscheopera.nl")`, type _Dynamic_,
+  doel `concat("https://delftscheopera.nl", http.request.uri.path)`, _Preserve query string_ aan.
+
+**stichtingdoc.nl**, vier regels in deze volgorde (de eerste die past, wint), type _Static_:
+
+1. `Producties`: `(http.host in {"stichtingdoc.nl" "www.stichtingdoc.nl"} and http.request.uri.path in {"/producties" "/producties/"})`
+   → `https://delftscheopera.nl/projecten/`
+2. `Organisatie`: `(http.host in {"stichtingdoc.nl" "www.stichtingdoc.nl"} and http.request.uri.path in {"/organisatie" "/organisatie/"})`
+   → `https://delftscheopera.nl/organisatie/`
+3. `Contact`: `(http.host in {"stichtingdoc.nl" "www.stichtingdoc.nl"} and http.request.uri.path in {"/contact" "/contact/"})`
+   → `https://delftscheopera.nl/contact/`
+4. `Overige pagina's`: `(http.host in {"stichtingdoc.nl" "www.stichtingdoc.nl"})` → `https://delftscheopera.nl/`
+
+De oude site op Google Sites is daarna niet meer via stichtingdoc.nl te bereiken en kan offline. De
+lijst met oude adressen staat ook in `scripts/check-live.mjs`; houd die twee gelijk.
+
+### Nieuwsbrief (Laposta)
+
+Het aanmeldformulier staat bovenaan de footer van elke pagina en gaat rechtstreeks naar de
+nieuwsbriefdienst, zonder eigen server of API-sleutel. Nieuwe aanmeldingen komen daarna op de
+bedankpagina `/nieuwsbrief/bedankt/` (Engels: `/en/newsletter/thanks/`). Zolang het formulier niet
+gekoppeld is, staat het uit met een gele markering.
+
+1. Maak een Laposta-account (gratis tot 2.000 relaties) en een lijst voor de nieuwsbrief. Zet bij de
+   lijst de **bevestigingsmail (double opt-in)** aan; de bedankpagina gaat daarvan uit. Maak het
+   e-mailadres het enige verplichte veld.
+2. Open _Relaties → (de lijst) → Verrijken → Aanmelden → Zelf vormgeven van aanmeldformulier_ en
+   bekijk de kale HTML-code.
+3. Neem in het beheer onder _Instellingen → Nieuwsbrief_ over:
+   - **Formulieradres**: wat bij `action="…"` staat (`https://….email-provider.nl/subscribe/post/index.php`);
+   - **Naam van het e-mailveld**: de `name="…"` van het invoerveld met `type="email"` en een code van
+     10 tekens. Niet het veld dat letterlijk `email` heet: dat is het anti-spamveld;
+   - **Verborgen velden**: `a` en `l` met hun waarden.
+     _Veld voor de bedankpagina_ (`next`) en _Anti-spamveld_ (`email`) staan al goed.
+4. Meld je zelf aan: je hoort op de bedankpagina te komen en een bevestigingsmail te krijgen.
+
+Een andere dienst met een gewoon HTML-formulier (Mailchimp, Brevo, MailerLite, …) werkt op dezelfde
+manier: vul dezelfde velden in met de gegevens van die dienst. Past de tekst van de bedankpagina niet
+meer, dan staat die in `src/i18n/ui.ts` (`newsletterThanks.*`).
+
+Voor de inhoud van de nieuwsbrief: de RSS-feeds `/nieuws/rss.xml` en `/en/news/rss.xml` bevatten per
+bericht de titel, samenvatting, link en omslagfoto. Laposta kan zo'n feed in een eigen sjabloon laden.
+
+### Statistieken (Cloudflare Web Analytics)
+
+Ga in Cloudflare naar _Analytics & Logs → Web Analytics → Add a site_ en kies delftscheopera.nl met de
+automatische installatie. Cloudflare zet het meetscript dan zelf op de pagina's. Web Analytics
+gebruikt geen cookies, dus een cookiemelding is niet nodig; de privacyverklaring noemt het al.
+Verschijnt er na een dag nog niets, zet de automatische installatie dan uit, kopieer de token uit het
+JS-fragment en vul die in bij _Instellingen → Statistieken_ in het beheer.
+
 ## Status
 
-| Fase | Inhoud                                                                                  | Status   |
-| ---- | --------------------------------------------------------------------------------------- | -------- |
-| 1    | Opzet, ontwerp, alle pagina's met gemigreerde content                                   | ✅ klaar |
-| 2    | CMS (Sveltia) en handleiding voor redacteuren                                           | ✅ klaar |
-| 3    | GitHub en Cloudflare, voorbeeld-URL's                                                   | gepland  |
-| 4    | Domein, doorverwijzingen vanaf stichtingdoc.nl, nieuwsbrief, deelplaatjes, statistieken | gepland  |
+| Fase | Inhoud                                                                                  | Status                                                            |
+| ---- | --------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| 1    | Opzet, ontwerp, alle pagina's met gemigreerde content                                   | ✅ klaar                                                          |
+| 2    | CMS (Sveltia) en handleiding voor redacteuren                                           | ✅ klaar                                                          |
+| 3    | GitHub en Cloudflare, voorbeeld-URL's                                                   | ✅ klaar                                                          |
+| 4    | Domein, doorverwijzingen vanaf stichtingdoc.nl, nieuwsbrief, deelplaatjes, statistieken | code klaar; instellen in Cloudflare en Laposta (zie _Publiceren_) |
 
 ## Nog te doen vóór de lancering
 
@@ -168,8 +246,13 @@ de callback-URL van de OAuth App is aan dat domein gekoppeld.
 - [ ] RSIN controleren: op de oude site staat `8036313217` (10 cijfers), een RSIN heeft er 9
 - [ ] Placeholders invullen: lustrumdetails (opzet, locaties, data) en de privacyverklaring laten controleren
 - [ ] De drie concept-nieuwsberichten nalezen (geschreven op basis van de oude site en het ontwerp)
-- [ ] Nieuwsbrief: Laposta-account en -lijst aanmaken (het aanmeldformulier wordt in fase 4 gekoppeld)
+- [ ] Nieuwsbrief: Laposta-account en -lijst aanmaken en het formulier koppelen (zie _Nieuwsbrief_)
 - [ ] IBAN invullen in `settings/site.yml` als dat op _Steun ons_ moet staan
-- [ ] GitHub OAuth App aanmaken en de Client ID en het secret instellen (zie hierboven)
+- [ ] Het client secret van de GitHub OAuth App als Secret in Cloudflare zetten (zie _Inloggen in het beheer_)
+- [ ] Doorverwijzingen voor www en stichtingdoc.nl aanmaken (zie _Doorverwijzingen_)
+- [ ] Cloudflare Web Analytics aanzetten (zie _Statistieken_)
+- [ ] `npm run check:live` draaien: er mogen geen ✗ meer staan
+- [ ] Een bericht in de [Post Inspector](https://www.linkedin.com/post-inspector/) van LinkedIn bekijken
 - [ ] Bij de lancering: in het beheer onder _Instellingen_ **Zichtbaar voor zoekmachines** aanzetten
-      (tot dan staat op elke pagina `noindex` en blokkeert robots.txt alles)
+      (tot dan staat op elke pagina `noindex` en blokkeert robots.txt alles), en eventueel de sitemap
+      `https://delftscheopera.nl/sitemap-index.xml` aanmelden bij Google Search Console

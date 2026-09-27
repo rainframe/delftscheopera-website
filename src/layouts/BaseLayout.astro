@@ -18,14 +18,18 @@ interface Props {
   /** Echte vertalingen van deze pagina (voor hreflang); standaard gelijk aan `alternates`. */
   translations?: Alternates;
   current?: RouteKey;
-  /** Afbeelding voor delen op sociale media (LinkedIn e.d.). */
+  /** Afbeelding voor delen op sociale media (LinkedIn e.d.); wordt bijgesneden tot 1200 × 630. */
   image?: ImageMetadata;
+  /** Kant-en-klare deelafbeelding (pad op deze site); gaat voor `image`. */
+  shareImage?: string;
   imageAlt?: string;
   type?: 'website' | 'article';
   published?: Date;
   isHome?: boolean;
   /** 404-pagina: verschijnt op willekeurige adressen, dus zonder eigen adres (canonical, og:url, hreflang). */
   isNotFound?: boolean;
+  /** Niet laten opnemen door zoekmachines, bijvoorbeeld de bedankpagina van de nieuwsbrief. */
+  noindex?: boolean;
 }
 
 const {
@@ -36,11 +40,13 @@ const {
   translations = alternates,
   current,
   image,
+  shareImage,
   imageAlt,
   type = 'website',
   published,
   isHome = false,
   isNotFound = false,
+  noindex = false,
 } = Astro.props;
 
 const siteName = 'Delftsche Opera';
@@ -49,13 +55,15 @@ const site = Astro.site ?? new URL('https://delftscheopera.nl');
 const canonical = new URL(Astro.url.pathname, site);
 const absolute = (path: string) => new URL(path, site).href;
 
-const shareImage = image
-  ? absolute((await getImage({ src: image, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src)
-  : absolute('/og-default.png');
+const ogImage = shareImage
+  ? absolute(shareImage)
+  : image
+    ? absolute((await getImage({ src: image, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src)
+    : absolute('/og-default.png');
 const showHreflang = !isNotFound && Boolean(translations.nl && translations.en);
-const { indexable } = await getSettings();
-// Tot de lancering blijft de hele site buiten zoekmachines; de 404-pagina altijd.
-const robots = !indexable ? 'noindex, nofollow' : isNotFound ? 'noindex' : undefined;
+const { indexable, analytics } = await getSettings();
+// Tot de lancering blijft de hele site buiten zoekmachines; de 404- en bedankpagina altijd.
+const robots = !indexable ? 'noindex, nofollow' : isNotFound || noindex ? 'noindex' : undefined;
 const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
 ---
 
@@ -82,7 +90,7 @@ const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     {!isNotFound && <meta property="og:url" content={canonical.href} />}
-    <meta property="og:image" content={shareImage} />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     {imageAlt && <meta property="og:image:alt" content={imageAlt} />}
@@ -115,6 +123,14 @@ const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
       <slot />
     </main>
     <Footer locale={locale} />
+    {analytics.cloudflareToken && (
+      <script
+        is:inline
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: analytics.cloudflareToken })}
+      />
+    )}
   </body>
 </html>
 

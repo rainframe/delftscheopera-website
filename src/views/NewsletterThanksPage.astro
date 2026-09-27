@@ -1,0 +1,34 @@
+---
+/**
+ * Bedankpagina na aanmelden voor de nieuwsbrief. De nieuwsbriefdienst stuurt bezoekers hierheen
+ * (zie NewsletterForm). De tekst gaat uit van een bevestigingsmail (dubbele opt-in).
+ */
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StageMessage from '@/components/StageMessage.astro';
+import Icon from '@/components/Icon.astro';
+import { alternatesFor, pageUrl, type Locale } from '@/i18n/routes';
+import { t } from '@/i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<BaseLayout
+  locale={locale}
+  title={t(locale, 'newsletterThanks.title')}
+  description={t(locale, 'newsletterThanks.text')}
+  alternates={alternatesFor('nieuwsbriefBedankt')}
+  noindex
+>
+  <StageMessage>
+    <h1>{t(locale, 'newsletterThanks.title')}</h1>
+    <p class="stage-message__lead">{t(locale, 'newsletterThanks.text')}</p>
+    <a class="arrow-link" href={pageUrl('home', locale)}>
+      <span>{t(locale, 'newsletterThanks.home')}</span>
+      <Icon name="arrow" />
+    </a>
+  </StageMessage>
+</BaseLayout>

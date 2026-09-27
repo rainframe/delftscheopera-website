@@ -13,6 +13,8 @@ export const routes = {
   steunOns: { nl: '/steun-ons/', en: '/en/support-us/' },
   anbi: { nl: '/anbi/', en: '/en/anbi/' },
   privacy: { nl: '/privacy/', en: '/en/privacy/' },
+  /** Hierheen stuurt de nieuwsbriefdienst nieuwe aanmeldingen; staat niet in de sitemap. */
+  nieuwsbriefBedankt: { nl: '/nieuwsbrief/bedankt/', en: '/en/newsletter/thanks/' },
 } as const satisfies Record<string, Record<Locale, string>>;
 
 export type RouteKey = keyof typeof routes;

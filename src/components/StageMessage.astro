@@ -1,0 +1,56 @@
+---
+/**
+ * Korte melding midden op marineblauw, tussen twee witte gordijnen: de 404-pagina en de bedankpagina
+ * van de nieuwsbrief. Geef de hoofdtekst de class `stage-message__lead`.
+ */
+import Curtain from './Curtain.astro';
+---
+
+<section class="stage-message">
+  <Curtain side="left" />
+  <Curtain side="right" />
+  <div class="stage-message__text">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .stage-message {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: clamp(28rem, 60vh, 40rem);
+    padding: 3rem calc(var(--gutter) + clamp(4rem, 14vw, 12rem));
+    overflow: hidden;
+    text-align: center;
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .stage-message > :global(.curtain) {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: clamp(4rem, 14vw, 12rem);
+    color: var(--white);
+  }
+
+  .stage-message > :global(.curtain--left) {
+    left: 0;
+  }
+
+  .stage-message > :global(.curtain--right) {
+    right: 0;
+  }
+
+  .stage-message__text :global(h1) {
+    margin-top: 0.5rem;
+    font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+  }
+
+  .stage-message__text :global(.stage-message__lead) {
+    max-width: 32rem;
+    margin: 1.25rem auto 1.5rem;
+    font-size: var(--fs-lead);
+  }
+</style>

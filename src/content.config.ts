@@ -101,10 +101,31 @@ const settings = defineCollection({
     iban: z.string().optional(),
     ibanName: z.string().optional(),
     socials: z.object({ instagram: z.url().optional(), linkedin: z.url().optional() }),
+    /**
+     * Aanmeldformulier van de nieuwsbrief. De velden komen uit de HTML-code die de dienst
+     * (nu Laposta) voor een eigen formulier geeft; een andere dienst met zo'n HTML-formulier kan
+     * zonder codewijziging. Zolang `action` of `emailField` ontbreekt, staat het formulier uit.
+     */
     newsletter: z.object({
+      /** Naam van de dienst, ter informatie. */
       provider: z.string(),
-      formAction: z.string().optional(),
+      /** Adres waar het formulier naartoe gaat (`action`). */
+      action: z.url().optional(),
+      /** `name` van het e-mailveld. */
+      emailField: z.string().optional(),
+      /** Vaste verborgen velden (bij Laposta `a` en `l`). */
+      hiddenFields: z.array(z.object({ name: z.string(), value: z.string() })).default([]),
+      /** Veld voor het adres van de bedankpagina (bij Laposta `next`). */
+      redirectField: z.string().optional(),
+      /** Veld dat leeg moet blijven, tegen spam (bij Laposta `email`). */
+      honeypotField: z.string().optional(),
     }),
+    analytics: z
+      .object({
+        /** Token van Cloudflare Web Analytics; zonder token staat er geen statistiekscript op de site. */
+        cloudflareToken: z.string().optional(),
+      })
+      .default({}),
   }),
 });
 
