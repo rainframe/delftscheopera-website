@@ -32,3 +32,5 @@ newsletter:
   redirectField: next
   honeypotField: email
   script: https://stichting-delftsche-opera-compagnie.email-provider.eu/subscribe/check/validate.js
+analytics:
+  cloudflareToken: 7aa29d1e43d744cab95865ba1efc8768
