@@ -24,6 +24,8 @@ interface Props {
   type?: 'website' | 'article';
   published?: Date;
   isHome?: boolean;
+  /** 404-pagina: verschijnt op willekeurige adressen, dus zonder eigen adres (canonical, og:url, hreflang). */
+  isNotFound?: boolean;
 }
 
 const {
@@ -38,6 +40,7 @@ const {
   type = 'website',
   published,
   isHome = false,
+  isNotFound = false,
 } = Astro.props;
 
 const siteName = 'Delftsche Opera';
@@ -49,8 +52,10 @@ const absolute = (path: string) => new URL(path, site).href;
 const shareImage = image
   ? absolute((await getImage({ src: image, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src)
   : absolute('/og-default.png');
-const hasBothLanguages = Boolean(translations.nl && translations.en);
+const showHreflang = !isNotFound && Boolean(translations.nl && translations.en);
 const { indexable } = await getSettings();
+// Tot de lancering blijft de hele site buiten zoekmachines; de 404-pagina altijd.
+const robots = !indexable ? 'noindex, nofollow' : isNotFound ? 'noindex' : undefined;
 const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
 ---
 
@@ -61,9 +66,9 @@ const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    {!indexable && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="canonical" href={canonical.href} />
-    {hasBothLanguages && (
+    {robots && <meta name="robots" content={robots} />}
+    {!isNotFound && <link rel="canonical" href={canonical.href} />}
+    {showHreflang && (
       <>
         <link rel="alternate" hreflang="nl" href={absolute(translations.nl!)} />
         <link rel="alternate" hreflang="en" href={absolute(translations.en!)} />
@@ -76,7 +81,7 @@ const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
     <meta property="og:locale" content={htmlLang[locale].replace('-', '_')} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical.href} />
+    {!isNotFound && <meta property="og:url" content={canonical.href} />}
     <meta property="og:image" content={shareImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
