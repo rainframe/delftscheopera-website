@@ -54,9 +54,9 @@ const strings = {
     'newsletter.submit': 'Aanmelden',
     'newsletter.privacy': 'We gebruiken je e-mailadres alleen voor de nieuwsbrief.',
     'newsletter.privacyLink': 'Privacyverklaring',
-    'newsletterThanks.title': 'Bijna klaar!',
+    'newsletterThanks.title': 'Bedankt!',
     'newsletterThanks.text':
-      'We hebben je een e-mail gestuurd. Klik op de link in die mail om je aanmelding te bevestigen. Niets ontvangen? Kijk dan ook even in je spammap.',
+      'Je bent aangemeld voor onze nieuwsbrief. Afmelden kan altijd via de link onderaan elke nieuwsbrief.',
     'newsletterThanks.home': 'Naar de homepage',
     'nav.home': 'Home',
     'nav.lustrum': 'Lustrum',
@@ -120,9 +120,9 @@ const strings = {
     'newsletter.submit': 'Subscribe',
     'newsletter.privacy': 'We only use your email address for the newsletter.',
     'newsletter.privacyLink': 'Privacy statement',
-    'newsletterThanks.title': 'Almost done!',
+    'newsletterThanks.title': 'Thank you!',
     'newsletterThanks.text':
-      'We have sent you an email. Click the link in it to confirm your subscription. Nothing there? Please check your spam folder too.',
+      'You are now subscribed to our newsletter. You can unsubscribe at any time using the link at the bottom of every newsletter.',
     'newsletterThanks.home': 'Go to the homepage',
     'nav.home': 'Home',
     'nav.lustrum': 'Lustrum',

@@ -106,9 +106,8 @@ nieuwe versie op.
 
 ## Nieuwsbrief
 
-Onderaan elke pagina kunnen bezoekers zich aanmelden voor de nieuwsbrief. Ze krijgen eerst een
-bevestigingsmail; pas als ze op de link daarin klikken, staan ze op de lijst. De aanmeldingen komen in
-**Laposta**, en daar maak en verstuur je ook de nieuwsbrief zelf.
+Onderaan elke pagina kunnen bezoekers zich aanmelden voor de nieuwsbrief. Wie zich aanmeldt, staat
+meteen op de lijst in **Laposta**; daar maak en verstuur je ook de nieuwsbrief zelf.
 
 Tip: schrijf het verhaal als nieuwsbericht op de website en zet in de nieuwsbrief een korte inleiding
 met een link naar dat bericht. Dan staat alles op één plek en kun je hetzelfde bericht ook op LinkedIn

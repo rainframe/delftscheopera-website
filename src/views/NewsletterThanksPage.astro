@@ -1,7 +1,8 @@
 ---
 /**
  * Bedankpagina na aanmelden voor de nieuwsbrief. De nieuwsbriefdienst stuurt bezoekers hierheen
- * (zie NewsletterForm). De tekst gaat uit van een bevestigingsmail (dubbele opt-in).
+ * (zie NewsletterForm). Laposta zet nieuwe aanmeldingen direct op de lijst, zonder bevestigingsmail
+ * (double opt-in kan daar alleen bij een betaald account); verandert dat, pas dan de tekst aan.
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StageMessage from '@/components/StageMessage.astro';

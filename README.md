@@ -206,9 +206,10 @@ nieuwsbriefdienst, zonder eigen server of API-sleutel. Nieuwe aanmeldingen komen
 bedankpagina `/nieuwsbrief/bedankt/` (Engels: `/en/newsletter/thanks/`). Zolang het formulier niet
 gekoppeld is, staat het uit met een gele markering.
 
-1. Maak een Laposta-account (gratis tot 2.000 relaties) en een lijst voor de nieuwsbrief. Zet bij de
-   lijst de **bevestigingsmail (double opt-in)** aan; de bedankpagina gaat daarvan uit. Maak het
-   e-mailadres het enige verplichte veld.
+1. Maak een Laposta-account (gratis tot 2.000 relaties) en maak op de pagina _Relaties_ met
+   _Nieuwe lijst_ een lijst voor de nieuwsbrief. Maak het e-mailadres het enige verplichte veld.
+   Nieuwe aanmeldingen staan in Laposta direct op de lijst; een bevestigingsmail (double opt-in) kan
+   alleen bij een betaald account en is volgens Laposta niet verplicht.
 2. Open _Relaties → (de lijst) → Verrijken → Aanmelden → Zelf vormgeven van aanmeldformulier_ en
    bekijk de kale HTML-code.
 3. Neem in het beheer onder _Instellingen → Nieuwsbrief_ over:
@@ -217,7 +218,7 @@ gekoppeld is, staat het uit met een gele markering.
      10 tekens. Niet het veld dat letterlijk `email` heet: dat is het anti-spamveld;
    - **Verborgen velden**: `a` en `l` met hun waarden.
      _Veld voor de bedankpagina_ (`next`) en _Anti-spamveld_ (`email`) staan al goed.
-4. Meld je zelf aan: je hoort op de bedankpagina te komen en een bevestigingsmail te krijgen.
+4. Meld je zelf aan: je hoort op de bedankpagina te komen en in Laposta op de lijst te staan.
 
 Een andere dienst met een gewoon HTML-formulier (Mailchimp, Brevo, MailerLite, …) werkt op dezelfde
 manier: vul dezelfde velden in met de gegevens van die dienst. Past de tekst van de bedankpagina niet
@@ -228,11 +229,13 @@ bericht de titel, samenvatting, link en omslagfoto. Laposta kan zo'n feed in een
 
 ### Statistieken (Cloudflare Web Analytics)
 
-Ga in Cloudflare naar _Analytics & Logs → Web Analytics → Add a site_ en kies delftscheopera.nl met de
-automatische installatie. Cloudflare zet het meetscript dan zelf op de pagina's. Web Analytics
-gebruikt geen cookies, dus een cookiemelding is niet nodig; de privacyverklaring noemt het al.
-Verschijnt er na een dag nog niets, zet de automatische installatie dan uit, kopieer de token uit het
-JS-fragment en vul die in bij _Instellingen → Statistieken_ in het beheer.
+Ga in Cloudflare naar _Analytics & Logs → Web Analytics_, voeg delftscheopera.nl toe en kies de
+installatie met een JS-fragment (handmatig). De automatische installatie zette het script niet op
+deze site, omdat die via een Worker loopt. Kopieer de `token` uit het fragment en vul die in bij
+_Instellingen → Statistieken_ in het beheer; de token is openbaar (hij staat in de broncode van elke
+pagina). Laat de automatische installatie uit staan, anders kan het script dubbel op de pagina komen.
+Web Analytics gebruikt geen cookies, dus een cookiemelding is niet nodig; de privacyverklaring noemt
+het al.
 
 ## Status
 
