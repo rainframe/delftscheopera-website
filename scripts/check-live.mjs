@@ -143,7 +143,7 @@ if (auth.status === 302 && auth.headers.get('location')?.startsWith('https://git
   const body = await auth.text();
   failures.push(
     body.includes('MISCONFIGURED_CLIENT')
-      ? 'Inloggen in het beheer: GITHUB_CLIENT_SECRET ontbreekt in Cloudflare (zie de README)'
+      ? 'Inloggen in het beheer: de worker ziet GITHUB_CLIENT_SECRET niet. Zet die als Secret bij Settings → Variables and Secrets (niet bij Build) en klik op Deploy'
       : `Inloggen in het beheer: /cms/auth geeft ${auth.status}`,
   );
 }
