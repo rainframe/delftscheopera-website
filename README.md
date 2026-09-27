@@ -139,14 +139,15 @@ De configuratie staat in `wrangler.jsonc`. Dit wordt ingericht in fase 3.
 
 ### Inloggen in het beheer instellen (fase 3)
 
-1. Maak op GitHub een **OAuth App** aan (bij de organisatie: _Settings → Developer settings → OAuth
-   Apps → New OAuth App_) met als _Homepage URL_ `https://delftscheopera.nl` en als _Authorization
-   callback URL_ `https://delftscheopera.nl/cms/callback`.
+1. Maak op GitHub een **OAuth App** aan via https://github.com/settings/applications/new, met als
+   _Homepage URL_ `https://delftscheopera.nl` en als _Authorization callback URL_
+   `https://delftscheopera.nl/cms/callback`.
 2. Zet de **Client ID** in `wrangler.jsonc` (`vars.GITHUB_CLIENT_ID`; die is openbaar).
 3. Maak een **client secret** aan en zet die in Cloudflare als _Secret_ met de naam
    `GITHUB_CLIENT_SECRET` (_Workers → delftscheopera-website → Settings → Variables and Secrets_).
-4. Zet de juiste repository in `public/admin/config.yml` (`backend.repo`).
-5. Geef redacteuren schrijfrechten op de repository (bijvoorbeeld als lid van de GitHub-organisatie).
+4. Geef redacteuren schrijfrechten op de repository
+   [rainframe/delftscheopera-website](https://github.com/rainframe/delftscheopera-website)
+   (_Settings → Collaborators → Add people_).
 
 Het beheer werkt daarna op https://delftscheopera.nl/admin/. Gebruik altijd het domein zonder `www`:
 de callback-URL van de OAuth App is aan dat domein gekoppeld.
@@ -169,5 +170,4 @@ de callback-URL van de OAuth App is aan dat domein gekoppeld.
 - [ ] De drie concept-nieuwsberichten nalezen (geschreven op basis van de oude site en het ontwerp)
 - [ ] Nieuwsbrief: Laposta-account en -lijst aanmaken (het aanmeldformulier wordt in fase 4 gekoppeld)
 - [ ] IBAN invullen in `settings/site.yml` als dat op _Steun ons_ moet staan
-- [ ] GitHub-organisatie en -repository aanmaken en de naam in `public/admin/config.yml` zetten
 - [ ] GitHub OAuth App aanmaken en de Client ID en het secret instellen (zie hierboven)

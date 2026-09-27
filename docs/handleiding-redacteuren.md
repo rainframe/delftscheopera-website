@@ -12,8 +12,8 @@ Je hebt twee dingen nodig:
 
 1. **Een GitHub-account.** Dat is gratis: ga naar [github.com](https://github.com) en kies _Sign up_.
    Gebruik gerust je eigen e-mailadres; het account blijft van jou, ook na je bestuursjaar.
-2. **Toegang tot de website.** Vraag de websitebeheerder om je toe te voegen aan de GitHub-organisatie
-   van de stichting. Je krijgt dan een uitnodiging per e-mail die je moet accepteren.
+2. **Toegang tot de website.** Vraag de websitebeheerder om je toe te voegen aan de repository van de
+   website op GitHub. Je krijgt dan een uitnodiging per e-mail die je moet accepteren.
 
 ## Inloggen
 

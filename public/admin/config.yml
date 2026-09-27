@@ -8,8 +8,10 @@
 
 backend:
   name: github
-  repo: delftscheopera/website # Wordt definitief in fase 3 (GitHub-repository van de stichting)
+  repo: rainframe/delftscheopera-website
   branch: main
+  # De repository is openbaar; dan volstaat toegang tot openbare repositories van de redacteur.
+  auth_scope: public_repo
   base_url: https://delftscheopera.nl
   auth_endpoint: cms/auth # Afgehandeld door worker/index.ts (inloggen met GitHub)
   commit_messages:
