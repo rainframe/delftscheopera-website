@@ -13,16 +13,24 @@
     // De worker komt vóór de bestanden, zodat hij per domein kan kiezen (bouwpagina, preview,
     // doorverwijzingen, inloggen). Alleen /_astro/ (bestanden met een hash in de naam) gaat er
     // rechtstreeks omheen.
-    "run_worker_first": ["/*", "!/_astro/*"]
+    "run_worker_first": ["/*", "!/_astro/*"],
   },
   // De site is alleen via de eigen domeinen bereikbaar (in Cloudflare aan de worker gekoppeld), niet
   // via *.workers.dev.
   "workers_dev": false,
   "preview_urls": false,
+  // Een logregel per verzoek, te zien onder Observability in het dashboard. Gratis tot 200.000
+  // regels per dag; Cloudflare bewaart ze 3 dagen.
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true,
+    },
+  },
   "vars": {
     // Client ID van de GitHub OAuth-app. Die is openbaar en hoort hier te staan: variabelen in dit
     // bestand overschrijven bij elke deploy wat in het Cloudflare-dashboard is ingesteld. Het
     // bijbehorende secret (GITHUB_CLIENT_SECRET) staat alleen als "Secret" in Cloudflare.
-    "GITHUB_CLIENT_ID": "Ov23li2hQ7G9sM5BR3pm"
-  }
+    "GITHUB_CLIENT_ID": "Ov23li2hQ7G9sM5BR3pm",
+  },
 }
