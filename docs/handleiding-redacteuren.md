@@ -150,6 +150,9 @@ gegevens staan op meerdere plekken op de site (onder meer onderaan elke pagina).
 Het beheer controleert of het KvK-nummer 8 cijfers heeft en het RSIN 9. Klopt dat niet, dan kun je
 de instellingen pas opslaan als het nummer verbeterd is.
 
+**Zichtbaar voor zoekmachines** staat uit zolang de website nog niet officieel gelanceerd is. Google
+neemt de site dan niet op. Zet dit pas aan als alles klaar is.
+
 ## Gele markeringen: tekst die nog moet komen
 
 Een alinea die begint met **TODO:** is een placeholder: tekst die nog aangevuld moet worden. Op de

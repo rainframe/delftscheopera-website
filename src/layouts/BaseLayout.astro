@@ -6,6 +6,7 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import type { Alternates, Locale, RouteKey } from '@/i18n/routes';
 import { htmlLang, t } from '@/i18n/ui';
+import { getSettings } from '@/lib/content';
 
 interface Props {
   locale: Locale;
@@ -49,6 +50,7 @@ const shareImage = image
   ? absolute((await getImage({ src: image, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src)
   : absolute('/og-default.png');
 const hasBothLanguages = Boolean(translations.nl && translations.en);
+const { indexable } = await getSettings();
 const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
 ---
 
@@ -59,6 +61,7 @@ const rssUrl = locale === 'nl' ? '/nieuws/rss.xml' : '/en/news/rss.xml';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {!indexable && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={canonical.href} />
     {hasBothLanguages && (
       <>

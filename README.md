@@ -171,3 +171,5 @@ de callback-URL van de OAuth App is aan dat domein gekoppeld.
 - [ ] Nieuwsbrief: Laposta-account en -lijst aanmaken (het aanmeldformulier wordt in fase 4 gekoppeld)
 - [ ] IBAN invullen in `settings/site.yml` als dat op _Steun ons_ moet staan
 - [ ] GitHub OAuth App aanmaken en de Client ID en het secret instellen (zie hierboven)
+- [ ] Bij de lancering: in het beheer onder _Instellingen_ **Zichtbaar voor zoekmachines** aanzetten
+      (tot dan staat op elke pagina `noindex` en blokkeert robots.txt alles)

@@ -562,6 +562,13 @@ collections:
         file: src/content/settings/site.yml
         fields:
           - { name: name, label: Naam (zoals op de website), widget: string }
+          - name: indexable
+            label: Zichtbaar voor zoekmachines
+            widget: boolean
+            default: false
+            hint: >-
+              Uit = Google en andere zoekmachines nemen de site niet op. Zet dit aan bij de officiële
+              lancering van de website.
           - { name: legalName, label: Statutaire naam, widget: string }
           - { name: email, label: Algemeen e-mailadres, widget: string, type: email }
           - name: address
