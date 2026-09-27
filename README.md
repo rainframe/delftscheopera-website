@@ -252,11 +252,12 @@ bericht de titel, samenvatting, link en omslagfoto. Laposta kan zo'n feed in een
 
 ### Statistieken (Cloudflare Web Analytics)
 
-Ga in Cloudflare naar _Analytics & Logs → Web Analytics_, voeg delftscheopera.nl toe en kies de
-installatie met een JS-fragment (handmatig). De automatische installatie zette het script niet op
-deze site, omdat die via een Worker loopt. Kopieer de `token` uit het fragment en vul die in bij
-_Instellingen → Statistieken_ in het beheer; de token is openbaar (hij staat in de broncode van elke
-pagina). Laat de automatische installatie uit staan, anders kan het script dubbel op de pagina komen.
+Ga in Cloudflare naar _Web Analytics_ (https://dash.cloudflare.com/?to=/:account/web-analytics) en
+voeg delftscheopera.nl toe met _Add a site_ (staat hij er al, kies dan _Manage site_). Kies als
+installatie _Enable with JS Snippet installation_: de automatische installatie zet het script niet op
+deze site, omdat die via een Worker loopt, en zo komt het script ook niet dubbel op de pagina. Kopieer
+de `token` uit het fragment en vul die in bij _Instellingen → Statistieken_ in het beheer. De token is
+openbaar (hij staat in de broncode van elke pagina) en telt ook preview.delftscheopera.nl mee.
 Web Analytics gebruikt geen cookies, dus een cookiemelding is niet nodig; de privacyverklaring noemt
 het al.
 
@@ -276,10 +277,7 @@ het al.
 - [ ] RSIN controleren: op de oude site staat `8036313217` (10 cijfers), een RSIN heeft er 9
 - [ ] Placeholders invullen: lustrumdetails (opzet, locaties, data) en de privacyverklaring laten controleren
 - [ ] De drie concept-nieuwsberichten nalezen (geschreven op basis van de oude site en het ontwerp)
-- [ ] Nieuwsbrief: Laposta-account en -lijst aanmaken en het formulier koppelen (zie _Nieuwsbrief_)
 - [ ] IBAN invullen in `settings/site.yml` als dat op _Steun ons_ moet staan
-- [ ] Het client secret van de GitHub OAuth App als Secret in Cloudflare zetten (zie _Inloggen in het beheer_)
-- [ ] preview.delftscheopera.nl als _Custom domain_ met _Enable for: Production_ aan de worker koppelen (zie _Publiceren_)
 - [ ] stichtingdoc.nl en www.stichtingdoc.nl aan de worker koppelen (zie _Doorverwijzingen_)
 - [ ] Cloudflare Web Analytics aanzetten (zie _Statistieken_)
 - [ ] `npm run check:live` draaien: er mogen geen ✗ meer staan

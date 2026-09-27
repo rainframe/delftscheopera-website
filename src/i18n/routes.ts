@@ -20,7 +20,7 @@ export const routes = {
 export type RouteKey = keyof typeof routes;
 
 /** Pagina's in het hoofdmenu, in deze volgorde. */
-export const mainNav: RouteKey[] = ['lustrum', 'nieuws', 'projecten', 'organisatie', 'contact'];
+export const mainNav: RouteKey[] = ['lustrum', 'nieuws', 'projecten', 'organisatie'];
 
 export function pageUrl(key: RouteKey, locale: Locale): string {
   return routes[key][locale];

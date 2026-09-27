@@ -6,7 +6,8 @@
 // 3. De headers uit public/_headers zijn actief.
 // 4. Vóór de lancering toont delftscheopera.nl alleen "Binnenkort online" (behalve het beheer);
 //    daarna verwijst preview.delftscheopera.nl door.
-// 5. www, http:// en de oude pagina's van stichtingdoc.nl verwijzen permanent (301) door.
+// 5. www, http:// en de oude pagina's van stichtingdoc.nl verwijzen permanent (301) door
+//    (stichtingdoc.nl pas zodra dat domein aan de worker gekoppeld is).
 // 6. Stand van zaken: inloggen in het beheer, het nieuwsbriefformulier, statistieken en zoekmachines.
 //
 // Gebruik: `npm run check:live`, of voor een ander adres `npm run check:live -- https://…` (dan
@@ -15,11 +16,14 @@
 const production = 'https://delftscheopera.nl';
 const preview = 'https://preview.delftscheopera.nl';
 
-/** Oude adressen en waar ze naartoe moeten. Houd gelijk met OLD_PAGES in worker/index.ts. */
+/** Adressen die doorverwijzen en waar ze naartoe moeten. */
 const redirects = [
   ['http://delftscheopera.nl/', '/'],
   ['https://www.delftscheopera.nl/', '/'],
   ['https://www.delftscheopera.nl/nieuws/', '/nieuws/'],
+];
+/** De oude site. Houd gelijk met OLD_PAGES in worker/index.ts. */
+const oldSite = [
   ['https://stichtingdoc.nl/', '/'],
   ['https://www.stichtingdoc.nl/', '/'],
   ['https://www.stichtingdoc.nl/home', '/'],
@@ -158,9 +162,19 @@ if (!custom) {
     return 'vóór de lancering: delftscheopera.nl toont alleen "Binnenkort online", het beheer blijft bereikbaar';
   });
 
-  // 5. Doorverwijzingen
+  // 5. Doorverwijzingen; stichtingdoc.nl alleen als een van beide domeinen al doorverwijst.
   await group(async () => {
-    for (const [from, to] of redirects) {
+    const linked = await Promise.all(
+      ['https://stichtingdoc.nl/', 'https://www.stichtingdoc.nl/'].map((url) =>
+        request(url, 'HEAD').then(
+          (response) => response.headers.get('location')?.startsWith(production) ?? false,
+          () => false,
+        ),
+      ),
+    );
+    const oldSiteLinked = linked.some(Boolean);
+    const checks = oldSiteLinked ? [...redirects, ...oldSite] : redirects;
+    for (const [from, to] of checks) {
       const expected = production + to;
       let url = from;
       const hops = [];
@@ -173,7 +187,7 @@ if (!custom) {
       }
       if (url !== expected) failures.push(`${from} → ${url} (${hops.join(' → ')}), verwacht ${expected}`);
     }
-    return `${redirects.length} doorverwijzingen (http, www en stichtingdoc.nl)`;
+    return `${checks.length} doorverwijzingen (http, www${oldSiteLinked ? ' en stichtingdoc.nl' : ''})`;
   });
 }
 
