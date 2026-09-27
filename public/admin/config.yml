@@ -636,6 +636,15 @@ collections:
                 widget: string
                 required: false
                 hint: Een veld dat leeg moet blijven, om spambots te herkennen (bij Laposta email).
+              - name: script
+                label: Script van de dienst
+                widget: string
+                type: url
+                required: false
+                hint: >-
+                  Het adres bij <script src="…"> onder het formulier (bij Laposta eindigend op
+                  /subscribe/check/validate.js, tegen spam). Het wordt pas geladen als iemand het
+                  formulier gebruikt.
           - name: analytics
             label: Statistieken
             widget: object

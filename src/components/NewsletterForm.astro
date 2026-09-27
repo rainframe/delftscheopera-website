@@ -15,7 +15,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const { newsletter } = await getSettings();
-const { action, emailField, redirectField, honeypotField } = newsletter;
+const { action, emailField, redirectField, honeypotField, script } = newsletter;
 const ready = Boolean(action && emailField);
 const hiddenFields = newsletter.hiddenFields.filter(
   ({ name }) => name !== redirectField && name !== honeypotField,
@@ -76,6 +76,45 @@ const thanksUrl = new URL(pageUrl('nieuwsbriefBedankt', locale), Astro.site ?? '
     )}
   </form>
 </section>
+
+{ready && script && <script is:inline define:vars={{ script }}>
+  // Het script van de nieuwsbriefdienst (bij Laposta: bescherming tegen spam) wordt pas geladen
+  // als iemand het formulier gebruikt. Zo krijgen gewone bezoekers geen verzoeken of cookies van
+  // de dienst. Wie verstuurt voordat het script er is, wacht daar even op.
+  const form = document.querySelector('.newsletter__form');
+  let state = 'idle';
+  let pending = false;
+  const send = () => (form.requestSubmit ? form.requestSubmit() : form.submit());
+  const load = () => {
+    if (state !== 'idle') return;
+    state = 'loading';
+    const tag = document.createElement('script');
+    tag.src = script;
+    tag.onload = () => {
+      state = 'ready';
+      if (pending) send();
+    };
+    tag.onerror = () => {
+      state = 'failed';
+      if (pending) form.submit();
+    };
+    document.head.append(tag);
+  };
+  for (const type of ['pointerover', 'touchstart', 'focusin']) {
+    form.addEventListener(type, load, { once: true, passive: true });
+  }
+  form.addEventListener('submit', (event) => {
+    if (state === 'ready' || state === 'failed') return;
+    event.preventDefault();
+    pending = true;
+    load();
+    setTimeout(() => {
+      if (state !== 'loading') return;
+      state = 'failed';
+      form.submit();
+    }, 5000);
+  });
+</script>}
 
 <style>
   .newsletter {

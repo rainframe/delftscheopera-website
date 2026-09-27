@@ -119,6 +119,8 @@ const settings = defineCollection({
       redirectField: z.string().optional(),
       /** Veld dat leeg moet blijven, tegen spam (bij Laposta `email`). */
       honeypotField: z.string().optional(),
+      /** Script dat bij het formulier hoort (bij Laposta validate.js, tegen spam). */
+      script: z.url().optional(),
     }),
     analytics: z
       .object({

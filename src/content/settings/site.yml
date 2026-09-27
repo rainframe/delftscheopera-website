@@ -22,5 +22,13 @@ socials:
 # Laposta-formulier (zie de README); zolang die ontbreken, staat het formulier uit.
 newsletter:
   provider: Laposta
+  action: https://stichting-delftsche-opera-compagnie.email-provider.eu/subscribe/post/v2/index.php
+  emailField: OSrjoxpRsr
+  hiddenFields:
+    - name: a
+      value: kmuulwjb6m
+    - name: l
+      value: fiwreregqq
   redirectField: next
   honeypotField: email
+  script: https://stichting-delftsche-opera-compagnie.email-provider.eu/subscribe/check/validate.js

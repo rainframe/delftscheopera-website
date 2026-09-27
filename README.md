@@ -213,11 +213,18 @@ gekoppeld is, staat het uit met een gele markering.
 2. Open _Relaties → (de lijst) → Verrijken → Aanmelden → Zelf vormgeven van aanmeldformulier_ en
    bekijk de kale HTML-code.
 3. Neem in het beheer onder _Instellingen → Nieuwsbrief_ over:
-   - **Formulieradres**: wat bij `action="…"` staat (`https://….email-provider.nl/subscribe/post/index.php`);
+   - **Formulieradres**: wat bij `action="…"` staat (`https://….email-provider.eu/subscribe/post/v2/index.php`);
    - **Naam van het e-mailveld**: de `name="…"` van het invoerveld met `type="email"` en een code van
      10 tekens. Niet het veld dat letterlijk `email` heet: dat is het anti-spamveld;
-   - **Verborgen velden**: `a` en `l` met hun waarden.
-     _Veld voor de bedankpagina_ (`next`) en _Anti-spamveld_ (`email`) staan al goed.
+   - **Verborgen velden**: `a` en `l` met hun waarden;
+   - **Script van de dienst**: het adres bij `<script src="…/subscribe/check/validate.js">` onder het
+     formulier. Dat script beschermt tegen spam (met een token en een kleine rekenpuzzel); het adres
+     waar het formulier naartoe gaat (`/subscribe/post/v2/…`) accepteert zonder dat script geen
+     aanmeldingen. De site laadt het pas als iemand het formulier gebruikt, zodat gewone bezoekers
+     geen verzoeken of cookies van Laposta krijgen.
+
+   _Veld voor de bedankpagina_ (`next`) en _Anti-spamveld_ (`email`) staan al goed.
+
 4. Meld je zelf aan: je hoort op de bedankpagina te komen en in Laposta op de lijst te staan.
 
 Een andere dienst met een gewoon HTML-formulier (Mailchimp, Brevo, MailerLite, …) werkt op dezelfde
