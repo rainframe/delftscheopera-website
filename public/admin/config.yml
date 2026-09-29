@@ -313,7 +313,6 @@ collections:
             fields:
               - { name: title, label: Titel, widget: string, i18n: true }
               - { name: subtitle, label: Ondertitel, widget: string, i18n: true }
-              - { name: year, label: Jaartal, widget: string, i18n: duplicate }
               - { name: credit, label: Fotograaf, widget: string, required: false, i18n: duplicate }
               - { name: image, label: Foto, widget: image, i18n: duplicate }
               - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }

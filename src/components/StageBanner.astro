@@ -1,7 +1,7 @@
 ---
 /**
  * De grote banner uit het ontwerp (de Community Opera 2028 op de homepage): foto tussen twee
- * gordijnen, met logo, titel, ondertitel en jaartal eroverheen. Met `href` wordt de hele banner een link.
+ * gordijnen, met logo, titel en ondertitel eroverheen. Met `href` wordt de hele banner een link.
  */
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
@@ -15,7 +15,6 @@ interface Props {
   locale: Locale;
   title: string;
   subtitle: string;
-  year: string;
   image: ImageMetadata;
   imageAlt: string;
   credit?: string;
@@ -31,7 +30,6 @@ const {
   locale,
   title,
   subtitle,
-  year,
   image,
   imageAlt,
   credit,
@@ -57,7 +55,6 @@ const Heading = headingLevel;
       <Logo class="stage__logo" color="white" alt="" width={132} />
       <Heading class="stage__title">{title}</Heading>
       <p class="stage__subtitle">{subtitle}</p>
-      <p class="stage__year">{year}</p>
       {href && (
         <a class="stage__link" href={href}>
           <Icon name="arrow" />
@@ -128,14 +125,6 @@ const Heading = headingLevel;
     font-size: clamp(1.5rem, 5vw, 4.25rem);
     line-height: 1;
     text-shadow: 0 2px 20px rgb(0 0 0 / 0.35);
-  }
-
-  .stage__year {
-    margin-top: 0.3em;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(1.25rem, 3.2vw, 2.75rem);
-    line-height: 1;
   }
 
   .stage__link {

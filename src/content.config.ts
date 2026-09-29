@@ -149,7 +149,6 @@ const home = defineCollection({
       banner: z.object({
         title: z.string(),
         subtitle: z.string(),
-        year: z.string(),
         credit: z.string().optional(),
         ...pictureFields(image),
       }),
