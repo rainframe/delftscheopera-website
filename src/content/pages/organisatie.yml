@@ -1,26 +1,30 @@
 nl:
   seo:
     title: Organisatie
-    description: Over Stichting Delftsche Opera Compagnie, het bestuur en de Raad van Toezicht.
+    description: Over Stichting Delftsche Opera Compagnie, het Comité van Aanbeveling, de Raad van Toezicht en het bestuur.
   title: Organisatie
   intro: |-
     Stichting Delftsche Opera Compagnie (DOC) is opgericht in 1994. De stichting heeft als doel grootschalige projecten te organiseren voor het Delftse studentenmuziekgezelschap Krashna Musika. Tegenwoordig treden we naar buiten als **Delftsche Opera**.
 
     De stichting heeft een eigen bestuur en een Raad van Toezicht, die wordt benoemd door de vereniging D.S.M.G. Krashna Musika.
-  boardTitle: Bestuur
+  recommendationTitle: Comité van Aanbeveling
+  recommendationText: De leden van het Comité van Aanbeveling staan achter de Delftsche Opera en bevelen ons werk van harte aan.
   supervisoryTitle: Raad van Toezicht
   supervisoryText: De Raad van Toezicht houdt toezicht op het bestuur en op de koers van de stichting.
+  boardTitle: Bestuur
   infoTitle: Algemene gegevens
 en:
   seo:
     title: Organisation
-    description: About Stichting Delftsche Opera Compagnie, its board and its supervisory board.
+    description: About Stichting Delftsche Opera Compagnie, its honorary committee, its supervisory board and its board.
   title: Organisation
   intro: |-
     Stichting Delftsche Opera Compagnie (DOC) was founded in 1994. The foundation's aim is to organise large-scale projects for Krashna Musika, the student music society of Delft. Today we present ourselves as **Delftsche Opera**.
 
     The foundation has its own board and a supervisory board (Raad van Toezicht), which is appointed by the association D.S.M.G. Krashna Musika.
-  boardTitle: Board
+  recommendationTitle: Honorary committee
+  recommendationText: The members of our honorary committee (Comité van Aanbeveling) support Delftsche Opera and warmly recommend our work.
   supervisoryTitle: Supervisory board
   supervisoryText: The supervisory board oversees the board and the course of the foundation.
+  boardTitle: Board
   infoTitle: General information

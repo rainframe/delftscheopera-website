@@ -204,7 +204,7 @@ collections:
   - name: mensen
     label: Mensen
     label_singular: Persoon
-    description: Bestuur, Raad van Toezicht en artistiek team.
+    description: Comité van Aanbeveling, Raad van Toezicht, bestuur en artistiek team.
     folder: src/content/mensen
     extension: yml
     format: yaml
@@ -233,6 +233,7 @@ collections:
         options:
           - { label: Bestuur, value: bestuur }
           - { label: Raad van Toezicht, value: raad-van-toezicht }
+          - { label: Comité van Aanbeveling, value: comite-van-aanbeveling }
           - { label: Artistiek team, value: artistiek-team }
       - name: role
         label: Functie
@@ -250,12 +251,15 @@ collections:
         label: Portretfoto
         widget: image
         required: false
-        hint: Staand formaat. Zonder foto verschijnen de initialen.
+        hint: >-
+          Staand formaat. Alleen bestuursleden staan met foto op de site; zonder foto verschijnen hun
+          initialen.
       - name: bio
         label: Korte biografie
         widget: object
         required: false
         collapsed: true
+        hint: Alleen voor het artistiek team; staat op de homepage bij de muzikale leiding.
         fields:
           - name: nl
             label: Nederlands
@@ -271,19 +275,6 @@ collections:
             minimal: true
             buttons: [bold, italic, link]
             editor_components: []
-      - name: workImage
-        label: Foto van een voorstelling
-        widget: image
-        required: false
-        hint: Alleen voor het artistiek team; verschijnt naast de biografie op de lustrumpagina.
-      - name: workImageAlt
-        label: Beschrijving van die foto
-        widget: object
-        required: false
-        collapsed: true
-        fields:
-          - { name: nl, label: Nederlands, widget: string, required: false }
-          - { name: en, label: Engels, widget: string, required: false }
       - name: order
         label: Volgorde
         widget: number
@@ -315,62 +306,8 @@ collections:
             fields:
               - { name: title, label: Titel, widget: string, i18n: true }
               - { name: description, label: Omschrijving, widget: text, i18n: true }
-          - name: hero
-            label: Grote foto bovenaan (Steun ons)
-            widget: object
-            i18n: true
-            fields:
-              - { name: title, label: Titel, widget: string, i18n: true }
-              - { name: subtitle, label: Ondertitel, widget: string, i18n: true }
-              - { name: intro, label: Korte introductie, widget: text, i18n: true }
-              - { name: linkLabel, label: Tekst van de link naar Steun ons, widget: string, i18n: true }
-              - { name: image, label: Foto, widget: image, i18n: duplicate }
-              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
-          - name: news
-            label: Nieuwsblok
-            widget: object
-            i18n: true
-            fields:
-              - { name: title, label: Titel, widget: string, i18n: true }
-              - { name: moreLabel, label: Tekst van de link naar al het nieuws, widget: string, i18n: true }
-          - name: feature
-            label: Uitgelichte banner (lustrum)
-            widget: object
-            i18n: true
-            fields:
-              - { name: title, label: Titel, widget: string, i18n: true }
-              - { name: subtitle, label: Ondertitel, widget: string, i18n: true }
-              - { name: year, label: Jaartal, widget: string, i18n: duplicate }
-              - { name: credit, label: Fotograaf, widget: string, required: false, i18n: duplicate }
-              - { name: linkLabel, label: Omschrijving van de link, widget: string, i18n: true }
-              - { name: image, label: Foto, widget: image, i18n: duplicate }
-              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
-          - name: conductors
-            label: Dirigenten
-            widget: object
-            i18n: true
-            fields:
-              - { name: title, label: Titel, widget: string, i18n: true }
-              - { name: text, label: Tekst, widget: text, i18n: true }
-              - name: people
-                label: Dirigenten
-                widget: relation
-                collection: mensen
-                search_fields: [name]
-                display_fields: [name]
-                multiple: true
-                i18n: duplicate
-              - { name: image, label: Foto, widget: image, i18n: duplicate }
-              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
-
-      - name: lustrum
-        label: Lustrum
-        file: src/content/pages/lustrum.yml
-        i18n: true
-        fields:
-          - *seo
           - name: banner
-            label: Banner bovenaan
+            label: Banner bovenaan (Community Opera)
             widget: object
             i18n: true
             fields:
@@ -381,7 +318,7 @@ collections:
               - { name: image, label: Foto, widget: image, i18n: duplicate }
               - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
           - name: intro
-            label: Community Opera
+            label: Over de Community Opera
             widget: object
             i18n: true
             fields:
@@ -393,6 +330,13 @@ collections:
                 minimal: true
                 buttons: [bold, italic, link]
                 editor_components: []
+          - name: news
+            label: Nieuwsblok
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: moreLabel, label: Tekst van de link naar al het nieuws, widget: string, i18n: true }
           - name: krashna
             label: Krashna Musika
             widget: object
@@ -411,13 +355,36 @@ collections:
               - { name: image, label: Foto, widget: image, i18n: duplicate }
               - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
           - name: team
-            label: Artistiek team (in deze volgorde)
-            widget: relation
-            collection: mensen
-            search_fields: [name]
-            display_fields: [name]
-            multiple: true
-            i18n: duplicate
+            label: Muzikale leiding
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: text, label: Tekst, widget: text, i18n: true }
+              - name: people
+                label: Mensen (in deze volgorde)
+                widget: relation
+                collection: mensen
+                search_fields: [name]
+                display_fields: [name]
+                multiple: true
+                i18n: duplicate
+                hint: Met functie en korte biografie, zoals ingevuld onder Mensen.
+              - { name: image, label: Foto, widget: image, i18n: duplicate }
+              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
+          - name: support
+            label: Oproep onderaan (Steun ons)
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: subtitle, label: Ondertitel, widget: string, i18n: true }
+              - name: linkLabel
+                label: Tekst van de link naar Steunen & samenwerken
+                widget: string
+                i18n: true
+              - { name: image, label: Foto, widget: image, i18n: duplicate }
+              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
 
       - name: nieuws
         label: Nieuwspagina
@@ -451,9 +418,17 @@ collections:
             minimal: true
             buttons: [bold, italic, link]
             editor_components: []
-          - { name: boardTitle, label: Kop boven het bestuur, widget: string, i18n: true }
+          - name: recommendationTitle
+            label: Kop boven het Comité van Aanbeveling
+            widget: string
+            i18n: true
+          - name: recommendationText
+            label: Tekst over het Comité van Aanbeveling
+            widget: text
+            i18n: true
           - { name: supervisoryTitle, label: Kop boven de Raad van Toezicht, widget: string, i18n: true }
           - { name: supervisoryText, label: Tekst over de Raad van Toezicht, widget: text, i18n: true }
+          - { name: boardTitle, label: Kop boven het bestuur, widget: string, i18n: true }
           - { name: infoTitle, label: Kop boven de algemene gegevens, widget: string, i18n: true }
 
       - name: contact
@@ -466,9 +441,9 @@ collections:
           - { name: intro, label: Introductie, widget: string, i18n: true }
           - { name: boardTitle, label: Kop boven het bestuur, widget: string, i18n: true }
 
-      - name: steun-ons
-        label: Steun ons
-        file: src/content/pages/steun-ons.yml
+      - name: steunen
+        label: Steunen & samenwerken
+        file: src/content/pages/steunen.yml
         i18n: true
         fields:
           - *seo
@@ -483,7 +458,7 @@ collections:
               - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
           - { name: intro, label: Introductie, widget: text, i18n: true }
           - name: ways
-            label: Manieren om te steunen
+            label: Manieren om te steunen of samen te werken
             label_singular: Manier
             widget: list
             i18n: true
@@ -585,7 +560,7 @@ collections:
             label: IBAN
             widget: string
             required: false
-            hint: Als dit is ingevuld, staat het rekeningnummer op de pagina Steun ons.
+            hint: Als dit is ingevuld, staat het rekeningnummer op de pagina Steunen & samenwerken.
           - { name: ibanName, label: Ten name van, widget: string, required: false }
           - name: socials
             label: Sociale media

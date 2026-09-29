@@ -76,13 +76,11 @@ const mensen = defineCollection({
   schema: ({ image }) =>
     z.object({
       name: z.string(),
-      group: z.enum(['bestuur', 'raad-van-toezicht', 'artistiek-team']),
+      group: z.enum(['bestuur', 'raad-van-toezicht', 'comite-van-aanbeveling', 'artistiek-team']),
       role: localized,
       email: z.email().optional(),
       photo: image().optional(),
       bio: z.object({ nl: z.string().optional(), en: z.string().optional() }).optional(),
-      workImage: image().optional(),
-      workImageAlt: localized.optional(),
       order: z.number().default(99),
     }),
 });
@@ -144,38 +142,8 @@ const pictureFields = (image: SchemaContext['image']) => ({
 const home = defineCollection({
   loader: glob({ pattern: 'home.yml', base: './src/content/pages' }),
   schema: ({ image }) => {
-    const schema = z.object({
-      seo,
-      hero: z.object({
-        title: z.string(),
-        subtitle: z.string(),
-        intro: z.string(),
-        linkLabel: z.string(),
-        ...pictureFields(image),
-      }),
-      news: z.object({ title: z.string(), moreLabel: z.string() }),
-      feature: z.object({
-        title: z.string(),
-        subtitle: z.string(),
-        year: z.string(),
-        credit: z.string().optional(),
-        linkLabel: z.string(),
-        ...pictureFields(image),
-      }),
-      conductors: z.object({
-        title: z.string(),
-        text: z.string(),
-        people: z.array(reference('mensen')),
-        ...pictureFields(image),
-      }),
-    });
-    return localizedPage(schema);
-  },
-});
-
-const lustrum = defineCollection({
-  loader: glob({ pattern: 'lustrum.yml', base: './src/content/pages' }),
-  schema: ({ image }) => {
+    // De homepage vertelt over de Community Opera 2028, van de banner bovenaan tot de oproep om te
+    // steunen onderaan.
     const schema = z.object({
       seo,
       banner: z.object({
@@ -186,6 +154,7 @@ const lustrum = defineCollection({
         ...pictureFields(image),
       }),
       intro: z.object({ title: z.string(), text: z.string() }),
+      news: z.object({ title: z.string(), moreLabel: z.string() }),
       krashna: z.object({
         title: z.string(),
         text: z.string(),
@@ -193,14 +162,25 @@ const lustrum = defineCollection({
         linkUrl: z.url(),
         ...pictureFields(image),
       }),
-      team: z.array(reference('mensen')),
+      team: z.object({
+        title: z.string(),
+        text: z.string(),
+        people: z.array(reference('mensen')),
+        ...pictureFields(image),
+      }),
+      support: z.object({
+        title: z.string(),
+        subtitle: z.string(),
+        linkLabel: z.string(),
+        ...pictureFields(image),
+      }),
     });
     return localizedPage(schema);
   },
 });
 
-const steunOns = defineCollection({
-  loader: glob({ pattern: 'steun-ons.yml', base: './src/content/pages' }),
+const steunen = defineCollection({
+  loader: glob({ pattern: 'steunen.yml', base: './src/content/pages' }),
   schema: ({ image }) => {
     const schema = z.object({
       seo,
@@ -219,8 +199,7 @@ export const collections = {
   mensen,
   settings,
   home,
-  lustrum,
-  steunOns,
+  steunen,
   nieuwsPagina: page('nieuws', z.object({ seo, title: z.string(), empty: z.string() })),
   projectenPagina: page('projecten', z.object({ seo, title: z.string(), intro: z.string() })),
   organisatie: page(
@@ -229,9 +208,11 @@ export const collections = {
       seo,
       title: z.string(),
       intro: z.string(),
-      boardTitle: z.string(),
+      recommendationTitle: z.string(),
+      recommendationText: z.string(),
       supervisoryTitle: z.string(),
       supervisoryText: z.string(),
+      boardTitle: z.string(),
       infoTitle: z.string(),
     }),
   ),

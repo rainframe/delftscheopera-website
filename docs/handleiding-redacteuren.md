@@ -30,8 +30,8 @@ Je komt nu in het beheer. Links staan de onderdelen:
 | ---------------- | -------------------------------------------------------------------- |
 | **Nieuws**       | De berichten op de nieuwspagina                                      |
 | **Projecten**    | Producties op de projectenpagina                                     |
-| **Mensen**       | Bestuur, Raad van Toezicht en artistiek team                         |
-| **Pagina's**     | De teksten van de vaste pagina's (Homepage, Lustrum, Organisatie, …) |
+| **Mensen**       | Comité van Aanbeveling, Raad van Toezicht, bestuur en artistiek team |
+| **Pagina's**     | De teksten van de vaste pagina's (Homepage, Organisatie, …)          |
 | **Instellingen** | Adres, KvK, RSIN, e-mailadres, sociale media, nieuwsbrief            |
 
 Tip: via het menu rechtsboven (je profielfoto) kun je ook **Inloggen met je mobiel**. Je scant dan
@@ -139,8 +139,11 @@ nieuwste productie staat bovenaan de projectenpagina.
   een portretfoto (staand formaat). Met **Volgorde** bepaal je de plek in de lijst: een lager nummer
   staat eerder.
 - **Oud-bestuurslid**: open de persoon en verwijder hem of haar.
-- Wie er op de homepage bij _Dirigenten_ en op de lustrumpagina bij het artistieke team staat, kies
-  je bij **Pagina's** → **Homepage** en **Lustrum**.
+- **Comité van Aanbeveling en Raad van Toezicht**: net als een bestuurslid, maar met de groep
+  _Comité van Aanbeveling_ of _Raad van Toezicht_. Hier zijn alleen de naam en functie nodig; een
+  e-mailadres en foto worden bij deze groepen niet getoond.
+- Wie er op de homepage bij _Muzikale leiding_ staat, met functie en korte biografie, kies je bij
+  **Pagina's** → **Homepage**.
 
 ### Pagina's
 

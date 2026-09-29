@@ -29,7 +29,8 @@ src/
   content/                 ← alle teksten en gegevens (dit is wat redacteuren aanpassen)
     nieuws/{nl,en}/        ← nieuwsberichten, één Markdown-bestand per bericht
     projecten/{nl,en}/     ← producties op de projectenpagina
-    mensen/                ← bestuur, Raad van Toezicht en artistiek team (één YAML-bestand per persoon)
+    mensen/                ← Comité van Aanbeveling, Raad van Toezicht, bestuur en artistiek team
+                             (één YAML-bestand per persoon)
     pages/                 ← teksten van vaste pagina's, met een nl:- en en:-blok
     settings/site.yml      ← adres, KvK, RSIN, e-mail, sociale media, IBAN, nieuwsbrief
   assets/
@@ -56,7 +57,7 @@ docs/                      ← handleiding voor redacteuren
 - Kleuren: navy `#042d64` en wit (huisstijl).
 - Lettertypes: koppen in **League Spartan** (meegeleverd via Fontsource), al het andere in Helvetica/Arial.
 - Het theatergordijn uit het logo is het terugkerende element: `Curtain.astro` is één gordijn,
-  `CurtainFrame.astro` zet gordijnen over een foto, `StageBanner.astro` is de grote lustrum-banner.
+  `CurtainFrame.astro` zet gordijnen over een foto, `StageBanner.astro` is de grote banner bovenaan de homepage (Community Opera 2028).
 - **Deelafbeeldingen**: elk nieuwsbericht krijgt bij het bouwen een eigen afbeelding van 1200 × 630
   pixels voor LinkedIn en andere sociale media ([src/lib/share-image.ts](src/lib/share-image.ts)): de
   titel in League Spartan op navy, met de omslagfoto tussen twee gordijnen (zonder foto: witte gordijnen,
@@ -135,7 +136,9 @@ De tekst van het bericht, in **Markdown**.
 ### Overige content
 
 - **Mensen**: kopieer een bestand in `src/content/mensen/` en pas het aan. `group` is `bestuur`,
-  `raad-van-toezicht` of `artistiek-team`; `order` bepaalt de volgorde.
+  `raad-van-toezicht`, `comite-van-aanbeveling` of `artistiek-team`; `order` bepaalt de volgorde.
+  Het Comité van Aanbeveling, de Raad van Toezicht en het bestuur staan op de pagina Organisatie; het
+  artistiek team staat op de homepage als het daar bij _Muzikale leiding_ gekozen is.
 - **Projecten**: Markdown-bestanden in `src/content/projecten/nl/` (en optioneel `en/`), nieuwste eerst.
 - **Paginateksten**: de YAML-bestanden in `src/content/pages/`.
 - **Gegevens van de stichting**: `src/content/settings/site.yml`.
@@ -273,13 +276,13 @@ het al.
 ## Nog te doen vóór de lancering
 
 - [ ] Scherpere foto's aanleveren
-- [ ] Portretten van Sytze Boerstra en Hidde Marsman (konden niet van de oude site gehaald worden)
+- [ ] Portretten van Sytze Boerstra, Hidde Marsman, Sean Camps en Catharina Goettsch
 - [ ] RSIN controleren: op de oude site staat `8036313217` (10 cijfers), een RSIN heeft er 9
-- [ ] Placeholders invullen: lustrumdetails (opzet, locaties, data) en de privacyverklaring laten controleren
+- [ ] Placeholders invullen: details van de Community Opera (opzet, locaties, data, meedoen) en de
+      privacyverklaring laten controleren
 - [ ] De drie concept-nieuwsberichten nalezen (geschreven op basis van de oude site en het ontwerp)
-- [ ] IBAN invullen in `settings/site.yml` als dat op _Steun ons_ moet staan
+- [ ] IBAN invullen in `settings/site.yml` als dat op _Steunen & samenwerken_ moet staan
 - [ ] stichtingdoc.nl en www.stichtingdoc.nl aan de worker koppelen (zie _Doorverwijzingen_)
-- [ ] Cloudflare Web Analytics aanzetten (zie _Statistieken_)
 - [ ] `npm run check:live` draaien: er mogen geen ✗ meer staan
 - [ ] Een bericht in de [Post Inspector](https://www.linkedin.com/post-inspector/) van LinkedIn bekijken
 - [ ] Bij de lancering: in het beheer onder _Instellingen_ **Website gelanceerd** aanzetten, en

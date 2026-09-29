@@ -17,15 +17,7 @@ export function mdInline(text: string | undefined): string {
 }
 
 type PageCollection =
-  | 'home'
-  | 'lustrum'
-  | 'steunOns'
-  | 'nieuwsPagina'
-  | 'projectenPagina'
-  | 'organisatie'
-  | 'contact'
-  | 'anbi'
-  | 'privacy';
+  'home' | 'steunen' | 'nieuwsPagina' | 'projectenPagina' | 'organisatie' | 'contact' | 'anbi' | 'privacy';
 
 type PageData<C extends PageCollection> = CollectionEntry<C>['data']['nl'];
 

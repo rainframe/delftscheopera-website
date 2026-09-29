@@ -5,12 +5,11 @@ export const defaultLocale: Locale = 'nl';
 /** Vaste pagina's met hun URL per taal. */
 export const routes = {
   home: { nl: '/', en: '/en/' },
-  lustrum: { nl: '/lustrum/', en: '/en/lustrum/' },
   nieuws: { nl: '/nieuws/', en: '/en/news/' },
   projecten: { nl: '/projecten/', en: '/en/projects/' },
   organisatie: { nl: '/organisatie/', en: '/en/organisation/' },
   contact: { nl: '/contact/', en: '/en/contact/' },
-  steunOns: { nl: '/steun-ons/', en: '/en/support-us/' },
+  steunen: { nl: '/steunen/', en: '/en/support/' },
   anbi: { nl: '/anbi/', en: '/en/anbi/' },
   privacy: { nl: '/privacy/', en: '/en/privacy/' },
   /** Hierheen stuurt de nieuwsbriefdienst nieuwe aanmeldingen; staat niet in de sitemap. */
@@ -19,8 +18,11 @@ export const routes = {
 
 export type RouteKey = keyof typeof routes;
 
-/** Pagina's in het hoofdmenu, in deze volgorde. */
-export const mainNav: RouteKey[] = ['lustrum', 'nieuws', 'projecten', 'organisatie'];
+/**
+ * Pagina's in het hoofdmenu, in deze volgorde. De homepage (via het logo) gaat over de Community
+ * Opera 2028; Projecten, ANBI, Privacy en Contact staan in de footer.
+ */
+export const mainNav: RouteKey[] = ['nieuws', 'steunen', 'organisatie'];
 
 export function pageUrl(key: RouteKey, locale: Locale): string {
   return routes[key][locale];

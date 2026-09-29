@@ -1,7 +1,6 @@
 name: Hidde Marsman
 group: bestuur
 role:
-  nl: Externe relaties
-  en: External relations
-email: extern@delftscheopera.nl
-order: 5
+  nl: Productie
+  en: Production
+order: 4

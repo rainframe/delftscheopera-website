@@ -1,0 +1,40 @@
+nl:
+  seo:
+    title: Steunen & samenwerken
+    description: Help de Delftsche Opera de Community Opera 2028 mogelijk te maken, als donateur, sponsor, fonds of partner.
+  hero:
+    title: Steunen & samenwerken
+    subtitle: Samen maken we de Community Opera 2028 mogelijk
+    image: /src/assets/uploads/orkest-panorama.jpg
+    imageAlt: Het orkest van Krashna Musika op het podium, in blauw licht
+  intro: Een community opera maak je samen. Grote producties met orkest, koor en solisten zijn bovendien niet mogelijk zonder steun van buiten. Met jouw gift, sponsoring of samenwerking maken we de Community Opera 2028 en onze andere producties mogelijk.
+  ways:
+    - title: Doneren
+      text: Elke gift helpt, groot of klein. Wil je doneren? Mail onze penningmeester via [penningmeester@delftscheopera.nl](mailto:penningmeester@delftscheopera.nl).
+    - title: Sponsoren
+      text: Wil je als bedrijf of fonds verbonden zijn aan de Community Opera 2028 of aan onze andere producties? Mail ons via [info@delftscheopera.nl](mailto:info@delftscheopera.nl), dan vertellen we je graag meer.
+    - title: Samenwerken
+      text: De Community Opera maken we samen met de mensen in Delft. Wil je als vereniging, school, culturele of maatschappelijke organisatie met ons samenwerken? Mail naar [info@delftscheopera.nl](mailto:info@delftscheopera.nl).
+  anbi:
+    title: ANBI-status
+    text: De Delftsche Opera is (nog) geen ANBI. We werken eraan om aan alle wettelijke en administratieve eisen te voldoen. Zolang we die status niet hebben, zijn giften aan ons niet aftrekbaar als gift aan een ANBI. [Meer over onze ANBI-status](/anbi/)
+en:
+  seo:
+    title: Support & collaborate
+    description: Help Delftsche Opera make the Community Opera 2028 happen, as a donor, sponsor, fund or partner.
+  hero:
+    title: Support & collaborate
+    subtitle: Together we make the Community Opera 2028 happen
+    image: /src/assets/uploads/orkest-panorama.jpg
+    imageAlt: The Krashna Musika orchestra on stage, in blue light
+  intro: A community opera is something you make together. Large-scale productions with orchestra, choir and soloists are also impossible without outside support. Your gift, sponsorship or collaboration makes the Community Opera 2028 and our other productions possible.
+  ways:
+    - title: Donate
+      text: Every gift helps, large or small. Would you like to donate? Email our treasurer at [penningmeester@delftscheopera.nl](mailto:penningmeester@delftscheopera.nl).
+    - title: Sponsor
+      text: Would your company or fund like to be associated with the Community Opera 2028 or our other productions? Email us at [info@delftscheopera.nl](mailto:info@delftscheopera.nl) and we will gladly tell you more.
+    - title: Collaborate
+      text: We are making the Community Opera together with the people of Delft. Are you an association, school, or cultural or community organisation that would like to work with us? Email [info@delftscheopera.nl](mailto:info@delftscheopera.nl).
+  anbi:
+    title: ANBI status
+    text: Delftsche Opera is not (yet) a registered charity (ANBI) in the Netherlands. We are working to meet all legal and administrative requirements. Until we have that status, gifts to us are not tax-deductible as gifts to an ANBI. [More about our ANBI status](/en/anbi/)

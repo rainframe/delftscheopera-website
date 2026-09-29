@@ -1,60 +1,92 @@
 nl:
   seo:
     title: Delftsche Opera
-    description: De Delftsche Opera (Stichting Delftsche Opera Compagnie) organiseert grootse producties voor het Delftse studentenorkest en -koor Krashna Musika.
-  hero:
-    title: Steun ons!
-    subtitle: Help ons met het realiseren van prachtige concerten
-    intro: De Delftsche Opera organiseert grootse producties voor het Delftse studentenorkest en -koor Krashna Musika.
-    linkLabel: Zo kun je ons steunen
-    image: /src/assets/uploads/orkest-dirigent.jpg
-    imageAlt: Het orkest van Krashna Musika tijdens een concert, met de dirigent rechts
+    description: In 2028 maakt de Delftsche Opera een community opera, samen met de mensen in Delft en met het studentenorkest en -koor Krashna Musika.
+  banner:
+    title: Community Opera
+    subtitle: Samen met Delft
+    year: '2028'
+    credit: Eduardus Lee
+    image: /src/assets/uploads/concertgebouw-lustrum.jpg
+    imageAlt: Koor en orkest op het podium van een concertzaal met een groot orgel
+  intro:
+    title: Samen opera maken
+    text: |-
+      In 2028 staat een heel bijzonder project op het programma: een **community opera**. Zoals de naam al zegt, maken we die opera niet alleen vóór de mensen in Delft, maar vooral sámen met hen. Het orkest en koor van Krashna Musika vormen daarbij het muzikale hart.
+
+      TODO: Meer over de opzet, de speellocaties, de data en hoe je kunt meedoen volgt.
   news:
     title: Nieuws
     moreLabel: Al het nieuws
-  feature:
-    title: Lustrum
-    subtitle: 60 jaar Krashna Musika
-    year: '2028'
-    credit: Eduardus Lee
-    linkLabel: Lees meer over het lustrum
-    image: /src/assets/uploads/concertgebouw-lustrum.jpg
-    imageAlt: Koor en orkest op het podium van een concertzaal met een groot orgel
-  conductors:
-    title: Dirigenten
-    text: Koor en orkest van Krashna Musika staan onder leiding van twee vaste dirigenten. Met hen brengen de studenten groot symfonisch repertoire op hoog niveau ten gehore.
+  krashna:
+    title: Krashna Musika
+    text: |-
+      De muziek komt van Krashna Musika, hét studentenorkest en -koor uit Delft. In 2023 won Krashna Musika de verkiezing _Het Leukste Studentenorkest van Nederland_ van het AVROTROS-programma De Klassieken op NPO Klassiek.
+
+      Sinds 1994 maakt de Delftsche Opera grootse producties met Krashna Musika, zoals de speciaal gecomponeerde opera _François Guyon_ (1996), Bizets _Carmen_ (2012) en de _Carmina Burana_ (2023). [Bekijk onze eerdere projecten](/projecten/).
+
+      In 2028 bestaat Krashna Musika zestig jaar. Voor de vereniging is de Community Opera daarmee ook het lustrumproject.
+    linkLabel: Naar de website van Krashna Musika
+    linkUrl: https://www.krashna.nl
+    image: /src/assets/uploads/krashna-leukste-studentenorkest.jpg
+    imageAlt: Krashna Musika na afloop van een concert, met het beeldmerk van Het Leukste Studentenorkest van Nederland
+  team:
+    title: Muzikale leiding
+    text: Koor en orkest van Krashna Musika staan onder leiding van twee vaste dirigenten. Met hen brengen de studenten groot symfonisch repertoire op hoog niveau ten gehore. Ook bij de Community Opera zijn zij betrokken.
     people:
       - ruben-de-grauw
       - stijn-berkouwer
     image: /src/assets/uploads/carmina-burana-2023.jpg
     imageAlt: Koor en orkest van Krashna Musika op het podium tijdens Carmina Burana
+  support:
+    title: Steun ons!
+    subtitle: Help de Community Opera mogelijk te maken
+    linkLabel: Steunen & samenwerken
+    image: /src/assets/uploads/orkest-panorama.jpg
+    imageAlt: Het orkest van Krashna Musika op het podium, in blauw licht
 en:
   seo:
     title: Delftsche Opera
-    description: Delftsche Opera (Stichting Delftsche Opera Compagnie) organises large-scale productions for Krashna Musika, the student orchestra and choir of Delft.
-  hero:
-    title: Support us!
-    subtitle: Help us make wonderful concerts happen
-    intro: Delftsche Opera organises large-scale productions for Krashna Musika, the student orchestra and choir of Delft.
-    linkLabel: How you can support us
-    image: /src/assets/uploads/orkest-dirigent.jpg
-    imageAlt: The Krashna Musika orchestra in concert, with the conductor on the right
+    description: In 2028 Delftsche Opera is creating a community opera, together with the people of Delft and Krashna Musika, the student orchestra and choir of Delft.
+  banner:
+    title: Community Opera
+    subtitle: Together with Delft
+    year: '2028'
+    credit: Eduardus Lee
+    image: /src/assets/uploads/concertgebouw-lustrum.jpg
+    imageAlt: Choir and orchestra on the stage of a concert hall with a large organ
+  intro:
+    title: Making opera together
+    text: |-
+      In 2028 a very special project is on the programme: a **community opera**. As the name suggests, we are not just making this opera for the people of Delft, but above all together with them. The orchestra and choir of Krashna Musika form its musical heart.
+
+      TODO: More about the concept, venues, dates and how to take part will follow.
   news:
     title: News
     moreLabel: All news
-  feature:
-    title: Lustrum
-    subtitle: 60 years of Krashna Musika
-    year: '2028'
-    credit: Eduardus Lee
-    linkLabel: Read more about the anniversary
-    image: /src/assets/uploads/concertgebouw-lustrum.jpg
-    imageAlt: Choir and orchestra on the stage of a concert hall with a large organ
-  conductors:
-    title: Conductors
-    text: Krashna Musika's choir and orchestra are led by two permanent conductors. Together with them, the students perform large-scale symphonic repertoire at a high level.
+  krashna:
+    title: Krashna Musika
+    text: |-
+      The music comes from Krashna Musika, the student orchestra and choir of Delft. In 2023 Krashna Musika won the public vote for _Het Leukste Studentenorkest van Nederland_ (the most fun student orchestra in the Netherlands), organised by the AVROTROS programme De Klassieken on NPO Klassiek.
+
+      Since 1994, Delftsche Opera has created large-scale productions with Krashna Musika, such as the specially composed opera _François Guyon_ (1996), Bizet's _Carmen_ (2012) and _Carmina Burana_ (2023). [See our earlier projects](/en/projects/).
+
+      In 2028 Krashna Musika turns sixty, which makes the Community Opera the association's anniversary (lustrum) project as well.
+    linkLabel: Visit the Krashna Musika website
+    linkUrl: https://www.krashna.nl
+    image: /src/assets/uploads/krashna-leukste-studentenorkest.jpg
+    imageAlt: Krashna Musika after a concert, with the logo of Het Leukste Studentenorkest van Nederland
+  team:
+    title: Musical direction
+    text: Krashna Musika's choir and orchestra are led by two permanent conductors. Together with them, the students perform large-scale symphonic repertoire at a high level. Both are also involved in the Community Opera.
     people:
       - ruben-de-grauw
       - stijn-berkouwer
     image: /src/assets/uploads/carmina-burana-2023.jpg
     imageAlt: Krashna Musika's choir and orchestra on stage during Carmina Burana
+  support:
+    title: Support us!
+    subtitle: Help make the Community Opera happen
+    linkLabel: Support & collaborate
+    image: /src/assets/uploads/orkest-panorama.jpg
+    imageAlt: The Krashna Musika orchestra on stage, in blue light

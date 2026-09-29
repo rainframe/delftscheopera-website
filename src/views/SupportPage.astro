@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const page = await getPage('steunOns', locale);
+const page = await getPage('steunen', locale);
 const settings = await getSettings();
 ---
 
@@ -19,7 +19,8 @@ const settings = await getSettings();
   locale={locale}
   title={page.seo.title}
   description={page.seo.description}
-  alternates={alternatesFor('steunOns')}
+  alternates={alternatesFor('steunen')}
+  current="steunen"
   image={page.hero.image}
   imageAlt={page.hero.imageAlt}
 >

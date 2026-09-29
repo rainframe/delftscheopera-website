@@ -1,5 +1,8 @@
 ---
-/** Brede foto met navy waas en grote witte titel ("Steun ons!" in het ontwerp). */
+/**
+ * Brede foto met navy waas en grote witte titel ("Steun ons!" in het ontwerp). Bovenaan een pagina
+ * laadt de foto meteen; lager op de pagina (`eager={false}`) pas als hij in beeld komt.
+ */
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import Icon from './Icon.astro';
@@ -11,11 +14,12 @@ interface Props {
   image: ImageMetadata;
   imageAlt: string;
   link?: { href: string; label: string };
-  /** Op de homepage is de paginatitel (h1) de sitenaam; daar is de hero-titel een h2. */
+  /** Staat de hero niet bovenaan de pagina, dan is de titel een h2. */
   headingLevel?: 'h1' | 'h2';
+  eager?: boolean;
 }
 
-const { title, subtitle, intro, image, imageAlt, link, headingLevel = 'h1' } = Astro.props;
+const { title, subtitle, intro, image, imageAlt, link, headingLevel = 'h1', eager = true } = Astro.props;
 const Heading = headingLevel;
 ---
 
@@ -25,8 +29,8 @@ const Heading = headingLevel;
     src={image}
     alt={imageAlt}
     layout="full-width"
-    loading="eager"
-    fetchpriority="high"
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : undefined}
   />
   <div class="hero__inner">
     {intro && <p class="hero__intro">{intro}</p>}

@@ -21,4 +21,4 @@ Je vindt ons ook op [LinkedIn](https://www.linkedin.com/company/delftsche-opera)
 
 ## Op naar 2028
 
-Ondertussen werken we aan ons volgende grote project: in 2028 bestaat Krashna Musika zestig jaar, en dat vieren we met een community opera in Delft. [Lees meer over het lustrum](/lustrum/).
+Ondertussen werken we aan ons volgende grote project: in 2028 maken we een community opera, samen met de mensen in Delft. [Lees meer over de Community Opera](/).
