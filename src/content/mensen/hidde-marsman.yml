@@ -3,4 +3,5 @@ group: bestuur
 role:
   nl: Productie
   en: Production
+email: productie@delftscheopera.nl
 order: 4

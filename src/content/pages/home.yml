@@ -4,7 +4,7 @@ nl:
     description: In 2028 maakt de Delftsche Opera een community opera, samen met de mensen in Delft en met het studentenorkest en -koor Krashna Musika.
   banner:
     title: Community Opera
-    subtitle: Samen met Delft
+    subtitle: In, met en voor Delft
     year: '2028'
     credit: Eduardus Lee
     image: /src/assets/uploads/concertgebouw-lustrum.jpg
@@ -13,8 +13,6 @@ nl:
     title: Samen opera maken
     text: |-
       In 2028 staat een heel bijzonder project op het programma: een **community opera**. Zoals de naam al zegt, maken we die opera niet alleen vóór de mensen in Delft, maar vooral sámen met hen. Het orkest en koor van Krashna Musika vormen daarbij het muzikale hart.
-
-      TODO: Meer over de opzet, de speellocaties, de data en hoe je kunt meedoen volgt.
   news:
     title: Nieuws
     moreLabel: Al het nieuws
@@ -50,7 +48,7 @@ en:
     description: In 2028 Delftsche Opera is creating a community opera, together with the people of Delft and Krashna Musika, the student orchestra and choir of Delft.
   banner:
     title: Community Opera
-    subtitle: Together with Delft
+    subtitle: In, with and for Delft
     year: '2028'
     credit: Eduardus Lee
     image: /src/assets/uploads/concertgebouw-lustrum.jpg
@@ -59,8 +57,6 @@ en:
     title: Making opera together
     text: |-
       In 2028 a very special project is on the programme: a **community opera**. As the name suggests, we are not just making this opera for the people of Delft, but above all together with them. The orchestra and choir of Krashna Musika form its musical heart.
-
-      TODO: More about the concept, venues, dates and how to take part will follow.
   news:
     title: News
     moreLabel: All news

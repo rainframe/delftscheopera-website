@@ -16,6 +16,4 @@ Het orkest en koor van Krashna Musika, hét studentenorkest en -koor van Delft, 
 
 Krashna Musika bestaat in 2028 zestig jaar. Voor de vereniging is de Community Opera daarmee ook het lustrumproject.
 
-TODO: Data, speellocaties en hoe je kunt meedoen volgen later.
-
 Meer weten? Kijk op onze [homepage](/). Wil je het project steunen of met ons samenwerken? Lees [hoe dat kan](/steunen/).

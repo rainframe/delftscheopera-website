@@ -16,6 +16,4 @@ The orchestra and choir of Krashna Musika, the student orchestra and choir of De
 
 Krashna Musika turns sixty in 2028, which makes the Community Opera the association's anniversary (lustrum) project as well.
 
-TODO: Dates, venues and how to take part will follow.
-
 Want to know more? Visit our [homepage](/en/). Would you like to support the project or work with us? Find out [how](/en/support/).
