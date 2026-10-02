@@ -205,6 +205,26 @@ a:hover {
   margin-block: 1.5em;
 }
 
+/* Tabellen schuiven op smalle schermen horizontaal in plaats van de pagina op te rekken. */
+.prose table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.prose th,
+.prose td {
+  padding: 0.5em 0.9em 0.5em 0;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  border-bottom-color: currentColor;
+}
+
 /* Zichtbare placeholder voor tekst die nog aangevuld moet worden
    (in content: een alinea die begint met "TODO:"). */
 p.todo,
