@@ -277,9 +277,7 @@ het al.
 ## Nog te doen vóór de lancering
 
 - [ ] Scherpere foto's aanleveren
-- [ ] Portretten van Sytze Boerstra, Hidde Marsman, Sean Camps en Catharina Goettsch
-- [ ] RSIN controleren: op de oude site staat `8036313217` (10 cijfers), een RSIN heeft er 9
-- [ ] De privacyverklaring laten controleren en daarna de gele placeholder bovenaan weghalen
+- [ ] Portretten van Sean Camps en Catharina Goettsch
 - [ ] De drie concept-nieuwsberichten nalezen (geschreven op basis van de oude site en het ontwerp)
 - [ ] IBAN invullen in `settings/site.yml` als dat op _Steunen & samenwerken_ moet staan
 - [ ] stichtingdoc.nl en www.stichtingdoc.nl aan de worker koppelen (zie _Doorverwijzingen_)

@@ -12,7 +12,7 @@ interface Props {
 
 const { locale, showAnbi = true, showIban = false } = Astro.props;
 const settings = await getSettings();
-// Een RSIN heeft altijd 9 cijfers; het nummer van de oude site moet gecontroleerd worden.
+// Een RSIN heeft altijd 9 cijfers; een ander aantal wordt op de site gemarkeerd.
 const rsinLooksValid = /^\d{9}$/.test(settings.rsin);
 ---
 
