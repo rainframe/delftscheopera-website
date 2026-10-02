@@ -7,6 +7,10 @@ nl:
     Stichting Delftsche Opera Compagnie (DOC) is opgericht in 1994. De stichting heeft als doel grootschalige projecten te organiseren voor het Delftse studentenmuziekgezelschap Krashna Musika. Tegenwoordig treden we naar buiten als **Delftsche Opera**.
 
     De stichting heeft een eigen bestuur en een Raad van Toezicht, die wordt benoemd door de vereniging D.S.M.G. Krashna Musika.
+  projects:
+    title: Eerdere projecten
+    text: Sinds 1994 maakt de Delftsche Opera grootse producties met Krashna Musika, zoals de speciaal gecomponeerde opera _François Guyon_ (1996), Bizets _Carmen_ (2012) en de _Carmina Burana_ (2023).
+    linkLabel: Bekijk onze eerdere projecten
   recommendationTitle: Comité van Aanbeveling
   recommendationText: De leden van het Comité van Aanbeveling staan achter de Delftsche Opera en bevelen ons werk van harte aan.
   supervisoryTitle: Raad van Toezicht
@@ -22,6 +26,10 @@ en:
     Stichting Delftsche Opera Compagnie (DOC) was founded in 1994. The foundation's aim is to organise large-scale projects for Krashna Musika, the student music society of Delft. Today we present ourselves as **Delftsche Opera**.
 
     The foundation has its own board and a supervisory board (Raad van Toezicht), which is appointed by the association D.S.M.G. Krashna Musika.
+  projects:
+    title: Earlier projects
+    text: Since 1994, Delftsche Opera has created large-scale productions with Krashna Musika, such as the specially composed opera _François Guyon_ (1996), Bizet's _Carmen_ (2012) and _Carmina Burana_ (2023).
+    linkLabel: See our earlier projects
   recommendationTitle: Honorary committee
   recommendationText: The members of our honorary committee (Comité van Aanbeveling) support Delftsche Opera and warmly recommend our work.
   supervisoryTitle: Supervisory board

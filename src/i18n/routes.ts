@@ -5,6 +5,7 @@ export const defaultLocale: Locale = 'nl';
 /** Vaste pagina's met hun URL per taal. */
 export const routes = {
   home: { nl: '/', en: '/en/' },
+  communityOpera: { nl: '/community-opera-2028/', en: '/en/community-opera-2028/' },
   nieuws: { nl: '/nieuws/', en: '/en/news/' },
   projecten: { nl: '/projecten/', en: '/en/projects/' },
   organisatie: { nl: '/organisatie/', en: '/en/organisation/' },
@@ -19,10 +20,10 @@ export const routes = {
 export type RouteKey = keyof typeof routes;
 
 /**
- * Pagina's in het hoofdmenu, in deze volgorde. De homepage (via het logo) gaat over de Community
- * Opera 2028; Projecten, ANBI, Privacy en Contact staan in de footer.
+ * Pagina's in het hoofdmenu, in deze volgorde. De homepage zit achter het logo; Projecten, ANBI,
+ * Privacy en Contact staan in de footer.
  */
-export const mainNav: RouteKey[] = ['nieuws', 'steunen', 'organisatie'];
+export const mainNav: RouteKey[] = ['communityOpera', 'nieuws', 'steunen', 'organisatie'];
 
 export function pageUrl(key: RouteKey, locale: Locale): string {
   return routes[key][locale];

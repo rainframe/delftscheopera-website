@@ -1,0 +1,148 @@
+---
+/**
+ * Pagina over de Community Opera 2028. De banner, de intro en het blok over Krashna Musika delen
+ * hun tekst met de homepage (home.yml); de muzikale leiding staat alleen hier.
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StageBanner from '@/components/StageBanner.astro';
+import CommunityIntro from '@/components/CommunityIntro.astro';
+import KrashnaBlock from '@/components/KrashnaBlock.astro';
+import CurtainFrame from '@/components/CurtainFrame.astro';
+import { alternatesFor, type Locale } from '@/i18n/routes';
+import { getPage, localized, md, resolvePeople } from '@/lib/content';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const home = await getPage('home', locale);
+const page = await getPage('communityOpera', locale);
+const team = await resolvePeople(page.team.people);
+---
+
+<BaseLayout
+  locale={locale}
+  title={page.seo.title}
+  description={page.seo.description}
+  alternates={alternatesFor('communityOpera')}
+  current="communityOpera"
+  image={home.banner.image}
+  imageAlt={home.banner.imageAlt}
+>
+  <StageBanner
+    locale={locale}
+    title={home.banner.title}
+    subtitle={home.banner.subtitle}
+    image={home.banner.image}
+    imageAlt={home.banner.imageAlt}
+    credit={home.banner.credit}
+    headingLevel="h1"
+    eager
+  />
+
+  <CommunityIntro title={home.intro.title} text={home.intro.text} />
+
+  <section class="team" aria-labelledby="team-title">
+    <div class="team__text">
+      <h2 id="team-title" class="team__title">
+        {page.team.title}
+      </h2>
+      <p class="team__intro">{page.team.text}</p>
+      <ul class="team__list" role="list">
+        {team.map((person) => {
+          const bio = localized(person.data.bio, locale);
+          return (
+            <li>
+              <h3>{person.data.name}</h3>
+              <p class="team__role">{localized(person.data.role, locale)}</p>
+              {bio && <div class="team__bio" set:html={md(bio)} />}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+    <CurtainFrame sides="left" tone="navy" curtainWidth="30%" class="team__media">
+      <Image
+        src={page.team.image}
+        alt={page.team.imageAlt}
+        widths={[480, 720, 1000, 1400]}
+        sizes="(min-width: 48rem) 45vw, 100vw"
+      />
+    </CurtainFrame>
+  </section>
+
+  <KrashnaBlock {...home.krashna} />
+</BaseLayout>
+
+<style>
+  /* Muzikale leiding: foto loopt door tot de rechterrand van het scherm, met een gordijn links. */
+  .team {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 5rem);
+    padding-top: var(--space-section);
+  }
+
+  .team__title {
+    font-size: var(--fs-h2);
+  }
+
+  .team__text {
+    padding-left: var(--gutter);
+    max-width: calc(var(--measure) + var(--gutter));
+  }
+
+  .team__intro {
+    margin-top: 1.25rem;
+    font-size: var(--fs-lead);
+    line-height: 1.5;
+  }
+
+  .team__list {
+    display: grid;
+    gap: 1.75rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .team__list h3 {
+    font-size: var(--fs-h3);
+  }
+
+  .team__role {
+    margin-top: 0.2rem;
+    font-weight: 700;
+  }
+
+  .team__bio {
+    margin-top: 0.6rem;
+  }
+
+  .team__bio :global(p + p) {
+    margin-top: 0.75em;
+  }
+
+  .team :global(.team__media) {
+    height: clamp(22rem, 36vw, 34rem);
+  }
+
+  @media (max-width: 48rem) {
+    .team {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .team__text {
+      padding-right: var(--gutter);
+    }
+
+    .team :global(.team__media) {
+      height: auto;
+      aspect-ratio: 4 / 3;
+      margin-left: var(--gutter);
+    }
+  }
+</style>

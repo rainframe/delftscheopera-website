@@ -143,7 +143,8 @@ const home = defineCollection({
   loader: glob({ pattern: 'home.yml', base: './src/content/pages' }),
   schema: ({ image }) => {
     // De homepage vertelt over de Community Opera 2028, van de banner bovenaan tot de oproep om te
-    // steunen onderaan.
+    // steunen onderaan. De banner, de intro en het blok over Krashna Musika staan ook op de pagina
+    // Community Opera 2028.
     const schema = z.object({
       seo,
       banner: z.object({
@@ -161,16 +162,27 @@ const home = defineCollection({
         linkUrl: z.url(),
         ...pictureFields(image),
       }),
-      team: z.object({
-        title: z.string(),
-        text: z.string(),
-        people: z.array(reference('mensen')),
-        ...pictureFields(image),
-      }),
       support: z.object({
         title: z.string(),
         subtitle: z.string(),
         linkLabel: z.string(),
+        ...pictureFields(image),
+      }),
+    });
+    return localizedPage(schema);
+  },
+});
+
+// Eigen teksten van de pagina Community Opera 2028; de rest van die pagina komt uit home.yml.
+const communityOpera = defineCollection({
+  loader: glob({ pattern: 'community-opera.yml', base: './src/content/pages' }),
+  schema: ({ image }) => {
+    const schema = z.object({
+      seo,
+      team: z.object({
+        title: z.string(),
+        text: z.string(),
+        people: z.array(reference('mensen')),
         ...pictureFields(image),
       }),
     });
@@ -198,6 +210,7 @@ export const collections = {
   mensen,
   settings,
   home,
+  communityOpera,
   steunen,
   nieuwsPagina: page('nieuws', z.object({ seo, title: z.string(), empty: z.string() })),
   projectenPagina: page('projecten', z.object({ seo, title: z.string(), intro: z.string() })),
@@ -207,6 +220,7 @@ export const collections = {
       seo,
       title: z.string(),
       intro: z.string(),
+      projects: z.object({ title: z.string(), text: z.string(), linkLabel: z.string() }),
       recommendationTitle: z.string(),
       recommendationText: z.string(),
       supervisoryTitle: z.string(),

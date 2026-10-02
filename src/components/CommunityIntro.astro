@@ -1,0 +1,69 @@
+---
+/**
+ * "Samen opera maken": tekst over de Community Opera, met bladmuziek rechtsboven en Delft onderaan.
+ * Staat op de homepage en op de pagina Community Opera 2028.
+ */
+import { Image } from 'astro:assets';
+import DelftSkyline from './DelftSkyline.astro';
+import bladmuziek from '@/assets/decor/bladmuziek-hoog.webp';
+import { md } from '@/lib/content';
+
+interface Props {
+  title: string;
+  text: string;
+}
+
+const { title, text } = Astro.props;
+---
+
+<section class="community" aria-labelledby="community-title">
+  <Image class="community__paper" src={bladmuziek} alt="" width={480} />
+  <div class="container">
+    <h2 id="community-title" class="display-title community__title">
+      {title}
+    </h2>
+    <div class="community__text lead" set:html={md(text)} />
+  </div>
+  <DelftSkyline />
+</section>
+
+<style>
+  .community {
+    position: relative;
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    overflow: hidden;
+  }
+
+  .community :global(.community__paper) {
+    position: absolute;
+    top: 0.75rem;
+    right: 4%;
+    width: clamp(7rem, 17.5vw, 15rem);
+    height: auto;
+    pointer-events: none;
+  }
+
+  .community__title {
+    position: relative;
+    text-align: left;
+    padding-left: clamp(0rem, 9vw, 8rem);
+  }
+
+  .community__text {
+    max-width: 30rem;
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
+    margin-bottom: clamp(1.5rem, 3vw, 2rem);
+    padding-left: clamp(0rem, 2.5vw, 2rem);
+  }
+
+  .community__text :global(p + p) {
+    margin-top: 1em;
+  }
+
+  @media (max-width: 56rem) {
+    .community__title {
+      padding-left: 0;
+      padding-right: 18vw;
+    }
+  }
+</style>

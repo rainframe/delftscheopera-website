@@ -142,14 +142,18 @@ nieuwste productie staat bovenaan de projectenpagina.
 - **Comité van Aanbeveling en Raad van Toezicht**: net als een bestuurslid, maar met de groep
   _Comité van Aanbeveling_ of _Raad van Toezicht_. Hier zijn alleen de naam en functie nodig; een
   e-mailadres en foto worden bij deze groepen niet getoond.
-- Wie er op de homepage bij _Muzikale leiding_ staat, met functie en korte biografie, kies je bij
-  **Pagina's** → **Homepage**.
+- Wie er op de pagina Community Opera 2028 bij _Muzikale leiding_ staat, met functie en korte
+  biografie, kies je bij **Pagina's** → **Community Opera 2028**.
 
 ### Pagina's
 
 Hier staan de teksten van de vaste pagina's, met Nederlands en Engels naast elkaar. De opmaak van de
 pagina's zelf (kleuren, gordijnen, indeling) zit in de code en kun je hier niet per ongeluk
 veranderen.
+
+De pagina **Community Opera 2028** deelt de banner, de tekst over de Community Opera en het blok
+over Krashna Musika met de homepage: die pas je aan bij **Homepage**, en dan veranderen ze op beide
+pagina's. Alleen de _Muzikale leiding_ staat bij **Community Opera 2028** zelf.
 
 Onder **Zoekmachines en delen** staan per pagina de titel en omschrijving voor Google en voor links
 die gedeeld worden.

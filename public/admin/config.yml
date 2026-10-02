@@ -309,6 +309,7 @@ collections:
           - name: banner
             label: Banner bovenaan (Community Opera)
             widget: object
+            hint: Staat ook op de pagina Community Opera 2028.
             i18n: true
             fields:
               - { name: title, label: Titel, widget: string, i18n: true }
@@ -319,6 +320,7 @@ collections:
           - name: intro
             label: Over de Community Opera
             widget: object
+            hint: Staat ook op de pagina Community Opera 2028.
             i18n: true
             fields:
               - { name: title, label: Titel, widget: string, i18n: true }
@@ -339,6 +341,7 @@ collections:
           - name: krashna
             label: Krashna Musika
             widget: object
+            hint: Staat ook op de pagina Community Opera 2028.
             i18n: true
             fields:
               - { name: title, label: Titel, widget: string, i18n: true }
@@ -353,6 +356,26 @@ collections:
               - { name: linkUrl, label: Adres van de link, widget: string, type: url, i18n: duplicate }
               - { name: image, label: Foto, widget: image, i18n: duplicate }
               - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
+          - name: support
+            label: Oproep onderaan (Steun ons)
+            widget: object
+            i18n: true
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - { name: subtitle, label: Ondertitel, widget: string, i18n: true }
+              - name: linkLabel
+                label: Tekst van de link naar Steunen & samenwerken
+                widget: string
+                i18n: true
+              - { name: image, label: Foto, widget: image, i18n: duplicate }
+              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
+
+      - name: communityOpera
+        label: Community Opera 2028
+        file: src/content/pages/community-opera.yml
+        i18n: true
+        fields:
+          - *seo
           - name: team
             label: Muzikale leiding
             widget: object
@@ -369,19 +392,6 @@ collections:
                 multiple: true
                 i18n: duplicate
                 hint: Met functie en korte biografie, zoals ingevuld onder Mensen.
-              - { name: image, label: Foto, widget: image, i18n: duplicate }
-              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
-          - name: support
-            label: Oproep onderaan (Steun ons)
-            widget: object
-            i18n: true
-            fields:
-              - { name: title, label: Titel, widget: string, i18n: true }
-              - { name: subtitle, label: Ondertitel, widget: string, i18n: true }
-              - name: linkLabel
-                label: Tekst van de link naar Steunen & samenwerken
-                widget: string
-                i18n: true
               - { name: image, label: Foto, widget: image, i18n: duplicate }
               - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
 
@@ -417,6 +427,21 @@ collections:
             minimal: true
             buttons: [bold, italic, link]
             editor_components: []
+          - name: projects
+            label: Verwijzing naar eerdere projecten
+            widget: object
+            i18n: true
+            hint: Navy blok onder de introductie, met een knop naar de projectenpagina.
+            fields:
+              - { name: title, label: Titel, widget: string, i18n: true }
+              - name: text
+                label: Tekst
+                widget: richtext
+                i18n: true
+                minimal: true
+                buttons: [bold, italic]
+                editor_components: []
+              - { name: linkLabel, label: Tekst op de knop, widget: string, i18n: true }
           - name: recommendationTitle
             label: Kop boven het Comité van Aanbeveling
             widget: string

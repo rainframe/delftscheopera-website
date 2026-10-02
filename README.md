@@ -138,7 +138,8 @@ De tekst van het bericht, in **Markdown**.
 - **Mensen**: kopieer een bestand in `src/content/mensen/` en pas het aan. `group` is `bestuur`,
   `raad-van-toezicht`, `comite-van-aanbeveling` of `artistiek-team`; `order` bepaalt de volgorde.
   Het Comité van Aanbeveling, de Raad van Toezicht en het bestuur staan op de pagina Organisatie; het
-  artistiek team staat op de homepage als het daar bij _Muzikale leiding_ gekozen is.
+  artistiek team staat op de pagina Community Opera 2028 als het daar bij _Muzikale leiding_
+  gekozen is (`src/content/pages/community-opera.yml`).
 - **Projecten**: Markdown-bestanden in `src/content/projecten/nl/` (en optioneel `en/`), nieuwste eerst.
 - **Paginateksten**: de YAML-bestanden in `src/content/pages/`.
 - **Gegevens van de stichting**: `src/content/settings/site.yml`.

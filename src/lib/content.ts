@@ -17,7 +17,15 @@ export function mdInline(text: string | undefined): string {
 }
 
 type PageCollection =
-  'home' | 'steunen' | 'nieuwsPagina' | 'projectenPagina' | 'organisatie' | 'contact' | 'anbi' | 'privacy';
+  | 'home'
+  | 'communityOpera'
+  | 'steunen'
+  | 'nieuwsPagina'
+  | 'projectenPagina'
+  | 'organisatie'
+  | 'contact'
+  | 'anbi'
+  | 'privacy';
 
 type PageData<C extends PageCollection> = CollectionEntry<C>['data']['nl'];
 

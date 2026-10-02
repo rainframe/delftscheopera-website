@@ -1,15 +1,13 @@
 ---
-import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
 import StageBanner from '@/components/StageBanner.astro';
 import PostCard from '@/components/PostCard.astro';
-import CurtainFrame from '@/components/CurtainFrame.astro';
-import DelftSkyline from '@/components/DelftSkyline.astro';
+import CommunityIntro from '@/components/CommunityIntro.astro';
+import KrashnaBlock from '@/components/KrashnaBlock.astro';
 import Icon from '@/components/Icon.astro';
-import bladmuziek from '@/assets/decor/bladmuziek-hoog.webp';
 import { alternatesFor, pageUrl, type Locale } from '@/i18n/routes';
-import { getPage, getPosts, localized, md, resolvePeople } from '@/lib/content';
+import { getPage, getPosts } from '@/lib/content';
 
 interface Props {
   locale: Locale;
@@ -18,7 +16,6 @@ interface Props {
 const { locale } = Astro.props;
 const page = await getPage('home', locale);
 const posts = (await getPosts(locale)).slice(0, 3);
-const team = await resolvePeople(page.team.people);
 ---
 
 <BaseLayout
@@ -41,16 +38,7 @@ const team = await resolvePeople(page.team.people);
     eager
   />
 
-  <section class="community" aria-labelledby="community-title">
-    <Image class="community__paper" src={bladmuziek} alt="" width={480} />
-    <div class="container">
-      <h2 id="community-title" class="display-title community__title">
-        {page.intro.title}
-      </h2>
-      <div class="community__text lead" set:html={md(page.intro.text)} />
-    </div>
-    <DelftSkyline />
-  </section>
+  <CommunityIntro title={page.intro.title} text={page.intro.text} />
 
   {posts.length > 0 && (
     <section class="home-news band" aria-labelledby="home-news-title">
@@ -73,57 +61,7 @@ const team = await resolvePeople(page.team.people);
     </section>
   )}
 
-  <section class="krashna" aria-labelledby="krashna-title">
-    <div class="krashna__grid container">
-      <div class="krashna__text">
-        <h2 id="krashna-title" class="section-heading">
-          {page.krashna.title}
-        </h2>
-        <div class="prose" set:html={md(page.krashna.text)} />
-        <a class="arrow-link krashna__link" href={page.krashna.linkUrl}>
-          <span>{page.krashna.linkLabel}</span>
-          <Icon name="arrow" />
-        </a>
-      </div>
-      <CurtainFrame sides="both" tone="navy" curtainWidth="8%" class="krashna__media">
-        <Image
-          src={page.krashna.image}
-          alt={page.krashna.imageAlt}
-          widths={[480, 720, 980]}
-          sizes="(min-width: 56rem) 50vw, 100vw"
-        />
-      </CurtainFrame>
-    </div>
-  </section>
-
-  <section class="team" aria-labelledby="team-title">
-    <div class="team__text">
-      <h2 id="team-title" class="section-heading">
-        {page.team.title}
-      </h2>
-      <p class="team__intro">{page.team.text}</p>
-      <ul class="team__list" role="list">
-        {team.map((person) => {
-          const bio = localized(person.data.bio, locale);
-          return (
-            <li>
-              <h3>{person.data.name}</h3>
-              <p class="team__role">{localized(person.data.role, locale)}</p>
-              {bio && <div class="team__bio" set:html={md(bio)} />}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-    <CurtainFrame sides="left" tone="navy" curtainWidth="30%" class="team__media">
-      <Image
-        src={page.team.image}
-        alt={page.team.imageAlt}
-        widths={[480, 720, 1000, 1400]}
-        sizes="(min-width: 48rem) 45vw, 100vw"
-      />
-    </CurtainFrame>
-  </section>
+  <KrashnaBlock {...page.krashna} />
 
   <Hero
     title={page.support.title}
@@ -137,43 +75,6 @@ const team = await resolvePeople(page.team.people);
 </BaseLayout>
 
 <style>
-  .section-heading {
-    font-size: var(--fs-h2);
-  }
-
-  /* Community Opera: tekst met bladmuziek rechtsboven en Delft onderaan. */
-  .community {
-    position: relative;
-    padding-top: clamp(2.5rem, 5vw, 4rem);
-    overflow: hidden;
-  }
-
-  .community :global(.community__paper) {
-    position: absolute;
-    top: 0.75rem;
-    right: 4%;
-    width: clamp(7rem, 17.5vw, 15rem);
-    height: auto;
-    pointer-events: none;
-  }
-
-  .community__title {
-    position: relative;
-    text-align: left;
-    padding-left: clamp(0rem, 9vw, 8rem);
-  }
-
-  .community__text {
-    max-width: 30rem;
-    margin-top: clamp(1.5rem, 3vw, 2.5rem);
-    margin-bottom: clamp(1.5rem, 3vw, 2rem);
-    padding-left: clamp(0rem, 2.5vw, 2rem);
-  }
-
-  .community__text :global(p + p) {
-    margin-top: 1em;
-  }
-
   /* Nieuws */
   .home-news {
     padding-block: clamp(2rem, 4.5vw, 3.6rem) var(--space-section);
@@ -197,119 +98,15 @@ const team = await resolvePeople(page.team.people);
     font-size: 1.3rem;
   }
 
-  /* Krashna Musika: foto links, tekst rechts. */
-  .krashna {
-    padding-top: var(--space-section);
-  }
-
-  .krashna__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    gap: clamp(2rem, 5vw, 5rem);
-    align-items: center;
-  }
-
-  .krashna :global(.krashna__media) {
-    order: -1;
-    aspect-ratio: 7 / 3;
-  }
-
-  .krashna__text .prose {
-    margin-top: 1.5rem;
-  }
-
-  .krashna__link {
-    margin-top: 1.75rem;
-    font-size: 1.15rem;
-  }
-
-  /* Muzikale leiding: foto loopt door tot de rechterrand van het scherm, met een gordijn links. */
-  .team {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
-    align-items: center;
-    gap: clamp(2rem, 5vw, 5rem);
-    padding-block: var(--space-section);
-  }
-
-  .team__text {
-    padding-left: var(--gutter);
-    max-width: calc(var(--measure) + var(--gutter));
-  }
-
-  .team__intro {
-    margin-top: 1.25rem;
-    font-size: var(--fs-lead);
-    line-height: 1.5;
-  }
-
-  .team__list {
-    display: grid;
-    gap: 1.75rem;
-    margin: 2rem 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .team__list h3 {
-    font-size: var(--fs-h3);
-  }
-
-  .team__role {
-    margin-top: 0.2rem;
-    font-weight: 700;
-  }
-
-  .team__bio {
-    margin-top: 0.6rem;
-  }
-
-  .team__bio :global(p + p) {
-    margin-top: 0.75em;
-  }
-
-  .team :global(.team__media) {
-    height: clamp(22rem, 36vw, 34rem);
-  }
-
   @media (max-width: 64rem) {
     .post-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
-  @media (max-width: 56rem) {
-    .krashna__grid {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .krashna :global(.krashna__media) {
-      order: 0;
-    }
-
-    .community__title {
-      padding-left: 0;
-      padding-right: 18vw;
-    }
-  }
-
   @media (max-width: 48rem) {
     .post-grid {
       grid-template-columns: minmax(0, 1fr);
-    }
-
-    .team {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .team__text {
-      padding-right: var(--gutter);
-    }
-
-    .team :global(.team__media) {
-      height: auto;
-      aspect-ratio: 4 / 3;
-      margin-left: var(--gutter);
     }
   }
 </style>

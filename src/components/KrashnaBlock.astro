@@ -1,0 +1,81 @@
+---
+/**
+ * Blok over Krashna Musika: foto links, tekst rechts. Staat op de homepage en op de pagina
+ * Community Opera 2028.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import CurtainFrame from './CurtainFrame.astro';
+import Icon from './Icon.astro';
+import { md } from '@/lib/content';
+
+interface Props {
+  title: string;
+  text: string;
+  linkLabel: string;
+  linkUrl: string;
+  image: ImageMetadata;
+  imageAlt: string;
+}
+
+const { title, text, linkLabel, linkUrl, image, imageAlt } = Astro.props;
+---
+
+<section class="krashna" aria-labelledby="krashna-title">
+  <div class="krashna__grid container">
+    <div class="krashna__text">
+      <h2 id="krashna-title" class="krashna__title">
+        {title}
+      </h2>
+      <div class="prose" set:html={md(text)} />
+      <a class="arrow-link krashna__link" href={linkUrl}>
+        <span>{linkLabel}</span>
+        <Icon name="arrow" />
+      </a>
+    </div>
+    <CurtainFrame sides="both" tone="navy" curtainWidth="8%" class="krashna__media">
+      <Image src={image} alt={imageAlt} widths={[480, 720, 980]} sizes="(min-width: 56rem) 50vw, 100vw" />
+    </CurtainFrame>
+  </div>
+</section>
+
+<style>
+  .krashna {
+    padding-block: var(--space-section);
+  }
+
+  .krashna__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+
+  .krashna__title {
+    font-size: var(--fs-h2);
+  }
+
+  .krashna :global(.krashna__media) {
+    order: -1;
+    aspect-ratio: 7 / 3;
+  }
+
+  .krashna__text .prose {
+    margin-top: 1.5rem;
+  }
+
+  .krashna__link {
+    margin-top: 1.75rem;
+    font-size: 1.15rem;
+  }
+
+  @media (max-width: 56rem) {
+    .krashna__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .krashna :global(.krashna__media) {
+      order: 0;
+    }
+  }
+</style>
