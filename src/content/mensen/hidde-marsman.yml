@@ -4,4 +4,5 @@ role:
   nl: Productie
   en: Production
 email: productie@delftscheopera.nl
+photo: /src/assets/uploads/hidde.webp
 order: 4
