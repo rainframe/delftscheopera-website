@@ -109,8 +109,9 @@ nieuwe versie op.
 
 ## Nieuwsbrief
 
-Onderaan elke pagina kunnen bezoekers zich aanmelden voor de nieuwsbrief. Wie zich aanmeldt, staat
-meteen op de lijst in **Laposta**; daar maak en verstuur je ook de nieuwsbrief zelf.
+Onderaan elke pagina kunnen bezoekers zich aanmelden voor de nieuwsbrief. Wie zich aanmeldt, krijgt
+eerst een bevestigingsmail en staat na het bevestigen op de lijst in **Brevo**; daar maak en verstuur
+je ook de nieuwsbrief zelf.
 
 Tip: schrijf het verhaal als nieuwsbericht op de website en zet in de nieuwsbrief een korte inleiding
 met een link naar dat bericht. Dan staat alles op één plek en kun je hetzelfde bericht ook op LinkedIn
@@ -162,7 +163,7 @@ die gedeeld worden.
 
 Het adres, KvK-nummer, RSIN, algemene e-mailadres, IBAN en de links naar sociale media. Deze
 gegevens staan op meerdere plekken op de site (onder meer onderaan elke pagina). Onder **Nieuwsbrief**
-en **Statistieken** staan de koppelingen met Laposta en Cloudflare; die stelt de websitebeheerder in.
+en **Statistieken** staan de koppelingen met Brevo en Cloudflare; die stelt de websitebeheerder in.
 
 Het beheer controleert of het KvK-nummer 8 cijfers heeft en het RSIN 9. Klopt dat niet, dan kun je
 de instellingen pas opslaan als het nummer verbeterd is.
@@ -177,7 +178,7 @@ als alles klaar is: dan staat de site binnen een paar minuten op delftscheopera.
 Een alinea die begint met **TODO:** is een placeholder: tekst die nog aangevuld moet worden. Op de
 website verschijnt die als geel blok, zodat niemand het over het hoofd ziet. Vervang de hele alinea
 (inclusief _TODO:_) door de echte tekst zodra die er is. Ook het nieuwsbriefformulier onderaan de
-pagina's toont een geel blok zolang het nog niet aan Laposta gekoppeld is.
+pagina's toont een geel blok zolang het nog niet aan Brevo gekoppeld is.
 
 ## Hoe publiceren werkt
 

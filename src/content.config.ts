@@ -105,7 +105,7 @@ const settings = defineCollection({
     socials: z.object({ instagram: z.url().optional(), linkedin: z.url().optional() }),
     /**
      * Aanmeldformulier van de nieuwsbrief. De velden komen uit de HTML-code die de dienst
-     * (nu Laposta) voor een eigen formulier geeft; een andere dienst met zo'n HTML-formulier kan
+     * (nu Brevo) voor een eigen formulier geeft; een andere dienst met zo'n HTML-formulier kan
      * zonder codewijziging. Zolang `action` of `emailField` ontbreekt, staat het formulier uit.
      */
     newsletter: z.object({
@@ -115,13 +115,13 @@ const settings = defineCollection({
       action: z.url().optional(),
       /** `name` van het e-mailveld. */
       emailField: z.string().optional(),
-      /** Vaste verborgen velden (bij Laposta `a` en `l`). */
+      /** Vaste verborgen velden (bij Brevo `locale` en `html_type`). */
       hiddenFields: z.array(z.object({ name: z.string(), value: z.string() })).default([]),
-      /** Veld voor het adres van de bedankpagina (bij Laposta `next`). */
+      /** Veld voor het adres van de bedankpagina (Brevo heeft dit niet; daar stel je het in Brevo in). */
       redirectField: z.string().optional(),
-      /** Veld dat leeg moet blijven, tegen spam (bij Laposta `email`). */
+      /** Veld dat leeg moet blijven, tegen spam (bij Brevo `email_address_check`). */
       honeypotField: z.string().optional(),
-      /** Script dat bij het formulier hoort (bij Laposta validate.js, tegen spam). */
+      /** Script dat bij het formulier hoort, als de dienst dat nodig heeft (bij Brevo niet). */
       script: z.url().optional(),
     }),
     analytics: z

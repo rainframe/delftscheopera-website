@@ -1,7 +1,7 @@
 ---
 /**
  * Aanmeldformulier voor de nieuwsbrief, bovenaan de footer. Het formulier gaat rechtstreeks naar de
- * nieuwsbriefdienst (nu Laposta), die de bezoeker daarna naar onze bedankpagina stuurt. Alle
+ * nieuwsbriefdienst (nu Brevo), die de bezoeker daarna naar onze bedankpagina stuurt. Alle
  * gegevens van de dienst staan in Instellingen → Nieuwsbrief, zodat een andere dienst met een
  * gewoon HTML-formulier geen codewijziging vraagt.
  */
@@ -78,7 +78,7 @@ const thanksUrl = new URL(pageUrl('nieuwsbriefBedankt', locale), Astro.site ?? '
 </section>
 
 {ready && script && <script is:inline define:vars={{ script }}>
-  // Het script van de nieuwsbriefdienst (bij Laposta: bescherming tegen spam) wordt pas geladen
+  // Het script van de nieuwsbriefdienst (bijvoorbeeld tegen spam) wordt pas geladen
   // als iemand het formulier gebruikt. Zo krijgen gewone bezoekers geen verzoeken of cookies van
   // de dienst. Wie verstuurt voordat het script er is, wacht daar even op.
   const form = document.querySelector('.newsletter__form');

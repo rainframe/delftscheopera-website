@@ -54,7 +54,7 @@ const strings = {
     'newsletter.privacyLink': 'Privacyverklaring',
     'newsletterThanks.title': 'Bedankt!',
     'newsletterThanks.text':
-      'Je bent aangemeld voor onze nieuwsbrief. Afmelden kan altijd via de link onderaan elke nieuwsbrief.',
+      'Bijna klaar: we hebben je een e-mail gestuurd. Klik op de link in die e-mail om je aanmelding te bevestigen. Zie je niets? Kijk dan ook in je map met ongewenste e-mail. Afmelden kan altijd via de link onderaan elke nieuwsbrief.',
     'newsletterThanks.home': 'Naar de homepage',
     'construction.title': 'Binnenkort online',
     'construction.text':
@@ -122,7 +122,7 @@ const strings = {
     'newsletter.privacyLink': 'Privacy statement',
     'newsletterThanks.title': 'Thank you!',
     'newsletterThanks.text':
-      'You are now subscribed to our newsletter. You can unsubscribe at any time using the link at the bottom of every newsletter.',
+      'Almost done: we have sent you an email. Click the link in it to confirm your subscription. Nothing there? Please check your spam folder too. You can unsubscribe at any time using the link at the bottom of every newsletter.',
     'newsletterThanks.home': 'Go to the homepage',
     'construction.title': 'Coming soon',
     'construction.text':

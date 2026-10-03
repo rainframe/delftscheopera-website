@@ -18,19 +18,18 @@ ibanName: Stichting Delftsche Opera Compagnie
 socials:
   instagram: https://www.instagram.com/delftscheopera
   linkedin: https://www.linkedin.com/company/delftsche-opera
-# Aanmeldformulier in de footer. action, emailField en hiddenFields komen uit de HTML-code van het
-# Laposta-formulier (zie de README); zolang die ontbreken, staat het formulier uit.
+# Aanmeldformulier in de footer. action, emailField, hiddenFields en honeypotField komen uit de
+# HTML-code van het Brevo-formulier (zie de README); zolang action of emailField ontbreekt, staat het
+# formulier uit. Brevo kent geen veld voor de bedankpagina: dat adres stel je in Brevo zelf in.
 newsletter:
-  provider: Laposta
-  action: https://stichting-delftsche-opera-compagnie.email-provider.eu/subscribe/post/v2/index.php
-  emailField: OSrjoxpRsr
+  provider: Brevo
+  action: https://e5ff60e3.sibforms.com/serve/MUIFAMrK5KswYGEKQgvq7OD95WNxZIyXip1XsrB7M_hSJulIwwuAM2gdXiIpnZt9veHE-PQl9Sycz6eIuXUgX7GkpKHsmBHeB6ExShHYtL1ySwyppOpLC16o2-zi6wAMn0yPUPX9gp0Va6Gy2qlgVeguMF5h0mOm2TnSTmO7R2CW7FFXkbfpMR6PhL3Nj1ELVuIXPnxCo6K8qgOsqw==
+  emailField: EMAIL
   hiddenFields:
-    - name: a
-      value: kmuulwjb6m
-    - name: l
-      value: fiwreregqq
-  redirectField: next
-  honeypotField: email
-  script: https://stichting-delftsche-opera-compagnie.email-provider.eu/subscribe/check/validate.js
+    - name: locale
+      value: en
+    - name: html_type
+      value: simple
+  honeypotField: email_address_check
 analytics:
   cloudflareToken: 7aa29d1e43d744cab95865ba1efc8768

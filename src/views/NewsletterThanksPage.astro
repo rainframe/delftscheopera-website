@@ -1,8 +1,9 @@
 ---
 /**
  * Bedankpagina na aanmelden voor de nieuwsbrief. De nieuwsbriefdienst stuurt bezoekers hierheen
- * (zie NewsletterForm). Laposta zet nieuwe aanmeldingen direct op de lijst, zonder bevestigingsmail
- * (double opt-in kan daar alleen bij een betaald account); verandert dat, pas dan de tekst aan.
+ * (zie NewsletterForm; bij Brevo staat dit adres in de formulierinstellingen). In Brevo staat
+ * double opt-in aan: de tekst vraagt bezoekers hun aanmelding via de bevestigingsmail af te ronden.
+ * Zet je dat uit, pas dan de tekst aan.
  */
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import StageMessage from '@/components/StageMessage.astro';

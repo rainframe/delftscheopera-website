@@ -219,40 +219,38 @@ Daarvoor moeten stichtingdoc.nl en www.stichtingdoc.nl aan de worker gekoppeld z
 De oude Google Site is daarna niet meer via stichtingdoc.nl te bereiken en kan offline. _Always Use
 HTTPS_ (_SSL/TLS → Edge Certificates_) aanzetten mag, maar is niet nodig: de worker doet het al.
 
-### Nieuwsbrief (Laposta)
+### Nieuwsbrief (Brevo)
 
 Het aanmeldformulier staat bovenaan de footer van elke pagina en gaat rechtstreeks naar de
-nieuwsbriefdienst, zonder eigen server of API-sleutel. Nieuwe aanmeldingen komen daarna op de
-bedankpagina `/nieuwsbrief/bedankt/` (Engels: `/en/newsletter/thanks/`). Zolang het formulier niet
-gekoppeld is, staat het uit met een gele markering.
+nieuwsbriefdienst, zonder eigen server of API-sleutel. Het formulier heeft de vormgeving van de site;
+van de HTML-code die Brevo geeft gebruikt de site alleen de gegevens, niet de opmaak, lettertypes of
+het Brevo-logo. Zolang het formulier niet gekoppeld is, staat het uit met een gele markering.
 
-1. Maak een Laposta-account (gratis tot 2.000 relaties) en maak op de pagina _Relaties_ met
-   _Nieuwe lijst_ een lijst voor de nieuwsbrief. Maak het e-mailadres het enige verplichte veld.
-   Nieuwe aanmeldingen staan in Laposta direct op de lijst; een bevestigingsmail (double opt-in) kan
-   alleen bij een betaald account en is volgens Laposta niet verplicht.
-2. Open _Relaties → (de lijst) → Verrijken → Aanmelden → Zelf vormgeven van aanmeldformulier_ en
-   bekijk de kale HTML-code.
-3. Neem in het beheer onder _Instellingen → Nieuwsbrief_ over:
-   - **Formulieradres**: wat bij `action="…"` staat (`https://….email-provider.eu/subscribe/post/v2/index.php`);
-   - **Naam van het e-mailveld**: de `name="…"` van het invoerveld met `type="email"` en een code van
-     10 tekens. Niet het veld dat letterlijk `email` heet: dat is het anti-spamveld;
-   - **Verborgen velden**: `a` en `l` met hun waarden;
-   - **Script van de dienst**: het adres bij `<script src="…/subscribe/check/validate.js">` onder het
-     formulier. Dat script beschermt tegen spam (met een token en een kleine rekenpuzzel); het adres
-     waar het formulier naartoe gaat (`/subscribe/post/v2/…`) accepteert zonder dat script geen
-     aanmeldingen. De site laadt het pas als iemand het formulier gebruikt, zodat gewone bezoekers
-     geen verzoeken of cookies van Laposta krijgen.
+1. Maak in Brevo onder _Contacts → Forms_ een aanmeldformulier met alleen het e-mailadres, en kies
+   bij het delen _Embed → Simple HTML_ (of kopieer de HTML-code).
+2. Neem in het beheer onder _Instellingen → Nieuwsbrief_ over:
+   - **Formulieradres**: wat bij `action="…"` staat (`https://….sibforms.com/serve/…`);
+   - **Naam van het e-mailveld**: `EMAIL`;
+   - **Verborgen velden**: `locale` en `html_type` met hun waarden;
+   - **Anti-spamveld**: `email_address_check`.
 
-   _Veld voor de bedankpagina_ (`next`) en _Anti-spamveld_ (`email`) staan al goed.
+   _Veld voor de bedankpagina_ en _Script van de dienst_ blijven leeg: het script van Brevo (`main.js`)
+   werkt alleen met de opmaak van Brevo zelf en is niet nodig om aan te melden.
+3. Brevo kent geen veld voor de bedankpagina. Stel in het formulier in Brevo bij de bevestiging na
+   aanmelden _Redirect to URL_ in met `https://delftscheopera.nl/nieuwsbrief/bedankt/` (zolang de site
+   niet gelanceerd is: `https://preview.delftscheopera.nl/nieuwsbrief/bedankt/`). Zonder die instelling
+   toont Brevo een eigen bevestigingspagina. In Brevo staat de bevestigingsmail (double opt-in) aan, en
+   de bedankpagina vraagt bezoekers hun aanmelding via die mail te bevestigen. Zet je dat uit, pas dan
+   de tekst aan in `src/i18n/ui.ts` (`newsletterThanks.*`).
+4. Meld je zelf aan: je hoort op de bedankpagina te komen, een bevestigingsmail te krijgen en na het
+   bevestigen in Brevo op de lijst te staan.
 
-4. Meld je zelf aan: je hoort op de bedankpagina te komen en in Laposta op de lijst te staan.
-
-Een andere dienst met een gewoon HTML-formulier (Mailchimp, Brevo, MailerLite, …) werkt op dezelfde
-manier: vul dezelfde velden in met de gegevens van die dienst. Past de tekst van de bedankpagina niet
-meer, dan staat die in `src/i18n/ui.ts` (`newsletterThanks.*`).
+Een andere dienst met een gewoon HTML-formulier (Laposta, Mailchimp, MailerLite, …) werkt op dezelfde
+manier: vul dezelfde velden in met de gegevens van die dienst. Diensten die een veld voor de
+bedankpagina kennen (bij Laposta `next`) krijgen dat adres automatisch van de site.
 
 Voor de inhoud van de nieuwsbrief: de RSS-feeds `/nieuws/rss.xml` en `/en/news/rss.xml` bevatten per
-bericht de titel, samenvatting, link en omslagfoto. Laposta kan zo'n feed in een eigen sjabloon laden.
+bericht de titel, samenvatting, link en omslagfoto. Brevo kan zo'n feed in een nieuwsbriefsjabloon laden (RSS-blok).
 
 ### Statistieken (Cloudflare Web Analytics)
 
@@ -272,7 +270,7 @@ het al.
 | 1    | Opzet, ontwerp, alle pagina's met gemigreerde content                                   | ✅ klaar                                                          |
 | 2    | CMS (Sveltia) en handleiding voor redacteuren                                           | ✅ klaar                                                          |
 | 3    | GitHub en Cloudflare, voorbeeld-URL's                                                   | ✅ klaar                                                          |
-| 4    | Domein, doorverwijzingen vanaf stichtingdoc.nl, nieuwsbrief, deelplaatjes, statistieken | code klaar; instellen in Cloudflare en Laposta (zie _Publiceren_) |
+| 4    | Domein, doorverwijzingen vanaf stichtingdoc.nl, nieuwsbrief, deelplaatjes, statistieken | code klaar; instellen in Cloudflare en Brevo (zie _Publiceren_) |
 
 ## Nog te doen vóór de lancering
 

@@ -598,9 +598,9 @@ collections:
             collapsed: true
             hint: >-
               Het aanmeldformulier onderaan elke pagina. Neem de gegevens over uit de HTML-code van
-              het formulier bij de nieuwsbriefdienst (voor Laposta staat in de README waar je die vindt).
+              het formulier bij de nieuwsbriefdienst (voor Brevo staat in de README waar je die vindt).
             fields:
-              - { name: provider, label: Dienst, widget: string, hint: 'Alleen ter informatie, bijvoorbeeld Laposta.' }
+              - { name: provider, label: Dienst, widget: string, hint: 'Alleen ter informatie, bijvoorbeeld Brevo.' }
               - name: action
                 label: Formulieradres
                 widget: string
@@ -612,8 +612,8 @@ collections:
                 widget: string
                 required: false
                 hint: >-
-                  De name="…" van het invoerveld voor het e-mailadres. Bij Laposta is dat een code van
-                  10 tekens (niet het veld dat letterlijk "email" heet; dat is het anti-spamveld).
+                  De name="…" van het invoerveld voor het e-mailadres. Bij Brevo is dat EMAIL (niet
+                  email_address_check; dat is het anti-spamveld).
               - name: hiddenFields
                 label: Verborgen velden
                 label_singular: verborgen veld
@@ -621,8 +621,8 @@ collections:
                 required: false
                 summary: '{{name}} = {{value}}'
                 hint: >-
-                  De velden met type="hidden" (bij Laposta a en l). Laat next weg: dat vult de site zelf
-                  in.
+                  De velden met type="hidden" (bij Brevo locale en html_type). Laat het veld voor de
+                  bedankpagina weg: dat vult de site zelf in.
                 fields:
                   - { name: name, label: Naam, widget: string }
                   - { name: value, label: Waarde, widget: string }
@@ -630,21 +630,23 @@ collections:
                 label: Veld voor de bedankpagina
                 widget: string
                 required: false
-                hint: Bij Laposta next. Daarmee komen nieuwe aanmeldingen op de bedankpagina van deze site.
+                hint: >-
+                  Laat leeg bij Brevo: daar stel je de bedankpagina in Brevo zelf in. Andere diensten
+                  (bijvoorbeeld Laposta: next) sturen nieuwe aanmeldingen via dit veld naar de bedankpagina.
               - name: honeypotField
                 label: Anti-spamveld
                 widget: string
                 required: false
-                hint: Een veld dat leeg moet blijven, om spambots te herkennen (bij Laposta email).
+                hint: Een veld dat leeg moet blijven, om spambots te herkennen (bij Brevo email_address_check).
               - name: script
                 label: Script van de dienst
                 widget: string
                 type: url
                 required: false
                 hint: >-
-                  Het adres bij <script src="…"> onder het formulier (bij Laposta eindigend op
-                  /subscribe/check/validate.js, tegen spam). Het wordt pas geladen als iemand het
-                  formulier gebruikt.
+                  Het adres bij <script src="…"> onder het formulier, als de dienst dat nodig heeft
+                  (bij Brevo laat je dit leeg). Het wordt pas geladen als iemand het formulier
+                  gebruikt.
           - name: analytics
             label: Statistieken
             widget: object
