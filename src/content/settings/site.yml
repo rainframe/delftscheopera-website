@@ -3,7 +3,7 @@
 name: Delftsche Opera
 # Zolang dit false is, toont delftscheopera.nl alleen "Binnenkort online", staat de site op
 # preview.delftscheopera.nl en houden alle pagina's zoekmachines buiten. Zet op true bij de lancering.
-launched: false
+launched: true
 legalName: Stichting Delftsche Opera Compagnie
 email: info@delftscheopera.nl
 address:
