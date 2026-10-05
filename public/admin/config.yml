@@ -314,9 +314,26 @@ collections:
             fields:
               - { name: title, label: Titel, widget: string, i18n: true }
               - { name: subtitle, label: Ondertitel, widget: string, i18n: true }
-              - { name: credit, label: Fotograaf, widget: string, required: false, i18n: duplicate }
-              - { name: image, label: Foto, widget: image, i18n: duplicate }
-              - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
+              - name: images
+                label: Foto's in de carrousel
+                widget: list
+                i18n: true
+                min: 1
+                summary: '{{fields.imageAlt}}'
+                fields:
+                  - { name: image, label: Foto, widget: image, i18n: duplicate }
+                  - { name: imageAlt, label: Beschrijving van de foto, widget: string, i18n: true }
+                  - { name: credit, label: Fotograaf, widget: string, required: false, i18n: duplicate }
+                  - name: mobileFocus
+                    label: Uitsnede op telefoons
+                    widget: number
+                    required: false
+                    i18n: duplicate
+                    value_type: int
+                    min: 0
+                    max: 100
+                    default: 50
+                    hint: 0 houdt de linkerkant in beeld, 50 het midden en 100 de rechterkant.
           - name: intro
             label: Over de Community Opera
             widget: object

@@ -15,9 +15,7 @@ interface Props {
   locale: Locale;
   title: string;
   subtitle: string;
-  image: ImageMetadata;
-  imageAlt: string;
-  credit?: string;
+  images: { image: ImageMetadata; imageAlt: string; credit?: string; mobileFocus?: number }[];
   href?: string;
   linkLabel?: string;
   headingLevel?: 'h1' | 'h2' | 'h3';
@@ -30,9 +28,7 @@ const {
   locale,
   title,
   subtitle,
-  image,
-  imageAlt,
-  credit,
+  images,
   href,
   linkLabel,
   headingLevel = 'h2',
@@ -42,15 +38,39 @@ const {
 const Heading = headingLevel;
 ---
 
-<div class:list={['stage', `stage--${tone}`]}>
+<stage-carousel
+  class:list={['stage', `stage--${tone}`]}
+  role="region"
+  aria-roledescription={t(locale, 'carousel.label')}
+  aria-label={title}
+  data-pause-label={t(locale, 'carousel.pause')}
+  data-play-label={t(locale, 'carousel.play')}
+>
   <CurtainFrame sides="both" tone={tone} class="stage__frame">
-    <Image
-      src={image}
-      alt={imageAlt}
-      layout="full-width"
-      loading={eager ? 'eager' : 'lazy'}
-      fetchpriority={eager ? 'high' : undefined}
-    />
+    {images.map(({ image, imageAlt, credit, mobileFocus = 50 }, index) => (
+      <div
+        class:list={['stage__slide', { 'is-active': index === 0 }]}
+        data-slide
+        role="group"
+        aria-roledescription={t(locale, 'carousel.slide')}
+        aria-label={`${index + 1} / ${images.length}`}
+        aria-hidden={index !== 0}
+        style={`--mobile-position: ${mobileFocus}% center`}
+      >
+        <Image
+          src={image}
+          alt={imageAlt}
+          layout="full-width"
+          loading={eager && index === 0 ? 'eager' : 'lazy'}
+          fetchpriority={eager && index === 0 ? 'high' : undefined}
+        />
+        {credit && (
+          <p class="stage__credit">
+            {t(locale, 'photo.credit')}: {credit}
+          </p>
+        )}
+      </div>
+    ))}
     <div class="stage__overlay">
       <Logo class="stage__logo" color="white" alt="" width={132} />
       <Heading class="stage__title">{title}</Heading>
@@ -62,16 +82,173 @@ const Heading = headingLevel;
         </a>
       )}
     </div>
-    {credit && (
-      <p class="stage__credit">
-        {t(locale, 'photo.credit')}: {credit}
-      </p>
-    )}
   </CurtainFrame>
-</div>
+  {images.length > 1 && (
+    <div class="stage__controls" data-controls hidden>
+      <button type="button" data-previous aria-label={t(locale, 'carousel.previous')}>
+        <span aria-hidden="true">‹</span>
+      </button>
+      {images.map((_, index) => (
+        <button
+          type="button"
+          class="stage__dot"
+          data-go-to={index}
+          aria-label={`${t(locale, 'carousel.goTo')} ${index + 1}`}
+          aria-current={index === 0 ? 'true' : 'false'}
+        >
+          <span aria-hidden="true" />
+        </button>
+      ))}
+      <button type="button" data-next aria-label={t(locale, 'carousel.next')}>
+        <span aria-hidden="true">›</span>
+      </button>
+      <button type="button" data-play aria-label={t(locale, 'carousel.pause')}>
+        <span data-play-icon aria-hidden="true">
+          Ⅱ
+        </span>
+      </button>
+    </div>
+  )}
+  <p class="visually-hidden" data-status aria-live="polite" aria-atomic="true" />
+</stage-carousel>
+
+<script>
+  class StageCarousel extends HTMLElement {
+    connectedCallback() {
+      const slides = Array.from(this.querySelectorAll<HTMLElement>('[data-slide]'));
+      const controls = this.querySelector<HTMLElement>('[data-controls]');
+      if (slides.length < 2 || !controls) return;
+
+      const dots = Array.from(this.querySelectorAll<HTMLButtonElement>('[data-go-to]'));
+      const play = this.querySelector<HTMLButtonElement>('[data-play]')!;
+      const playIcon = this.querySelector<HTMLElement>('[data-play-icon]')!;
+      const status = this.querySelector<HTMLElement>('[data-status]')!;
+      const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const events = new AbortController();
+      let current = 0;
+      let paused = motion.matches;
+      let hovering = false;
+      let pointerPlayState: boolean | undefined;
+      let timer: ReturnType<typeof setTimeout> | undefined;
+
+      const schedule = () => {
+        clearTimeout(timer);
+        if (!paused && !hovering && !document.hidden) {
+          timer = setTimeout(() => show(current + 1), 6000);
+        }
+      };
+      const updatePlay = () => {
+        play.setAttribute('aria-label', (paused ? this.dataset.playLabel : this.dataset.pauseLabel)!);
+        playIcon.textContent = paused ? '▶' : 'Ⅱ';
+        schedule();
+      };
+      const show = (index: number, manual = false) => {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('is-active', i === current);
+          slide.setAttribute('aria-hidden', String(i !== current));
+          dots[i].setAttribute('aria-current', String(i === current));
+        });
+        if (manual) {
+          paused = true;
+          status.textContent = `${current + 1} / ${slides.length}: ${slides[current].querySelector('img')!.alt}`;
+        }
+        updatePlay();
+      };
+
+      controls.hidden = false;
+      // Bewaar de bedoelde actie voordat focus de carrousel automatisch pauzeert.
+      play.addEventListener(
+        'pointerdown',
+        () => {
+          pointerPlayState = !paused;
+        },
+        { signal: events.signal },
+      );
+      play.addEventListener(
+        'pointercancel',
+        () => {
+          pointerPlayState = undefined;
+        },
+        { signal: events.signal },
+      );
+      controls.addEventListener(
+        'click',
+        (event) => {
+          const button = (event.target as HTMLElement).closest('button');
+          if (!button) return;
+          if (button.hasAttribute('data-play')) {
+            paused = event.detail > 0 ? (pointerPlayState ?? !paused) : !paused;
+            pointerPlayState = undefined;
+            updatePlay();
+          } else if (button.hasAttribute('data-previous')) show(current - 1, true);
+          else if (button.hasAttribute('data-next')) show(current + 1, true);
+          else if (button.dataset.goTo !== undefined) show(Number(button.dataset.goTo), true);
+        },
+        { signal: events.signal },
+      );
+      controls.addEventListener(
+        'keydown',
+        (event) => {
+          if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+          event.preventDefault();
+          show(current + (event.key === 'ArrowLeft' ? -1 : 1), true);
+        },
+        { signal: events.signal },
+      );
+      this.addEventListener(
+        'mouseenter',
+        () => {
+          hovering = true;
+          schedule();
+        },
+        { signal: events.signal },
+      );
+      this.addEventListener(
+        'mouseleave',
+        () => {
+          hovering = false;
+          schedule();
+        },
+        { signal: events.signal },
+      );
+      this.addEventListener(
+        'focusin',
+        () => {
+          paused = true;
+          updatePlay();
+        },
+        { signal: events.signal },
+      );
+      document.addEventListener('visibilitychange', schedule, { signal: events.signal });
+      motion.addEventListener(
+        'change',
+        () => {
+          if (motion.matches) paused = true;
+          updatePlay();
+        },
+        { signal: events.signal },
+      );
+      updatePlay();
+      this.cleanup = () => {
+        clearTimeout(timer);
+        events.abort();
+      };
+    }
+
+    private cleanup?: () => void;
+
+    disconnectedCallback() {
+      this.cleanup?.();
+    }
+  }
+
+  if (!customElements.get('stage-carousel')) customElements.define('stage-carousel', StageCarousel);
+</script>
 
 <style>
   .stage {
+    display: block;
     --curtain-w: clamp(2rem, 9.8%, 9rem);
     padding-block: clamp(2.5rem, 6vw, 5.25rem);
   }
@@ -91,6 +268,71 @@ const Heading = headingLevel;
     color: var(--white);
   }
 
+  .stage__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.7s ease,
+      visibility 0.7s;
+  }
+
+  .stage__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .stage__slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .stage__controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.75rem;
+    color: var(--white);
+  }
+
+  .stage__controls[hidden] {
+    display: none;
+  }
+
+  .stage--white .stage__controls {
+    color: var(--navy);
+  }
+
+  .stage__controls button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: inherit;
+    background: transparent;
+    font-size: 1.75rem;
+    cursor: pointer;
+  }
+
+  .stage__controls button:hover {
+    background: rgb(255 255 255 / 0.15);
+  }
+
+  .stage__dot span {
+    width: 10px;
+    height: 10px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+  }
+
+  .stage__dot[aria-current='true'] span {
+    background: currentColor;
+  }
+
   .stage__overlay {
     position: absolute;
     inset: 0;
@@ -103,6 +345,7 @@ const Heading = headingLevel;
     color: var(--white);
     text-align: center;
     background: radial-gradient(ellipse at center, rgb(0 0 0 / 0.28), rgb(0 0 0 / 0.08) 70%);
+    pointer-events: none;
   }
 
   .stage__overlay :global(.stage__logo) {
@@ -128,6 +371,7 @@ const Heading = headingLevel;
   }
 
   .stage__link {
+    pointer-events: auto;
     display: inline-flex;
     margin-top: clamp(0.6rem, 1.8vw, 1.4rem);
     font-size: clamp(1.9rem, 3.8vw, 3.25rem);
@@ -161,6 +405,9 @@ const Heading = headingLevel;
     right: calc(var(--curtain-w) * 0.78 + 0.5rem);
     bottom: 0.55rem;
     color: var(--white);
+    padding: 0.2rem 0.4rem;
+    border-radius: 2px;
+    background: rgb(0 0 0 / 0.45);
     font-size: var(--fs-tiny);
     line-height: 1.2;
     text-shadow: 0 1px 6px rgb(0 0 0 / 0.6);
@@ -173,6 +420,10 @@ const Heading = headingLevel;
   }
 
   @media (max-width: 40rem) {
+    .stage__slide img {
+      object-position: var(--mobile-position, center);
+    }
+
     .stage :global(.stage__frame) {
       aspect-ratio: 4 / 5;
     }

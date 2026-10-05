@@ -3,5 +3,6 @@ title: Carmina Burana
 year: 2023
 image: /src/assets/uploads/carmina-burana-2023.jpg
 imageAlt: Krashna Musika's choir and orchestra on stage, in red light
+imageCredit: Kang Li
 ---
 Krashna Musika performs _Carmina Burana_ and Prokofiev's Seventh Symphony, accompanied by a dazzling light show and with the choir fully in costume.

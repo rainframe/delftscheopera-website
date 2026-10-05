@@ -5,9 +5,20 @@ nl:
   banner:
     title: Community Opera 2028
     subtitle: In, met en voor Delft
-    credit: Eduardus Lee
-    image: /src/assets/uploads/concertgebouw-lustrum.jpg
-    imageAlt: Koor en orkest op het podium van een concertzaal met een groot orgel
+    images:
+      - image: /src/assets/uploads/ming-dao-2.jpg
+        imageAlt: Een solist in een paarse mantel voor het orkest van Krashna Musika
+        credit: Ming Dao
+      - image: /src/assets/uploads/ming-dao-1.jpg
+        imageAlt: Een spreker en dirigent voor het orkest van Krashna Musika in een concertzaal
+        credit: Ming Dao
+      - image: /src/assets/uploads/carmina-burana-2023.jpg
+        imageAlt: Koor en orkest van Krashna Musika tijdens Carmina Burana, in rood licht
+        credit: Kang Li
+        mobileFocus: 0
+      - image: /src/assets/uploads/kang-li-2.jpg
+        imageAlt: Dirigent, orkest en koor van Krashna Musika tijdens een concert in een kerk
+        credit: Kang Li
   intro:
     title: Samen opera maken
     text: |-
@@ -40,9 +51,20 @@ en:
   banner:
     title: Community Opera 2028
     subtitle: In, with and for Delft
-    credit: Eduardus Lee
-    image: /src/assets/uploads/concertgebouw-lustrum.jpg
-    imageAlt: Choir and orchestra on the stage of a concert hall with a large organ
+    images:
+      - image: /src/assets/uploads/ming-dao-2.jpg
+        imageAlt: A soloist in a purple cloak in front of the Krashna Musika orchestra
+        credit: Ming Dao
+      - image: /src/assets/uploads/ming-dao-1.jpg
+        imageAlt: A speaker and conductor in front of the Krashna Musika orchestra in a concert hall
+        credit: Ming Dao
+      - image: /src/assets/uploads/carmina-burana-2023.jpg
+        imageAlt: Krashna Musika's choir and orchestra performing Carmina Burana, in red light
+        credit: Kang Li
+        mobileFocus: 0
+      - image: /src/assets/uploads/kang-li-2.jpg
+        imageAlt: Krashna Musika's conductor, orchestra and choir performing in a church
+        credit: Kang Li
   intro:
     title: Making opera together
     text: |-

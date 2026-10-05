@@ -23,17 +23,15 @@ const posts = (await getPosts(locale)).slice(0, 3);
   title={page.seo.title}
   description={page.seo.description}
   alternates={alternatesFor('home')}
-  image={page.banner.image}
-  imageAlt={page.banner.imageAlt}
+  image={page.banner.images[0].image}
+  imageAlt={page.banner.images[0].imageAlt}
   isHome
 >
   <StageBanner
     locale={locale}
     title={page.banner.title}
     subtitle={page.banner.subtitle}
-    image={page.banner.image}
-    imageAlt={page.banner.imageAlt}
-    credit={page.banner.credit}
+    images={page.banner.images}
     headingLevel="h1"
     eager
   />

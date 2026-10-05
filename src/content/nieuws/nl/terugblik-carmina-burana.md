@@ -5,6 +5,7 @@ summary: In 2023 bracht Krashna Musika de Carmina Burana, met een spetterende li
 author: Bestuur Delftsche Opera
 cover: /src/assets/uploads/carmina-burana-2023.jpg
 coverAlt: Koor en orkest van Krashna Musika op het podium, in rood licht
+coverCredit: Kang Li
 draft: false
 ---
 In 2023 bracht Krashna Musika de _Carmina Burana_ van Carl Orff en de zevende symfonie van Prokofjev ten gehore. De uitvoering ging gepaard met een spetterende lichtshow, en het koor stond er geheel in kostuum.

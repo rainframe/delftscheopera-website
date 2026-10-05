@@ -150,8 +150,15 @@ const home = defineCollection({
       banner: z.object({
         title: z.string(),
         subtitle: z.string(),
-        credit: z.string().optional(),
-        ...pictureFields(image),
+        images: z
+          .array(
+            z.object({
+              ...pictureFields(image),
+              credit: z.string().optional(),
+              mobileFocus: z.number().min(0).max(100).optional(),
+            }),
+          )
+          .min(1),
       }),
       intro: z.object({ title: z.string(), text: z.string() }),
       news: z.object({ title: z.string(), moreLabel: z.string() }),

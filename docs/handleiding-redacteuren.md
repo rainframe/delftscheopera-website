@@ -156,6 +156,11 @@ De pagina **Community Opera 2028** deelt de banner, de tekst over de Community O
 over Krashna Musika met de homepage: die pas je aan bij **Homepage**, en dan veranderen ze op beide
 pagina's. Alleen de _Muzikale leiding_ staat bij **Community Opera 2028** zelf.
 
+Bij **Homepage → Banner bovenaan → Foto's in de carrousel** kun je foto's toevoegen, verwijderen
+en de volgorde aanpassen. Vul per foto een beschrijving in beide talen en de naam van de fotograaf
+in. De eerste foto wordt ook gebruikt wanneer iemand de pagina deelt. Met één foto verschijnt er
+een vaste banner zonder carrouselknoppen.
+
 Onder **Zoekmachines en delen** staan per pagina de titel en omschrijving voor Google en voor links
 die gedeeld worden.
 

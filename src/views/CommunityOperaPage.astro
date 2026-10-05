@@ -28,16 +28,14 @@ const team = await resolvePeople(page.team.people);
   description={page.seo.description}
   alternates={alternatesFor('communityOpera')}
   current="communityOpera"
-  image={home.banner.image}
-  imageAlt={home.banner.imageAlt}
+  image={home.banner.images[0].image}
+  imageAlt={home.banner.images[0].imageAlt}
 >
   <StageBanner
     locale={locale}
     title={home.banner.title}
     subtitle={home.banner.subtitle}
-    image={home.banner.image}
-    imageAlt={home.banner.imageAlt}
-    credit={home.banner.credit}
+    images={home.banner.images}
     headingLevel="h1"
     eager
   />
